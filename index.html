@@ -646,85 +646,530 @@
     const COURSES_DB = {
      toan: {
   "10": {
-    chapters: [
-      {
-        id: "c-toan-10-1",
-        title: "Chương I: Mệnh đề và Tập hợp (SGK Toán 10)",
-        summary: "Nắm vững mệnh đề, phủ định, kéo theo, tương đương, tập hợp và các phép toán tập hợp.",
-        chapterExercises: [
-          {
-            id: "ex-c-toan-10-1-1",
-            type: "Phép toán trên tập hợp",
-            q: "Cho A = (-∞; 2] và B = (-1; +∞). Tập hợp A ∩ B là:",
-            opts: ["(-1; 2]", "[-1; 2]", "(-1; 2)", "(-∞; +∞)"],
-            ans: 0,
-            explain: "Phần giao của (-∞; 2] và (-1; +∞) là các số thực x sao cho -1 < x ≤ 2, tức (-1; 2]."
-          },
-          {
-            id: "ex-c-toan-10-1-2",
-            type: "Mệnh đề chứa biến & lượng từ",
-            q: "Phủ định của mệnh đề '∃x ∈ ℝ, x² + x + 1 < 0' là:",
-            opts: ["∀x ∈ ℝ, x² + x + 1 ≥ 0", "∀x ∈ ℝ, x² + x + 1 > 0", "∃x ∈ ℝ, x² + x + 1 ≥ 0", "∀x ∈ ℝ, x² + x + 1 = 0"],
-            ans: 0,
-            explain: "Phủ định của '∃' là '∀', phủ định của '<' là '≥'."
-          }
-        ],
-        lessons: [
-          {
-            id: "l-toan-10-1-1",
-            title: "Bài 1: Mệnh đề",
-            lecture: "Mệnh đề là câu khẳng định có tính đúng hoặc sai xác định. Câu cảm thán, câu hỏi, câu mệnh lệnh hoặc biểu thức chứa biến chưa gán giá trị không phải là mệnh đề.",
-            definitions: [
-              "Mệnh đề phủ định của mệnh đề P ký hiệu là P̄, đúng khi P sai và sai khi P đúng.",
-              "Mệnh đề kéo theo P ⇒ Q chỉ sai khi P đúng và Q sai; mệnh đề tương đương P ⇔ Q đúng khi cả P và Q cùng đúng hoặc cùng sai."
-            ],
-            formula: "Phủ định của (∀x ∈ X, P(x)) là (∃x ∈ X, P̄(x)).",
-            exercises: [
-              {
-                id: "ex-l-toan-10-1-1-1",
-                type: "Nhận diện mệnh đề",
-                q: "Trong các câu sau, câu nào là mệnh đề đúng?",
-                opts: ["Số π là số vô tỉ", "Phương trình x - 3 = 0 có nghiệm x = 1", "Hãy mở cửa sổ ra!", "x + 2 > 5"],
-                ans: 0,
-                explain: "'Số π là số vô tỉ' là khẳng định có tính đúng xác định."
-              }
-            ]
-          },
-          {
-            id: "l-toan-10-1-2",
-            title: "Bài 2: Tập hợp và các phép toán trên tập hợp",
-            lecture: "Tập hợp được xác định bằng cách liệt kê các phần tử hoặc nêu tính chất đặc trưng. Các phép toán giao, hợp, hiệu mô tả quan hệ giữa hai tập hợp.",
-            definitions: [
-              "Giao của hai tập hợp A và B (A ∩ B): gồm các phần tử thuộc cả A và B.",
-              "Hợp của hai tập hợp A và B (A ∪ B): gồm các phần tử thuộc A hoặc thuộc B.",
-              "Hiệu của A và B (A \\ B): gồm các phần tử thuộc A nhưng không thuộc B."
-            ],
-            formula: "A ⊂ B ⇔ ∀x, (x ∈ A ⇒ x ∈ B).",
-            exercises: [
-              {
-                id: "ex-l-toan-10-1-2-1",
-                type: "Hiệu hai tập hợp",
-                q: "Cho A = {1; 2; 3; 5}, B = {2; 4; 5}. Tập hợp A \\ B là:",
-                opts: ["{1; 3}", "{4}", "{2; 5}", "{1; 2; 3; 4; 5}"],
-                ans: 0,
-                explain: "A \\ B gồm các phần tử thuộc A nhưng không thuộc B: 1 và 3."
-              }
-            ]
-          }
-        ]
-      }
-    ],
-    periodicTests: [
-      {
-        id: "pt-toan-10-1",
-        title: "Kiểm tra Định kì Chương I – Toán 10",
-        questions: [
-          { q: "Cho A = [1; 4], B = (2; 6). Khi đó A ∪ B là:", opts: ["[1; 6)", "(2; 4]", "[2; 4]", "(1; 6)"], ans: 0 },
-          { q: "Điều kiện cần để tứ giác ABCD là hình chữ nhật là:", opts: ["Tứ giác ABCD có hai đường chéo bằng nhau", "Tứ giác ABCD có bốn góc vuông", "Tứ giác ABCD có ba góc vuông", "Tứ giác ABCD là hình bình hành có một góc vuông"], ans: 0 }
-        ]
-      }
-    ]
-  },
+  chapters: [
+    // =========================================================================
+    // CHƯƠNG I: MỆNH ĐỀ VÀ TẬP HỢP
+    // =========================================================================
+    {
+      id: "c-toan-10-1",
+      title: "Chương I: Mệnh đề và Tập hợp",
+      summary: "Mệnh đề lôgic, phủ định, kéo theo, đảo, tương đương, kí hiệu ∀, ∃; tập hợp, các tập hợp số và các phép toán giao, hợp, hiệu, phần bù.",
+      chapterExercises: [
+        {
+          id: "ex-c-toan-10-1-1",
+          type: "Mệnh đề & Lượng từ",
+          q: "Phủ định của mệnh đề P: '∀x ∈ ℝ, x² + 1 > 0' là:",
+          opts: ["∃x ∈ ℝ, x² + 1 ≤ 0", "∀x ∈ ℝ, x² + 1 ≤ 0", "∃x ∈ ℝ, x² + 1 < 0", "∃x ∈ ℝ, x² + 1 = 0"],
+          ans: 0,
+          explain: "Phủ định của lượng từ '∀' là '∃', phủ định của dấu '>' là '≤'."
+        },
+        {
+          id: "ex-c-toan-10-1-2",
+          type: "Phép toán trên tập con của ℝ",
+          q: "Cho hai tập hợp A = [-2; 3] và B = (1; +∞). Tập hợp A ∩ B là:",
+          opts: ["(1; 3]", "[1; 3]", "[-2; +∞)", "[-2; 1]"],
+          ans: 0,
+          explain: "Biểu diễn trên trục số, phần giao của [-2; 3] và (1; +∞) là nửa khoảng (1; 3]."
+        },
+        {
+          id: "ex-c-toan-10-1-3",
+          type: "Bài toán thực tế dùng biểu đồ Ven",
+          q: "Lớp 10A có 24 bạn thi đấu bóng đá và cầu lông, trong đó có 16 bạn thi bóng đá và 11 bạn thi cầu lông. Hỏi có bao nhiêu bạn thi đấu cả hai môn?",
+          opts: ["3 bạn", "5 bạn", "8 bạn", "27 bạn"],
+          ans: 0,
+          explain: "Áp dụng công thức n(A ∪ B) = n(A) + n(B) - n(A ∩ B) ⇒ n(A ∩ B) = 16 + 11 - 24 = 3 (bạn)."
+        }
+      ],
+      lessons: [
+        {
+          id: "l-toan-10-1-1",
+          title: "Bài 1: Mệnh đề",
+          lecture: "Mệnh đề lôgic là câu khẳng định có tính đúng hoặc sai xác định (không thể vừa đúng vừa sai). Câu hỏi, câu cảm thán, câu cầu khiến hoặc biểu thức chứa biến chưa gán giá trị không phải là mệnh đề. Các định lí toán học thường có dạng P ⇒ Q.",
+          definitions: [
+            "Mệnh đề phủ định của P kí hiệu P̄: đúng khi P sai và sai khi P đúng.",
+            "Mệnh đề kéo theo P ⇒ Q ('Nếu P thì Q'): chỉ sai khi P đúng và Q sai. P là điều kiện đủ để có Q; Q là điều kiện cần để có P.",
+            "Mệnh đề đảo của P ⇒ Q là Q ⇒ P. Nếu cả hai đều đúng thì P ⇔ Q ('P khi và chỉ khi Q') là mệnh đề tương đương đúng."
+          ],
+          formula: "Phủ định (∀x ∈ X, P(x)) là (∃x ∈ X, P̄(x)) | Phủ định (∃x ∈ X, P(x)) là (∀x ∈ X, P̄(x)).",
+          exercises: [
+            {
+              id: "ex-l-toan-10-1-1-1",
+              type: "Nhận diện mệnh đề",
+              q: "Câu nào sau đây KHÔNG phải là mệnh đề?",
+              opts: ["Bạn học giỏi quá!", "13 là số nguyên tố.", "3 < 1.", "4 - 5 = 1."],
+              ans: 0,
+              explain: "'Bạn học giỏi quá!' là câu cảm thán, không xác định được tính đúng sai nên không phải mệnh đề."
+            },
+            {
+              id: "ex-l-toan-10-1-1-2",
+              type: "Điều kiện cần, điều kiện đủ",
+              q: "Cho định lí: 'Nếu hai tam giác bằng nhau thì diện tích của chúng bằng nhau'. Phát biểu nào đúng?",
+              opts: [
+                "Hai tam giác bằng nhau là điều kiện đủ để diện tích của chúng bằng nhau.",
+                "Hai tam giác bằng nhau là điều kiện cần để diện tích của chúng bằng nhau.",
+                "Hai tam giác bằng nhau là điều kiện cần và đủ để diện tích của chúng bằng nhau.",
+                "Hai tam giác có diện tích bằng nhau là điều kiện đủ để chúng bằng nhau."
+              ],
+              ans: 0,
+              explain: "Trong định lí P ⇒ Q, giả thiết P là điều kiện đủ để có kết luận Q."
+            }
+          ]
+        },
+        {
+          id: "l-toan-10-1-2",
+          title: "Bài 2: Tập hợp và các phép toán trên tập hợp",
+          lecture: "Tập hợp được xác định bằng cách liệt kê phần tử hoặc nêu tính chất đặc trưng. Tập rỗng Ø không chứa phần tử nào. Quan hệ các tập số: ℕ ⊂ ℤ ⊂ ℚ ⊂ ℝ. Các tập con thường dùng của ℝ gồm khoảng (a; b), đoạn [a; b] và nửa khoảng [a; b), (a; b].",
+          definitions: [
+            "Giao (S ∩ T): gồm các phần tử thuộc cả S và T.",
+            "Hợp (S ∪ T): gồm các phần tử thuộc S hoặc thuộc T.",
+            "Hiệu (S \\ T): gồm các phần tử thuộc S nhưng không thuộc T. Nếu T ⊂ S thì S \\ T gọi là phần bù C_S(T)."
+          ],
+          formula: "n(A ∪ B) = n(A) + n(B) - n(A ∩ B) | Số tập con của tập có k phần tử là 2^k.",
+          exercises: [
+            {
+              id: "ex-l-toan-10-1-2-1",
+              type: "Tập hợp bằng nhau & Tập con",
+              q: "Cho tập hợp A = {a; b; c}. Tập A có tất cả bao nhiêu tập con?",
+              opts: ["8", "6", "4", "3"],
+              ans: 0,
+              explain: "Tập hợp có 3 phần tử nên có 2³ = 8 tập con (kể cả Ø và chính nó)."
+            },
+            {
+              id: "ex-l-toan-10-1-2-2",
+              type: "Phép toán trên tập hợp",
+              q: "Xác định tập hợp (-4; 1] ∩ [0; 3):",
+              opts: ["[0; 1]", "(-4; 3)", "[0; 1)", "(-4; 0]"],
+              ans: 0,
+              explain: "Phần tử vừa lớn hơn -4 và ≤ 1, vừa ≥ 0 và < 3 là 0 ≤ x ≤ 1, tức đoạn [0; 1]."
+            }
+          ]
+        }
+      ]
+    },
+
+    // =========================================================================
+    // CHƯƠNG II: BẤT PHƯƠNG TRÌNH VÀ HỆ BẤT PHƯƠNG TRÌNH BẬC NHẤT HAI ẨN
+    // =========================================================================
+    {
+      id: "c-toan-10-2",
+      title: "Chương II: Bất phương trình và Hệ bất phương trình bậc nhất hai ẩn",
+      summary: "Biểu diễn miền nghiệm trên mặt phẳng tọa độ Oxy và giải bài toán tối ưu kinh tế, sản xuất.",
+      chapterExercises: [
+        {
+          id: "ex-c-toan-10-2-1",
+          type: "Nghiệm của hệ bất phương trình",
+          q: "Cho hệ bất phương trình { x - y < -3 ; 2y ≥ -4 }. Điểm nào sau đây thuộc miền nghiệm của hệ?",
+          opts: ["(-3; 1)", "(0; 0)", "(-2; 1)", "(3; -1)"],
+          ans: 0,
+          explain: "Thay (-3; 1) vào hệ: -3 - 1 = -4 < -3 (đúng) và 2(1) = 2 ≥ -4 (đúng)."
+        },
+        {
+          id: "ex-c-toan-10-2-2",
+          type: "Bài toán tối ưu tuyến tính",
+          q: "Giá trị lớn nhất của biểu thức F(x; y) = 3,5x + 2y trên miền tứ giác OABC có các đỉnh O(0;0), A(0;100), B(20;80), C(60;0) là:",
+          opts: ["230", "210", "200", "240"],
+          ans: 0,
+          explain: "Tính F tại các đỉnh: F(0;0)=0; F(0;100)=200; F(20;80)=3,5·20 + 2·80 = 230; F(60;0)=210. Vậy GTLN là 230."
+        }
+      ],
+      lessons: [
+        {
+          id: "l-toan-10-2-1",
+          title: "Bài 3: Bất phương trình bậc nhất hai ẩn",
+          lecture: "Bất phương trình bậc nhất hai ẩn x, y có dạng ax + by ≤ c (hoặc <, ≥, >) với a, b không đồng thời bằng 0. Trên mặt phẳng Oxy, đường thẳng d: ax + by = c chia mặt phẳng thành hai nửa mặt phẳng bờ d, một trong hai nửa đó là miền nghiệm.",
+          definitions: [
+            "Cặp số (x₀; y₀) là nghiệm nếu ax₀ + by₀ ≤ c là bất đẳng thức đúng. Bất phương trình bậc nhất hai ẩn luôn có vô số nghiệm.",
+            "Nếu dấu bất phương trình là '<' hoặc '>', miền nghiệm không kể bờ d (vẽ d bằng nét đứt)."
+          ],
+          formula: "Bước 1: Vẽ d: ax + by = c | Bước 2: Thử điểm M₀(x₀; y₀) ∉ d (thường lấy O(0;0) nếu c ≠ 0) để xác định nửa mặt phẳng nghiệm.",
+          exercises: [
+            {
+              id: "ex-l-toan-10-2-1-1",
+              type: "Nhận diện bất phương trình bậc nhất hai ẩn",
+              q: "Bất phương trình nào sau đây là bất phương trình bậc nhất hai ẩn?",
+              opts: ["2²x + y ≤ 0", "2x² - y ≥ 1", "x² + y² ≤ 4", "(x - y)(3x + y) ≥ 1"],
+              ans: 0,
+              explain: "2²x + y ≤ 0 ⇔ 4x + y ≤ 0 có bậc của x và y đều là bậc nhất."
+            },
+            {
+              id: "ex-l-toan-10-2-1-2",
+              type: "Kiểm tra nghiệm",
+              q: "Cặp số nào sau đây là một nghiệm của bất phương trình x + 2y > 5?",
+              opts: ["(3; 4)", "(0; -1)", "(1; 2)", "(5; 0)"],
+              ans: 0,
+              explain: "Với (3; 4), ta có 3 + 2·4 = 11 > 5 (đúng)."
+            }
+          ]
+        },
+        {
+          id: "l-toan-10-2-2",
+          title: "Bài 4: Hệ bất phương trình bậc nhất hai ẩn",
+          lecture: "Hệ bất phương trình bậc nhất hai ẩn gồm hai hay nhiều bất phương trình bậc nhất hai ẩn. Miền nghiệm của hệ là giao các miền nghiệm của từng bất phương trình trong hệ (phần không bị gạch bỏ trên mặt phẳng tọa độ).",
+          definitions: [
+            "Miền nghiệm của hệ thường là một miền đa giác (tam giác, tứ giác,...) hoặc miền không bị chặn.",
+            "Nguyên lí tối ưu: Giá trị lớn nhất hoặc nhỏ nhất của biểu thức F(x; y) = ax + by trên một miền đa giác luôn đạt được tại một trong các đỉnh của đa giác đó."
+          ],
+          formula: "F_max / F_min trên đa giác A₁A₂...Aₙ = max / min { F(A₁), F(A₂), ..., F(Aₙ) }.",
+          exercises: [
+            {
+              id: "ex-l-toan-10-2-2-1",
+              type: "Tìm GTLN - GTNN trên miền đa giác",
+              q: "Cho F(x; y) = 2x + 3y trên miền tam giác OAB với O(0;0), A(150;0), B(0;150). Giá trị lớn nhất của F(x; y) là:",
+              opts: ["450", "300", "0", "375"],
+              ans: 0,
+              explain: "F(0;0) = 0; F(150;0) = 300; F(0;150) = 450 ⇒ GTLN bằng 450 tại B(0; 150)."
+            }
+          ]
+        }
+      ]
+    },
+
+    // =========================================================================
+    // CHƯƠNG III: HỆ THỨC LƯỢNG TRONG TAM GIÁC
+    // =========================================================================
+    {
+      id: "c-toan-10-3",
+      title: "Chương III: Hệ thức lượng trong tam giác",
+      summary: "Giá trị lượng giác góc từ 0° đến 180°, định lí côsin, định lí sin, giải tam giác và công thức diện tích.",
+      chapterExercises: [
+        {
+          id: "ex-c-toan-10-3-1",
+          type: "Định lí côsin",
+          q: "Cho tam giác ABC có AB = 5, AC = 8 và góc A = 120°. Độ dài cạnh BC bằng:",
+          opts: ["√129", "√49", "√89", "13"],
+          ans: 0,
+          explain: "BC² = 5² + 8² - 2·5·8·cos 120° = 25 + 64 - 80·(-1/2) = 129 ⇒ BC = √129."
+        },
+        {
+          id: "ex-c-toan-10-3-2",
+          type: "Công thức diện tích Heron",
+          q: "Tam giác ABC có ba cạnh a = 13, b = 14, c = 15. Diện tích tam giác ABC bằng:",
+          opts: ["84", "42", "90", "72"],
+          ans: 0,
+          explain: "Nửa chu vi p = (13+14+15)/2 = 21. S = √(21·(21-13)·(21-14)·(21-15)) = √(21·8·7·6) = 84."
+        }
+      ],
+      lessons: [
+        {
+          id: "l-toan-10-3-1",
+          title: "Bài 5: Giá trị lượng giác của một góc từ 0° đến 180°",
+          lecture: "Với mỗi góc α (0° ≤ α ≤ 180°), lấy điểm M(x₀; y₀) trên nửa đường tròn đơn vị sao cho góc xOM = α. Khi đó sin α = y₀, cos α = x₀, tan α = y₀/x₀ (α ≠ 90°), cot α = x₀/y₀ (0° < α < 180°).",
+          definitions: [
+            "Hai góc bù nhau (α và 180° - α): sin bằng nhau; cos, tan, cot đối nhau.",
+            "Hai góc phụ nhau (α và 90° - α): sin góc này bằng cos góc kia; tan góc này bằng cot góc kia."
+          ],
+          formula: "sin(180° - α) = sin α | cos(180° - α) = -cos α | sin²α + cos²α = 1 | 1 + tan²α = 1/cos²α.",
+          exercises: [
+            {
+              id: "ex-l-toan-10-3-1-1",
+              type: "Giá trị lượng giác góc tù",
+              q: "Giá trị của cos 135° và sin 120° lần lượt là:",
+              opts: ["-√2/2 và √3/2", "√2/2 và √3/2", "-√2/2 và -√3/2", "-1/2 và √3/2"],
+              ans: 0,
+              explain: "cos 135° = -cos 45° = -√2/2; sin 120° = sin 60° = √3/2."
+            },
+            {
+              id: "ex-l-toan-10-3-1-2",
+              type: "Tính giá trị biểu thức lượng giác",
+              q: "Cho tan α = 3. Giá trị của biểu thức P = (2 sin α - 3 cos α) / (3 sin α + 2 cos α) là:",
+              opts: ["3/11", "9/11", "1/3", "3/7"],
+              ans: 0,
+              explain: "Chia cả tử và mẫu cho cos α ≠ 0: P = (2 tan α - 3)/(3 tan α + 2) = (2·3 - 3)/(3·3 + 2) = 3/11."
+            }
+          ]
+        },
+        {
+          id: "l-toan-10-3-2",
+          title: "Bài 6: Hệ thức lượng trong tam giác",
+          lecture: "Trong tam giác ABC có các cạnh a, b, c, nửa chu vi p, bán kính ngoại tiếp R, bán kính nội tiếp r. Các định lí côsin, định lí sin và công thức diện tích giúp giải tam giác và đo đạc khoảng cách thực tế không tới được trực tiếp.",
+          definitions: [
+            "Định lí côsin: a² = b² + c² - 2bc·cos A (tương tự cho b², c²). Hệ quả: cos A = (b² + c² - a²)/(2bc).",
+            "Định lí sin: a/sin A = b/sin B = c/sin C = 2R.",
+            "Giải tam giác: tính các cạnh và góc còn lại khi biết 2 cạnh & góc xen giữa, biết 3 cạnh, hoặc biết 1 cạnh & 2 góc kề."
+          ],
+          formula: "S = (1/2)bc·sin A = abc/(4R) = p·r = √[p(p - a)(p - b)(p - c)].",
+          exercises: [
+            {
+              id: "ex-l-toan-10-3-2-1",
+              type: "Định lí sin & Bán kính ngoại tiếp",
+              q: "Cho tam giác ABC có a = 10 và góc A = 45°. Bán kính R của đường tròn ngoại tiếp tam giác ABC bằng:",
+              opts: ["5√2", "10√2", "5", "10"],
+              ans: 0,
+              explain: "Theo định lí sin: 2R = a / sin A = 10 / sin 45° = 10√2 ⇒ R = 5√2."
+            },
+            {
+              id: "ex-l-toan-10-3-2-2",
+              type: "Bán kính đường tròn nội tiếp",
+              q: "Tam giác ABC có diện tích S = 84 và các cạnh a = 13, b = 14, c = 15. Bán kính đường tròn nội tiếp r bằng:",
+              opts: ["4", "8", "3", "21"],
+              ans: 0,
+              explain: "Nửa chu vi p = 21. Từ S = p·r ⇒ r = S/p = 84/21 = 4."
+            }
+          ]
+        }
+      ]
+    },
+
+    // =========================================================================
+    // CHƯƠNG IV: VECTƠ
+    // =========================================================================
+    {
+      id: "c-toan-10-4",
+      title: "Chương IV: Vectơ",
+      summary: "Khái niệm vectơ, tổng, hiệu, tích vectơ với một số, tọa độ vectơ trong mặt phẳng Oxy và tích vô hướng.",
+      chapterExercises: [
+        {
+          id: "ex-c-toan-10-4-1",
+          type: "Tọa độ vectơ & Trọng tâm",
+          q: "Trong mặt phẳng Oxy, cho A(1; 3), B(-2; 6), C(5; 1). Tọa độ trọng tâm G của tam giác ABC là:",
+          opts: ["(4/3; 10/3)", "(2; 5)", "(4; 10)", "(-1/2; 9/2)"],
+          ans: 0,
+          explain: "x_G = (1 - 2 + 5)/3 = 4/3; y_G = (3 + 6 + 1)/3 = 10/3."
+        },
+        {
+          id: "ex-c-toan-10-4-2",
+          type: "Tích vô hướng & Vuông góc",
+          q: "Trong mặt phẳng Oxy, cho A(1; 2), B(-4; 3) và M(t; 0) thuộc trục hoành. Tìm t để góc AMB = 90°:",
+          opts: ["t = -5 hoặc t = 2", "t = 5 hoặc t = -2", "t = -1 hoặc t = 4", "t = 1 hoặc t = -4"],
+          ans: 0,
+          explain: "AM⃗ = (t - 1; -2), BM⃗ = (t + 4; -3). Góc AMB = 90° ⇔ AM⃗·BM⃗ = 0 ⇔ (t - 1)(t + 4) + 6 = 0 ⇔ t² + 3t - 10 = 0 ⇔ t = -5 hoặc t = 2."
+        }
+      ],
+      lessons: [
+        {
+          id: "l-toan-10-4-1",
+          title: "Bài 7: Các khái niệm mở đầu",
+          lecture: "Vectơ là một đoạn thẳng có hướng (đã chỉ rõ điểm đầu và điểm cuối). Giá của vectơ là đường thẳng đi qua điểm đầu và điểm cuối. Hai vectơ cùng phương nếu giá của chúng song song hoặc trùng nhau.",
+          definitions: [
+            "Hai vectơ bằng nhau (a⃗ = b⃗) nếu chúng có cùng độ dài và cùng hướng.",
+            "Vectơ-không (0⃗) có điểm đầu trùng điểm cuối, độ dài bằng 0, quy ước cùng phương và cùng hướng với mọi vectơ.",
+            "Ba điểm phân biệt A, B, C thẳng hàng ⇔ AB⃗ và AC⃗ cùng phương."
+          ],
+          formula: "|AB⃗| = AB | Tứ giác ABCD là hình bình hành ⇔ BC⃗ = AD⃗.",
+          exercises: [
+            {
+              id: "ex-l-toan-10-4-1-1",
+              type: "Hai vectơ bằng nhau",
+              q: "Cho hình chữ nhật ABCD. Khẳng định nào sau đây đúng?",
+              opts: ["AD⃗ = BC⃗", "AB⃗ = CD⃗", "AC⃗ = BD⃗", "AB⃗ = AD⃗"],
+              ans: 0,
+              explain: "Trong hình chữ nhật ABCD, hai cạnh đối AD và BC song song, bằng nhau và cùng hướng nên AD⃗ = BC⃗."
+            }
+          ]
+        },
+        {
+          id: "l-toan-10-4-2",
+          title: "Bài 8: Tổng và hiệu của hai vectơ",
+          lecture: "Phép cộng và trừ vectơ tuân theo quy tắc ba điểm, quy tắc hình bình hành và quy tắc hiệu. Ứng dụng trực tiếp để tổng hợp lực và tổng hợp vận tốc trong Vật lí.",
+          definitions: [
+            "Quy tắc ba điểm: AB⃗ + BC⃗ = AC⃗ (với ba điểm A, B, C bất kì).",
+            "Quy tắc hình bình hành: Nếu ABCD là hình bình hành thì AB⃗ + AD⃗ = AC⃗.",
+            "Quy tắc hiệu: MN⃗ = ON⃗ - OM⃗ (với ba điểm O, M, N bất kì)."
+          ],
+          formula: "I là trung điểm AB ⇔ IA⃗ + IB⃗ = 0⃗ | G là trọng tâm ΔABC ⇔ GA⃗ + GB⃗ + GC⃗ = 0⃗.",
+          exercises: [
+            {
+              id: "ex-l-toan-10-4-2-1",
+              type: "Độ dài tổng hiệu vectơ",
+              q: "Cho hình vuông ABCD cạnh bằng 1. Độ dài của vectơ AB⃗ + CB⃗ bằng:",
+              opts: ["√2", "2", "1", "0"],
+              ans: 0,
+              explain: "Do AB⃗ = DC⃗ nên AB⃗ + CB⃗ = DC⃗ + CB⃗ = DB⃗. Vậy |DB⃗| = DB = √2."
+            }
+          ]
+        },
+        {
+          id: "l-toan-10-4-3",
+          title: "Bài 9: Tích của một vectơ với một số",
+          lecture: "Tích của vectơ a⃗ ≠ 0⃗ với số thực k là vectơ ka⃗ có độ dài |k|·|a⃗|, cùng hướng với a⃗ nếu k > 0 và ngược hướng với a⃗ nếu k < 0. Mọi vectơ u⃗ đều phân tích được duy nhất theo hai vectơ không cùng phương a⃗, b⃗.",
+          definitions: [
+            "Điều kiện cùng phương: a⃗ và b⃗ (b⃗ ≠ 0⃗) cùng phương ⇔ ∃k ∈ ℝ sao cho a⃗ = kb⃗.",
+            "Tính chất trung điểm & trọng tâm với điểm O bất kì: OA⃗ + OB⃗ = 2OI⃗; OA⃗ + OB⃗ + OC⃗ = 3OG⃗."
+          ],
+          formula: "u⃗ = xa⃗ + yb⃗ (a⃗, b⃗ không cùng phương) | Điểm khối tâm: m₁MA₁⃗ + ... + mₙMAₙ⃗ = 0⃗.",
+          exercises: [
+            {
+              id: "ex-l-toan-10-4-3-1",
+              type: "Biểu thị vectơ",
+              q: "Cho hình bình hành ABCD, M là trung điểm cạnh BC. Biểu thị AM⃗ theo AB⃗ và AD⃗:",
+              opts: ["AM⃗ = AB⃗ + (1/2)AD⃗", "AM⃗ = (1/2)AB⃗ + AD⃗", "AM⃗ = AB⃗ - (1/2)AD⃗", "AM⃗ = 2AB⃗ + AD⃗"],
+              ans: 0,
+              explain: "AM⃗ = AB⃗ + BM⃗ = AB⃗ + (1/2)BC⃗ = AB⃗ + (1/2)AD⃗."
+            }
+          ]
+        },
+        {
+          id: "l-toan-10-4-4",
+          title: "Bài 10: Vectơ trong mặt phẳng tọa độ",
+          lecture: "Trên mặt phẳng tọa độ Oxy với hai vectơ đơn vị i⃗ = (1; 0), j⃗ = (0; 1), mỗi vectơ u⃗ = xi⃗ + yj⃗ được biểu diễn duy nhất bởi cặp tọa độ (x; y).",
+          definitions: [
+            "Tọa độ vectơ theo hai đầu mút: M(x; y), N(x'; y') ⇒ MN⃗ = (x' - x; y' - y).",
+            "Hai vectơ u⃗(x; y) và v⃗(x'; y') cùng phương ⇔ xy' - x'y = 0 (hay x'/x = y'/y nếu xy ≠ 0)."
+          ],
+          formula: "|u⃗| = √(x² + y²) | Trung điểm I((x_A+x_B)/2; (y_A+y_B)/2) | Trọng tâm G((x_A+x_B+x_C)/3; (y_A+y_B+y_C)/3).",
+          exercises: [
+            {
+              id: "ex-l-toan-10-4-4-1",
+              type: "Phép toán tọa độ vectơ",
+              q: "Cho a⃗ = (1; 2) và b⃗ = (3/2; 3). Tọa độ của vectơ a⃗ - 2b⃗ là:",
+              opts: ["(-2; -4)", "(4; 8)", "(-2; 4)", "(2; 4)"],
+              ans: 0,
+              explain: "2b⃗ = (3; 6) ⇒ a⃗ - 2b⃗ = (1 - 3; 2 - 6) = (-2; -4)."
+            }
+          ]
+        },
+        {
+          id: "l-toan-10-4-5",
+          title: "Bài 11: Tích vô hướng của hai vectơ",
+          lecture: "Tích vô hướng của hai vectơ u⃗ và v⃗ là một số thực: u⃗·v⃗ = |u⃗|·|v⃗|·cos(u⃗, v⃗). Trong Vật lí, tích vô hướng biểu diễn công sinh bởi một lực không đổi.",
+          definitions: [
+            "Điều kiện vuông góc: u⃗ ⊥ v⃗ ⇔ u⃗·v⃗ = 0 ⇔ xx' + yy' = 0.",
+            "Bình phương vô hướng bằng bình phương độ dài: u⃗² = |u⃗|² = x² + y²."
+          ],
+          formula: "u⃗·v⃗ = xx' + yy' | cos(u⃗, v⃗) = (xx' + yy') / [√(x² + y²)·√(x'² + y'²)].",
+          exercises: [
+            {
+              id: "ex-l-toan-10-4-5-1",
+              type: "Tích vô hướng & Góc giữa hai vectơ",
+              q: "Trong mặt phẳng Oxy, góc giữa hai vectơ a⃗ = (1; -1) và b⃗ = (-2; 0) bằng:",
+              opts: ["135°", "45°", "90°", "120°"],
+              ans: 0,
+              explain: "cos(a⃗, b⃗) = [1·(-2) + (-1)·0] / (√2 · 2) = -2 / (2√2) = -√2/2 ⇒ góc bằng 135°."
+            }
+          ]
+        }
+      ]
+    },
+
+    // =========================================================================
+    // CHƯƠNG V: CÁC SỐ ĐẶC TRƯNG CỦA MẪU SỐ LIỆU KHÔNG GHÉP NHÓM
+    // =========================================================================
+    {
+      id: "c-toan-10-5",
+      title: "Chương V: Các số đặc trưng của mẫu số liệu không ghép nhóm",
+      summary: "Số gần đúng, sai số, số quy tròn; các số đo xu thế trung tâm và các số đo độ phân tán.",
+      chapterExercises: [
+        {
+          id: "ex-c-toan-10-5-1",
+          type: "Quy tròn số gần đúng",
+          q: "Cho số gần đúng a = 581 268 với độ chính xác d = 200. Số quy tròn của a là:",
+          opts: ["581 000", "581 300", "580 000", "581 270"],
+          ans: 0,
+          explain: "Độ chính xác d = 200 ở hàng trăm nên ta quy tròn a đến hàng thấp nhất mà d nhỏ hơn 1 đơn vị hàng đó, tức hàng nghìn: 581 000."
+        },
+        {
+          id: "ex-c-toan-10-5-2",
+          type: "Phát hiện giá trị bất thường",
+          q: "Một mẫu số liệu có Q₁ = 56 và Q₃ = 84. Trong hai giá trị 10 và 100, giá trị nào là giá trị bất thường?",
+          opts: ["10 là giá trị bất thường", "100 là giá trị bất thường", "Cả 10 và 100 đều bất thường", "Không có giá trị nào bất thường"],
+          ans: 0,
+          explain: "Δ_Q = 84 - 56 = 28. Ngưỡng dưới Q₁ - 1,5·Δ_Q = 56 - 42 = 14; ngưỡng trên Q₃ + 1,5·Δ_Q = 84 + 42 = 126. Vì 10 < 14 nên 10 là giá trị bất thường."
+        }
+      ],
+      lessons: [
+        {
+          id: "l-toan-10-5-1",
+          title: "Bài 12: Số gần đúng và sai số",
+          lecture: "Trong đo đạc và tính toán thực tế, ta thường dùng số gần đúng a thay cho số đúng ā. Độ chính xác d càng nhỏ hoặc sai số tương đối càng bé thì phép đo càng chính xác.",
+          definitions: [
+            "Sai số tuyệt đối: Δ_a = |a - ā|. Nếu Δ_a ≤ d thì ā = a ± d, d gọi là độ chính xác.",
+            "Sai số tương đối: δ_a = Δ_a / |a| ≤ d / |a| (thường viết dưới dạng phần trăm)."
+          ],
+          formula: "Δ_a = |a - ā| | δ_a ≤ d/|a| | Quy tròn a khi có d: làm tròn đến hàng liền trái của hàng chữ số khác 0 đầu tiên của d.",
+          exercises: [
+            {
+              id: "ex-l-toan-10-5-1-1",
+              type: "Độ chính xác phép đo",
+              q: "Khi cân một bao gạo bằng cân treo có thang chia nhỏ nhất 0,2 kg thì độ chính xác d là:",
+              opts: ["0,1 kg", "0,2 kg", "0,05 kg", "0,4 kg"],
+              ans: 0,
+              explain: "Độ chính xác d của phép đo bằng một nửa độ chia nhỏ nhất của dụng cụ đo: 0,2 / 2 = 0,1 kg."
+            }
+          ]
+        },
+        {
+          id: "l-toan-10-5-2",
+          title: "Bài 13: Các số đặc trưng đo xu thế trung tâm",
+          lecture: "Các số đo xu thế trung tâm đại diện cho mẫu số liệu gồm: số trung bình (x̄), trung vị (M_e = Q₂), tứ phân vị (Q₁, Q₂, Q₃) và mốt (M_o).",
+          definitions: [
+            "Số trung bình x̄: dùng khi số liệu đồng đều, không có giá trị bất thường.",
+            "Trung vị M_e (Q₂): giá trị đứng chính giữa mẫu đã sắp xếp không giảm; không bị ảnh hưởng bởi giá trị bất thường.",
+            "Tứ phân vị Q₁, Q₂, Q₃: chia mẫu số liệu đã sắp xếp thành 4 phần, mỗi phần chứa 25% số liệu.",
+            "Mốt M_o: giá trị xuất hiện với tần số lớn nhất (dùng được cho cả dữ liệu định tính)."
+          ],
+          formula: "x̄ = (x₁ + x₂ + ... + xₙ)/n | Q₁ = trung vị nửa trái Q₂ | Q₃ = trung vị nửa phải Q₂.",
+          exercises: [
+            {
+              id: "ex-l-toan-10-5-2-1",
+              type: "Tìm trung vị & tứ phân vị",
+              q: "Cho mẫu số liệu đã sắp xếp: 4; 4; 4; 4; 4; 20. Số trung bình và trung vị của mẫu lần lượt là:",
+              opts: ["6,67 và 4", "4 và 6,67", "4 và 4", "20 và 4"],
+              ans: 0,
+              explain: "x̄ = (4·5 + 20)/6 ≈ 6,67; hai giá trị chính giữa đều là 4 nên trung vị M_e = 4."
+            }
+          ]
+        },
+        {
+          id: "l-toan-10-5-3",
+          title: "Bài 14: Các số đặc trưng đo độ phân tán",
+          lecture: "Độ phân tán cho biết mức độ đồng đều hay chênh lệch của các số liệu quanh vị trí trung tâm, gồm khoảng biến thiên (R), khoảng tứ phân vị (Δ_Q), phương sai (s²) và độ lệch chuẩn (s).",
+          definitions: [
+            "Khoảng biến thiên R = x_max - x_min: đơn giản nhưng dễ bị ảnh hưởng bởi giá trị bất thường.",
+            "Khoảng tứ phân vị Δ_Q = Q₃ - Q₁: đo độ phân tán của 50% số liệu chính giữa.",
+            "Phương sai s² và độ lệch chuẩn s = √s²: sử dụng toàn bộ thông tin của mọi giá trị trong mẫu; càng nhỏ thì số liệu càng đồng đều."
+          ],
+          formula: "s² = [(x₁ - x̄)² + ... + (xₙ - x̄)²]/n | Giá trị bất thường: x < Q₁ - 1,5·Δ_Q hoặc x > Q₃ + 1,5·Δ_Q.",
+          exercises: [
+            {
+              id: "ex-l-toan-10-5-3-1",
+              type: "Phương sai & Độ lệch chuẩn",
+              q: "Cho mẫu số liệu sĩ số 5 lớp: 43; 45; 46; 41; 40. Phương sai của mẫu số liệu là:",
+              opts: ["5,2", "26", "2,28", "6,5"],
+              ans: 0,
+              explain: "x̄ = 43. Tổng bình phương độ lệch = 0² + 2² + 3² + (-2)² + (-3)² = 26 ⇒ s² = 26/5 = 5,2."
+            },
+            {
+              id: "ex-l-toan-10-5-3-2",
+              type: "Tính chất biến đổi số liệu",
+              q: "Nếu cộng thêm mỗi giá trị của mẫu số liệu với 0,5 thì số đặc trưng nào sau đây KHÔNG thay đổi?",
+              opts: ["Độ lệch chuẩn", "Số trung bình", "Trung vị", "Tứ phân vị thứ nhất"],
+              ans: 0,
+              explain: "Tịnh tiến toàn bộ mẫu số liệu thêm hằng số c giữ nguyên khoảng cách giữa các số liệu nên khoảng biến thiên, khoảng tứ phân vị, phương sai và độ lệch chuẩn không đổi."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+
+  // =========================================================================
+  // ĐỀ KIỂM TRA ĐỊNH KÌ HỌC KÌ I – TOÁN 10
+  // =========================================================================
+  periodicTests: [
+    {
+      id: "pt-toan-10-gk1",
+      title: "Đề Kiểm tra Giữa Học kì I – Toán 10 (Chương I, II, III)",
+      questions: [
+        { q: "Mệnh đề nào sau đây đúng?", opts: ["∀x ∈ ℝ, x > 1 ⇒ x² > 1", "∀x ∈ ℝ, x² > 1 ⇒ x > 1", "∀x ∈ ℝ, x² > 1 ⇒ x > -1", "∀x ∈ ℝ, x > -1 ⇒ x² > 1"], ans: 0 },
+        { q: "Cho A = {x ∈ ℕ | x < 7} và B = {1; 2; 3; 6; 7; 8}. Tập hợp A \\ B là:", opts: ["{0; 4; 5}", "{7; 8}", "{1; 2; 3; 6}", "{0; 1; 2; 3; 4; 5; 6; 7; 8}"], ans: 0 },
+        { q: "Miền nghiệm của bất phương trình 2x + y > 3 có bao nhiêu nghiệm?", opts: ["Vô số nghiệm", "Nghiệm duy nhất", "Vô nghiệm", "2 nghiệm"], ans: 0 },
+        { q: "Cho tam giác ABC có B = 135°. Khẳng định nào sau đây đúng?", opts: ["S = (√2/4)ca", "S = (-√2/4)ac", "sin B = -√2/2", "b² = c² + a² - √2ca"], ans: 0 },
+        { q: "Tam giác ABC có b = 6, c = 4, góc A = 150°. Diện tích tam giác ABC là:", opts: ["6", "12", "6√3", "12√3"], ans: 0 }
+      ]
+    },
+    {
+      id: "pt-toan-10-ck1",
+      title: "Đề Kiểm tra Cuối Học kì I – Toán 10 (Tổng hợp Chương I → V)",
+      questions: [
+        { q: "Trong mặt phẳng tọa độ Oxy, cặp vectơ nào sau đây vuông góc với nhau?", opts: ["z⃗ = (a; b) và t⃗ = (-b; a)", "u⃗ = (2; 3) và v⃗ = (4; 6)", "a⃗ = (1; -1) và b⃗ = (-1; 1)", "n⃗ = (1; 1) và k⃗ = (2; 0)"], ans: 0 },
+        { q: "Vectơ nào sau đây có độ dài bằng 1?", opts: ["d⃗ = (1/√2; -1/√2)", "a⃗ = (1; 1)", "b⃗ = (1; -1)", "c⃗ = (2; 1/2)"], ans: 0 },
+        { q: "Cho hình vuông ABCD cạnh a. Khẳng định nào sau đây đúng?", opts: ["AC⃗·BC⃗ = a²", "(AB⃗, BD⃗) = 45°", "AC⃗·BD⃗ = a²√2", "BA⃗·BD⃗ = -a²"], ans: 0 },
+        { q: "Có bao nhiêu phần trăm giá trị của mẫu số liệu nằm giữa Q₁ và Q₃?", opts: ["50%", "25%", "75%", "100%"], ans: 0 },
+        { q: "Khảo sát 1410 khách du lịch vịnh Hạ Long: 789 khách thăm động Thiên Cung, 690 khách thăm đảo Titop, mọi khách đều thăm ít nhất 1 trong 2 nơi. Số khách thăm cả hai nơi là:", opts: ["69 khách", "720 khách", "621 khách", "1479 khách"], ans: 0 }
+      ]
+    }
+  ]
+},
   "11": {
     chapters: [
       {
