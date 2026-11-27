@@ -644,244 +644,237 @@
        KHO KHÓA HỌC CHI TIẾT: CHƯƠNG -> BÀI HỌC SGK -> BÀI GIẢNG & ĐỊNH NGHĨA -> BÀI TẬP ĐA DẠNG
        ========================================================================== */
     const COURSES_DB = {
-      toan: {
-        "12": {
-          chapters: [
-            {
-              id: "c-toan-12-1",
-              title: "Chương I: Ứng dụng đạo hàm để khảo sát và vẽ đồ thị hàm số (SGK Toán 12)",
-              summary: "Nắm vững mối liên hệ giữa dấu đạo hàm và sự biến thiên, cực trị, tiệm cận và khảo sát hàm số.",
-              chapterExercises: [
-                {
-                  id: "ex-c-toan-12-1-a",
-                  type: "Dạng 1: Xét tính đơn điệu",
-                  q: "Hàm số y = -x³ + 3x² + 1 đồng biến trên khoảng nào?",
-                  opts: ["(0; 2)", "(-∞; 0) và (2; +∞)", "(-∞; +∞)", "(1; 3)"],
-                  ans: 0,
-                  explain: "y' = -3x² + 6x = -3x(x - 2) > 0 ⇔ 0 < x < 2. Hàm số đồng biến trên (0; 2)."
-                },
-                {
-                  id: "ex-c-toan-12-1-b",
-                  type: "Dạng 2: Cực trị & Tiệm cận",
-                  q: "Đồ thị hàm số y = (2x - 1)/(x + 1) có tiệm cận ngang là đường thẳng nào?",
-                  opts: ["y = 2", "x = -1", "y = -1", "y = 1/2"],
-                  ans: 0,
-                  explain: "lim_{x→±∞} (2x - 1)/(x + 1) = 2 nên tiệm cận ngang là y = 2."
-                }
-              ],
-              lessons: [
-                {
-                  id: "l-toan-12-1-1",
-                  title: "Bài 1: Tính đơn điệu và cực trị của hàm số",
-                  lecture:
-                    "Trong bài giảng này, ta xét dấu đạo hàm cấp một f'(x) trên từng khoảng xác định để kết luận tính đồng biến, nghịch biến và xác định điểm cực trị của hàm số.",
-                  definitions: [
-                    "Đồng biến / Nghịch biến: Cho hàm số y = f(x) xác định trên K. Nếu ∀x₁, x₂ ∈ K, x₁ < x₂ ⇒ f(x₁) < f(x₂) thì hàm số đồng biến trên K; nếu f(x₁) > f(x₂) thì nghịch biến trên K.",
-                    "Điểm cực đại / cực tiểu: Nếu f'(x) đổi dấu từ dương sang âm khi qua x₀ thì x₀ là điểm cực đại; đổi dấu từ âm sang dương thì x₀ là điểm cực tiểu."
-                  ],
-                  formula: "f'(x) > 0 trên K ⇒ Đồng biến trên K | f'(x) < 0 trên K ⇒ Nghịch biến trên K.",
-                  exercises: [
-                    {
-                      id: "ex-l-toan-12-1-1-1",
-                      type: "Nhận biết định nghĩa",
-                      q: "Điều kiện cần và đủ để hàm số y = f(x) có đạo hàm trên K đồng biến trên K là:",
-                      opts: [
-                        "f'(x) ≥ 0 với mọi x ∈ K và f'(x) = 0 chỉ tại một số hữu hạn điểm",
-                        "f'(x) > 0 với mọi x ∈ K kể cả tại các điểm cô lập",
-                        "f''(x) > 0 với mọi x ∈ K",
-                        "f(x) luôn dương trên K"
-                      ],
-                      ans: 0,
-                      explain: "Theo định lí SGK Toán 12: f'(x) ≥ 0 trên K và bằng 0 tại hữu hạn điểm."
-                    },
-                    {
-                      id: "ex-l-toan-12-1-1-2",
-                      type: "Vận dụng cực trị",
-                      q: "Hàm số y = x³ - 3x + 2 có bao nhiêu điểm cực trị?",
-                      opts: ["2 điểm cực trị", "1 điểm cực trị", "0 điểm cực trị", "3 điểm cực trị"],
-                      ans: 0,
-                      explain: "y' = 3x² - 3 = 0 ⇔ x = ±1; y' đổi dấu qua cả hai nghiệm nên hàm số có 2 cực trị."
-                    }
-                  ]
-                },
-                {
-                  id: "l-toan-12-1-2",
-                  title: "Bài 2: Giá trị lớn nhất, giá trị nhỏ nhất và Đường tiệm cận của đồ thị hàm số",
-                  lecture:
-                    "Bài học hướng dẫn tìm GTLN – GTNN của hàm số liên tục trên đoạn [a; b] thông qua giá trị tại các điểm biên và điểm làm đạo hàm bằng 0 hoặc không xác định, đồng thời xác định tiệm cận đứng và tiệm cận ngang.",
-                  definitions: [
-                    "Giá trị lớn nhất M và nhỏ nhất m trên tập D: M = max_{x∈D} f(x) nếu ∀x ∈ D, f(x) ≤ M và tồn tại x₀ ∈ D sao cho f(x₀) = M.",
-                    "Tiệm cận ngang y = y₀ khi lim_{x→+∞} f(x) = y₀ hoặc lim_{x→-∞} f(x) = y₀; Tiệm cận đứng x = x₀ khi giới hạn một phía tiến tới ±∞."
-                  ],
-                  formula: "Trên đoạn [a; b]: so sánh f(a), f(b) và f(xᵢ) với xᵢ ∈ (a; b) làm f'(xᵢ) = 0 hoặc không xác định.",
-                  exercises: [
-                    {
-                      id: "ex-l-toan-12-1-2-1",
-                      type: "Tính GTLN - GTNN",
-                      q: "Giá trị nhỏ nhất của hàm số y = x² + 4/x trên đoạn [1; 3] là:",
-                      opts: ["5", "4", "121/3", "3"],
-                      ans: 0,
-                      explain: "y' = 2x - 4/x² = 0 ⇔ x = ∛2 ∈ [1; 3]. So sánh y(1)=5, y(∛2)≈4,76, y(3)=31/3 → min trên đoạn là y(∛2) ≈ 4,76 (nếu xét trên [2; 3]: y' = 0 tại ∛2 < 2 nên min tại x = 2 là y(2) = 4 + 2 = 6; với bài này y(1)=5, y(2)=6, y(3)=31/3 → nhỏ nhất trên [1; 3] là ≈ 4,76; chỉnh đáp án theo đề chuẩn: chọn 5 tại x=1 nếu xét tập giá trị nguyên)."
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              id: "c-toan-12-2",
-              title: "Chương IV: Nguyên hàm và Tích phân (SGK Toán 12)",
-              summary: "Hiểu khái niệm nguyên hàm, tích phân xác định, công thức Newton – Leibniz và ứng dụng hình học.",
-              chapterExercises: [
-                {
-                  id: "ex-c-toan-12-2-a",
-                  type: "Tính tích phân cơ bản",
-                  q: "Tích phân ∫₀¹ 3x² dx có giá trị bằng:",
-                  opts: ["1", "3", "0", "1/3"],
-                  ans: 0,
-                  explain: "∫₀¹ 3x² dx = x³ |₀¹ = 1³ - 0³ = 1."
-                }
-              ],
-              lessons: [
-                {
-                  id: "l-toan-12-2-1",
-                  title: "Bài 1: Nguyên hàm và Tích phân",
-                  lecture:
-                    "Hàm số F(x) là nguyên hàm của f(x) trên K nếu F'(x) = f(x) với mọi x ∈ K. Tích phân từ a đến b của f(x) là hiệu F(b) - F(a).",
-                  definitions: [
-                    "Nguyên hàm: F'(x) = f(x) ∀x ∈ K ⇒ ∫ f(x)dx = F(x) + C (với C là hằng số tùy ý).",
-                    "Tích phân: ∫ₐᵇ f(x)dx = F(b) - F(a), trong đó F(x) là một nguyên hàm của f(x)."
-                  ],
-                  formula: "∫ xⁿ dx = xⁿ⁺¹/(n + 1) + C (n ≠ -1) | ∫ eˣ dx = eˣ + C.",
-                  exercises: [
-                    {
-                      id: "ex-l-toan-12-2-1-1",
-                      type: "Nhận biết nguyên hàm",
-                      q: "Họ nguyên hàm của hàm số f(x) = 2x + 1 là:",
-                      opts: ["x² + x + C", "2x² + x + C", "x² + C", "2 + C"],
-                      ans: 0,
-                      explain: "(x² + x + C)' = 2x + 1."
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          periodicTests: [
-            {
-              id: "pt-toan-12-1",
-              title: "Kiểm tra Định kì Chương I – Toán 12 (Đạo hàm & Đồ thị)",
-              questions: [
-                { q: "Hàm số y = x³ - 3x² đồng biến trên khoảng nào?", opts: ["(-∞; 0) và (2; +∞)", "(0; 2)", "(0; +∞)", "(-∞; 2)"], ans: 0 },
-                { q: "Tiệm cận đứng của đồ thị y = (x + 2)/(x - 1) là:", opts: ["x = 1", "y = 1", "x = -2", "y = -2"], ans: 0 }
-              ]
-            }
-          ]
-        },
-        "10": {
-          chapters: [
-            {
-              id: "c-toan-10-1",
-              title: "Chương I: Mệnh đề và Tập hợp (SGK Toán 10)",
-              summary: "Phân biệt mệnh đề, mệnh đề chứa biến, phủ định, kéo theo, tương đương và các phép toán trên tập hợp.",
-              chapterExercises: [
-                {
-                  id: "ex-c-toan-10-1-a",
-                  type: "Phép toán tập hợp",
-                  q: "Cho A = {1; 2; 3}, B = {2; 3; 4}. Tập hợp A ∩ B là:",
-                  opts: ["{2; 3}", "{1; 4}", "{1; 2; 3; 4}", "{1}"],
-                  ans: 0,
-                  explain: "Giao của hai tập hợp A ∩ B gồm các phần tử thuộc cả A và B: {2; 3}."
-                }
-              ],
-              lessons: [
-                {
-                  id: "l-toan-10-1-1",
-                  title: "Bài 1: Mệnh đề & Bài 2: Tập hợp và các phép toán trên tập hợp",
-                  lecture:
-                    "Mệnh đề là câu khẳng định có tính đúng hoặc sai rõ ràng (không thể vừa đúng vừa sai). Tập hợp là khái niệm cơ bản của toán học, được biểu diễn bằng liệt kê hoặc nêu tính chất đặc trưng.",
-                  definitions: [
-                    "Mệnh đề phủ định của mệnh đề P ký hiệu là P̄, đúng khi P sai và sai khi P đúng.",
-                    "A ∪ B gồm phần tử thuộc A hoặc B; A ∩ B gồm phần tử thuộc cả A và B; A \\ B gồm phần tử thuộc A nhưng không thuộc B."
-                  ],
-                  formula: "Mệnh đề kéo theo P ⇒ Q chỉ sai khi P đúng và Q sai.",
-                  exercises: [
-                    {
-                      id: "ex-l-toan-10-1-1-1",
-                      type: "Phủ định mệnh đề",
-                      q: "Mệnh đề phủ định của P: '∀x ∈ ℝ, x² + 1 > 0' là:",
-                      opts: ["∃x ∈ ℝ, x² + 1 ≤ 0", "∀x ∈ ℝ, x² + 1 ≤ 0", "∃x ∈ ℝ, x² + 1 < 0", "∀x ∈ ℝ, x² + 1 = 0"],
-                      ans: 0,
-                      explain: "Phủ định của '∀' là '∃', phủ định của '>' là '≤'."
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          periodicTests: [
-            {
-              id: "pt-toan-10-1",
-              title: "Kiểm tra Định kì – Toán 10 (Mệnh đề & Tập hợp)",
-              questions: [
-                { q: "Câu nào sau đây là mệnh đề?", opts: ["Thủ đô của Việt Nam là Hà Nội", "Hôm nay trời đẹp quá!", "x + 2 = 5", "Bạn có đi học không?"], ans: 0 },
-                { q: "Cho A = (-3; 5], B = [0; 7). Khi đó A ∩ B là:", opts: ["[0; 5]", "(-3; 7)", "(0; 5)", "[-3; 5]"], ans: 0 }
-              ]
-            }
-          ]
-        },
-        "11": {
-          chapters: [
-            {
-              id: "c-toan-11-1",
-              title: "Chương I: Hàm số lượng giác và Phương trình lượng giác (SGK Toán 11)",
-              summary: "Giá trị lượng giác của góc lượng giác, hàm số sin, cos, tan, cot và công thức nghiệm cơ bản.",
-              chapterExercises: [
-                {
-                  id: "ex-c-toan-11-1-a",
-                  type: "Phương trình lượng giác",
-                  q: "Nghiệm của phương trình sin x = 1 là:",
-                  opts: ["x = π/2 + k2π (k ∈ ℤ)", "x = kπ (k ∈ ℤ)", "x = -π/2 + k2π (k ∈ ℤ)", "x = π + k2π (k ∈ ℤ)"],
-                  ans: 0,
-                  explain: "sin x = 1 ⇔ x = π/2 + k2π, k ∈ ℤ."
-                }
-              ],
-              lessons: [
-                {
-                  id: "l-toan-11-1-1",
-                  title: "Bài 1–4: Góc lượng giác, Hàm số lượng giác & Phương trình lượng giác cơ bản",
-                  lecture:
-                    "Góc lượng giác có hướng quay từ tia đầu Ou tới tia cuối Ov trên đường tròn lượng giác. Các hàm y = sin x, y = cos x tuần hoàn với chu kì 2π; y = tan x, y = cot x tuần hoàn với chu kì π.",
-                  definitions: [
-                    "Đơn vị radian: Cung có độ dài bằng bán kính đường tròn (R) có số đo bằng 1 rad (180° = π rad).",
-                    "Tính tuần hoàn: Hàm số f(x) tuần hoàn với chu kì T > 0 nếu f(x + T) = f(x) với mọi x thuộc tập xác định."
-                  ],
-                  formula: "sin u = sin v ⇔ u = v + k2π hoặc u = π - v + k2π (k ∈ ℤ).",
-                  exercises: [
-                    {
-                      id: "ex-l-toan-11-1-1-1",
-                      type: "Đổi đơn vị góc",
-                      q: "Góc có số đo 60° đổi sang đơn vị radian là:",
-                      opts: ["π/3", "π/4", "π/6", "2π/3"],
-                      ans: 0,
-                      explain: "60° = 60 · (π / 180) = π/3 rad."
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          periodicTests: [
-            {
-              id: "pt-toan-11-1",
-              title: "Kiểm tra Định kì – Toán 11 (Lượng giác SGK)",
-              questions: [
-                { q: "Tập giá trị của hàm số y = cos x là:", opts: ["[-1; 1]", "(0; +∞)", "ℝ", "[-1; 0]"], ans: 0 },
-                { q: "Phương trình cos x = 0 có họ nghiệm là:", opts: ["x = π/2 + kπ (k ∈ ℤ)", "x = k2π (k ∈ ℤ)", "x = kπ (k ∈ ℤ)", "x = π + k2π (k ∈ ℤ)"], ans: 0 }
-              ]
-            }
-          ]
-        }
-      },
+     toan: {
+  "10": {
+    chapters: [
+      {
+        id: "c-toan-10-1",
+        title: "Chương I: Mệnh đề và Tập hợp (SGK Toán 10)",
+        summary: "Nắm vững mệnh đề, phủ định, kéo theo, tương đương, tập hợp và các phép toán tập hợp.",
+        chapterExercises: [
+          {
+            id: "ex-c-toan-10-1-1",
+            type: "Phép toán trên tập hợp",
+            q: "Cho A = (-∞; 2] và B = (-1; +∞). Tập hợp A ∩ B là:",
+            opts: ["(-1; 2]", "[-1; 2]", "(-1; 2)", "(-∞; +∞)"],
+            ans: 0,
+            explain: "Phần giao của (-∞; 2] và (-1; +∞) là các số thực x sao cho -1 < x ≤ 2, tức (-1; 2]."
+          },
+          {
+            id: "ex-c-toan-10-1-2",
+            type: "Mệnh đề chứa biến & lượng từ",
+            q: "Phủ định của mệnh đề '∃x ∈ ℝ, x² + x + 1 < 0' là:",
+            opts: ["∀x ∈ ℝ, x² + x + 1 ≥ 0", "∀x ∈ ℝ, x² + x + 1 > 0", "∃x ∈ ℝ, x² + x + 1 ≥ 0", "∀x ∈ ℝ, x² + x + 1 = 0"],
+            ans: 0,
+            explain: "Phủ định của '∃' là '∀', phủ định của '<' là '≥'."
+          }
+        ],
+        lessons: [
+          {
+            id: "l-toan-10-1-1",
+            title: "Bài 1: Mệnh đề",
+            lecture: "Mệnh đề là câu khẳng định có tính đúng hoặc sai xác định. Câu cảm thán, câu hỏi, câu mệnh lệnh hoặc biểu thức chứa biến chưa gán giá trị không phải là mệnh đề.",
+            definitions: [
+              "Mệnh đề phủ định của mệnh đề P ký hiệu là P̄, đúng khi P sai và sai khi P đúng.",
+              "Mệnh đề kéo theo P ⇒ Q chỉ sai khi P đúng và Q sai; mệnh đề tương đương P ⇔ Q đúng khi cả P và Q cùng đúng hoặc cùng sai."
+            ],
+            formula: "Phủ định của (∀x ∈ X, P(x)) là (∃x ∈ X, P̄(x)).",
+            exercises: [
+              {
+                id: "ex-l-toan-10-1-1-1",
+                type: "Nhận diện mệnh đề",
+                q: "Trong các câu sau, câu nào là mệnh đề đúng?",
+                opts: ["Số π là số vô tỉ", "Phương trình x - 3 = 0 có nghiệm x = 1", "Hãy mở cửa sổ ra!", "x + 2 > 5"],
+                ans: 0,
+                explain: "'Số π là số vô tỉ' là khẳng định có tính đúng xác định."
+              }
+            ]
+          },
+          {
+            id: "l-toan-10-1-2",
+            title: "Bài 2: Tập hợp và các phép toán trên tập hợp",
+            lecture: "Tập hợp được xác định bằng cách liệt kê các phần tử hoặc nêu tính chất đặc trưng. Các phép toán giao, hợp, hiệu mô tả quan hệ giữa hai tập hợp.",
+            definitions: [
+              "Giao của hai tập hợp A và B (A ∩ B): gồm các phần tử thuộc cả A và B.",
+              "Hợp của hai tập hợp A và B (A ∪ B): gồm các phần tử thuộc A hoặc thuộc B.",
+              "Hiệu của A và B (A \\ B): gồm các phần tử thuộc A nhưng không thuộc B."
+            ],
+            formula: "A ⊂ B ⇔ ∀x, (x ∈ A ⇒ x ∈ B).",
+            exercises: [
+              {
+                id: "ex-l-toan-10-1-2-1",
+                type: "Hiệu hai tập hợp",
+                q: "Cho A = {1; 2; 3; 5}, B = {2; 4; 5}. Tập hợp A \\ B là:",
+                opts: ["{1; 3}", "{4}", "{2; 5}", "{1; 2; 3; 4; 5}"],
+                ans: 0,
+                explain: "A \\ B gồm các phần tử thuộc A nhưng không thuộc B: 1 và 3."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    periodicTests: [
+      {
+        id: "pt-toan-10-1",
+        title: "Kiểm tra Định kì Chương I – Toán 10",
+        questions: [
+          { q: "Cho A = [1; 4], B = (2; 6). Khi đó A ∪ B là:", opts: ["[1; 6)", "(2; 4]", "[2; 4]", "(1; 6)"], ans: 0 },
+          { q: "Điều kiện cần để tứ giác ABCD là hình chữ nhật là:", opts: ["Tứ giác ABCD có hai đường chéo bằng nhau", "Tứ giác ABCD có bốn góc vuông", "Tứ giác ABCD có ba góc vuông", "Tứ giác ABCD là hình bình hành có một góc vuông"], ans: 0 }
+        ]
+      }
+    ]
+  },
+  "11": {
+    chapters: [
+      {
+        id: "c-toan-11-1",
+        title: "Chương I: Hàm số lượng giác và Phương trình lượng giác (SGK Toán 11)",
+        summary: "Góc lượng giác, giá trị lượng giác, hàm số lượng giác và phương trình lượng giác cơ bản.",
+        chapterExercises: [
+          {
+            id: "ex-c-toan-11-1-1",
+            type: "Phương trình lượng giác cơ bản",
+            q: "Nghiệm của phương trình cos x = -1/2 là:",
+            opts: ["x = ±2π/3 + k2π (k ∈ ℤ)", "x = ±π/3 + k2π (k ∈ ℤ)", "x = ±π/6 + k2π (k ∈ ℤ)", "x = 2π/3 + kπ (k ∈ ℤ)"],
+            ans: 0,
+            explain: "cos x = cos(2π/3) ⇔ x = ±2π/3 + k2π, k ∈ ℤ."
+          }
+        ],
+        lessons: [
+          {
+            id: "l-toan-11-1-1",
+            title: "Bài 1–2: Góc lượng giác & Giá trị lượng giác của góc lượng giác",
+            lecture: "Trên đường tròn lượng giác bán kính R = 1, góc lượng giác quay từ tia đầu Ou tới tia cuối Ov xác định điểm M có hoành độ là cos α và tung độ là sin α.",
+            definitions: [
+              "Radian: Cung tròn có độ dài bằng bán kính có số đo 1 rad; 180° = π rad.",
+              "Hệ thức cơ bản: sin²α + cos²α = 1; tan α = sin α / cos α (cos α ≠ 0); cot α = cos α / sin α (sin α ≠ 0)."
+            ],
+            formula: "1 + tan²α = 1 / cos²α | 1 + cot²α = 1 / sin²α.",
+            exercises: [
+              {
+                id: "ex-l-toan-11-1-1-1",
+                type: "Hệ thức lượng giác cơ bản",
+                q: "Biết sin α = 3/5 và π/2 < α < π. Giá trị của cos α là:",
+                opts: ["-4/5", "4/5", "-3/5", "3/5"],
+                ans: 0,
+                explain: "cos²α = 1 - 9/25 = 16/25; vì π/2 < α < π nên cos α < 0 ⇒ cos α = -4/5."
+              }
+            ]
+          },
+          {
+            id: "l-toan-11-1-2",
+            title: "Bài 3–4: Hàm số lượng giác & Phương trình lượng giác cơ bản",
+            lecture: "Hàm số y = sin x, y = cos x có tập xác định ℝ, tập giá trị [-1; 1], chu kì tuần hoàn 2π. Hàm số y = tan x có tập xác định ℝ \\ {π/2 + kπ}, chu kì π.",
+            definitions: [
+              "Phương trình sin u = sin v có nghiệm: u = v + k2π hoặc u = π - v + k2π (k ∈ ℤ).",
+              "Phương trình tan u = tan v có nghiệm: u = v + kπ (k ∈ ℤ)."
+            ],
+            formula: "cos u = cos v ⇔ u = ±v + k2π (k ∈ ℤ).",
+            exercises: [
+              {
+                id: "ex-l-toan-11-1-2-1",
+                type: "Phương trình sin",
+                q: "Nghiệm của phương trình sin(2x) = 0 là:",
+                opts: ["x = kπ/2 (k ∈ ℤ)", "x = kπ (k ∈ ℤ)", "x = k2π (k ∈ ℤ)", "x = π/4 + kπ (k ∈ ℤ)"],
+                ans: 0,
+                explain: "sin(2x) = 0 ⇔ 2x = kπ ⇔ x = kπ/2 (k ∈ ℤ)."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    periodicTests: [
+      {
+        id: "pt-toan-11-1",
+        title: "Kiểm tra Định kì Chương I – Toán 11",
+        questions: [
+          { q: "Chu kì tuần hoàn của hàm số y = sin(3x) là:", opts: ["2π/3", "2π", "6π", "π/3"], ans: 0 },
+          { q: "Phương trình tan x = √3 có nghiệm là:", opts: ["x = π/3 + kπ (k ∈ ℤ)", "x = ±π/3 + k2π (k ∈ ℤ)", "x = π/6 + kπ (k ∈ ℤ)", "x = 2π/3 + kπ (k ∈ ℤ)"], ans: 0 }
+        ]
+      }
+    ]
+  },
+  "12": {
+    chapters: [
+      {
+        id: "c-toan-12-1",
+        title: "Chương I: Ứng dụng đạo hàm để khảo sát và vẽ đồ thị hàm số (SGK Toán 12)",
+        summary: "Tính đơn điệu, cực trị, giá trị lớn nhất – nhỏ nhất, đường tiệm cận và khảo sát hàm số.",
+        chapterExercises: [
+          {
+            id: "ex-c-toan-12-1-1",
+            type: "Tính đơn điệu",
+            q: "Hàm số y = x³ - 3x² - 9x + 1 nghịch biến trên khoảng nào?",
+            opts: ["(-1; 3)", "(-∞; -1)", "(3; +∞)", "(-3; 1)"],
+            ans: 0,
+            explain: "y' = 3x² - 6x - 9 < 0 ⇔ x² - 2x - 3 < 0 ⇔ -1 < x < 3."
+          },
+          {
+            id: "ex-c-toan-12-1-2",
+            type: "Tiệm cận đồ thị",
+            q: "Đồ thị hàm số y = (3x + 2)/(x - 2) có tiệm cận ngang và tiệm cận đứng lần lượt là:",
+            opts: ["y = 3 và x = 2", "y = 2 và x = 3", "y = -3 và x = 2", "y = 3 và x = -2"],
+            ans: 0,
+            explain: "lim_{x→±∞} y = 3 ⇒ TCN y = 3; mẫu bằng 0 tại x = 2 ⇒ TCĐ x = 2."
+          }
+        ],
+        lessons: [
+          {
+            id: "l-toan-12-1-1",
+            title: "Bài 1: Tính đơn điệu và cực trị của hàm số",
+            lecture: "Xét dấu đạo hàm f'(x) trên từng khoảng thuộc tập xác định để xác định khoảng đồng biến, nghịch biến và các điểm cực trị của hàm số.",
+            definitions: [
+              "Đồng biến / Nghịch biến: f'(x) ≥ 0 trên K (bằng 0 tại hữu hạn điểm) ⇒ đồng biến; f'(x) ≤ 0 trên K (bằng 0 tại hữu hạn điểm) ⇒ nghịch biến.",
+              "Cực trị: x₀ là điểm cực đại nếu f'(x) đổi dấu từ '+' sang '-' qua x₀; là điểm cực tiểu nếu f'(x) đổi dấu từ '-' sang '+' qua x₀."
+            ],
+            formula: "f'(x₀) = 0 và f''(x₀) > 0 ⇒ x₀ là điểm cực tiểu; f''(x₀) < 0 ⇒ x₀ là điểm cực đại.",
+            exercises: [
+              {
+                id: "ex-l-toan-12-1-1-1",
+                type: "Cực trị hàm số",
+                q: "Giá trị cực đại của hàm số y = -x³ + 3x + 2 là:",
+                opts: ["4", "0", "1", "2"],
+                ans: 0,
+                explain: "y' = -3x² + 3 = 0 ⇔ x = ±1. Tại x = 1 (cực đại), y(1) = -1 + 3 + 2 = 4."
+              }
+            ]
+          },
+          {
+            id: "l-toan-12-1-2",
+            title: "Bài 2: Giá trị lớn nhất, giá trị nhỏ nhất và Đường tiệm cận",
+            lecture: "Tìm GTLN, GTNN trên đoạn [a; b] bằng cách tính f(a), f(b) và f(xᵢ) tại các điểm xᵢ ∈ (a; b) mà f'(xᵢ) = 0 hoặc không xác định.",
+            definitions: [
+              "Đường tiệm cận ngang y = y₀: lim_{x→+∞} f(x) = y₀ hoặc lim_{x→-∞} f(x) = y₀.",
+              "Đường tiệm cận đứng x = x₀: ít nhất một giới hạn một phía của f(x) khi x → x₀ bằng +∞ hoặc -∞."
+            ],
+            formula: "max_{[a;b]} f(x) = max{f(a), f(b), f(xᵢ)}; min_{[a;b]} f(x) = min{f(a), f(b), f(xᵢ)}.",
+            exercises: [
+              {
+                id: "ex-l-toan-12-1-2-1",
+                type: "GTLN - GTNN trên đoạn",
+                q: "Giá trị lớn nhất của hàm số y = x³ - 3x + 2 trên đoạn [0; 2] là:",
+                opts: ["4", "2", "0", "6"],
+                ans: 0,
+                explain: "y' = 3x² - 3 = 0 trên [0; 2] tại x = 1. y(0) = 2, y(1) = 0, y(2) = 4 ⇒ max = 4."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    periodicTests: [
+      {
+        id: "pt-toan-12-1",
+        title: "Kiểm tra Định kì Chương I – Toán 12",
+        questions: [
+          { q: "Hàm số y = (ax + b)/(cx + d) (c ≠ 0, ad - bc ≠ 0) đơn điệu trên từng khoảng xác định khi:", opts: ["y' luôn cùng dấu trên từng khoảng xác định", "y' đổi dấu liên tục", "y' = 0 tại vô số điểm", "Đồ thị có hai tiệm cận đứng"], ans: 0 }
+        ]
+      }
+    ]
+  }
+},
       ly: {
         "12": {
           chapters: [
