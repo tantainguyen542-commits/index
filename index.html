@@ -6,25 +6,18 @@
   <meta name="theme-color" content="#6366f1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <title>StudyFlow — Không gian học tập thông minh & Gamification</title>
+  <title>StudyFlow — Không gian học tập cấp 3 thông minh</title>
 
-  <!-- Google Fonts: Be Vietnam Pro -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
-  <!-- Firebase Auth SDK (Compat v10) -->
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 
   <style>
-    /* ==========================================================================
-1. DESIGN TOKENS & THEME VARIABLES (LIGHT / DARK MODE)
-       ========================================================================== */
     :root {
       --font-sans: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-
-      /* Brand & Gamification Palette */
       --indigo: #6366f1;
       --indigo-hover: #4f46e5;
       --indigo-soft: rgba(99, 102, 241, 0.12);
@@ -32,15 +25,1758 @@
       --emerald-hover: #059669;
       --emerald-soft: rgba(16, 185, 129, 0.14);
       --amber: #f59e0b;
-      --amber-hover: #d97706;
       --amber-soft: rgba(245, 158, 11, 0.15);
       --rose: #ef4444;
       --rose-soft: rgba(239, 68, 68, 0.14);
 
-      /* Light Theme Surfaces */
       --bg-app: #f3f5f9;
       --bg-surface: #ffffff;
       --bg-surface-2: #f8fafc;
-      --bg-glass: rgba(255, 255, 255, 0.88);
+      --bg-glass: rgba(255, 255, 255, 0.9);
       --border-color: #e2e8f0;
-      --border-strong:
+      --border-strong: #cbd5e1;
+
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+
+      --radius-bento: 16px;
+      --radius-md: 12px;
+      --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
+      --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.06);
+      --shadow-lg: 0 16px 36px rgba(99, 102, 241, 0.14);
+
+      --sidebar-width: 256px;
+      --topbar-height: 68px;
+      --bottom-nav-height: 66px;
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --safe-left: env(safe-area-inset-left, 0px);
+      --safe-right: env(safe-area-inset-right, 0px);
+      --transition: all 0.2s ease;
+    }
+
+    [data-theme="dark"] {
+      --bg-app: #0b1120;
+      --bg-surface: #131c31;
+      --bg-surface-2: #1a253e;
+      --bg-glass: rgba(19, 28, 49, 0.9);
+      --border-color: #24324d;
+      --border-strong: #334569;
+
+      --text-primary: #f1f5f9;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+
+      --indigo-soft: rgba(99, 102, 241, 0.22);
+      --emerald-soft: rgba(16, 185, 129, 0.22);
+      --amber-soft: rgba(245, 158, 11, 0.22);
+      --rose-soft: rgba(239, 68, 68, 0.22);
+
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
+      --shadow-md: 0 10px 28px rgba(0, 0, 0, 0.35);
+      --shadow-lg: 0 16px 36px rgba(99, 102, 241, 0.22);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      min-height: 100dvh;
+      font-family: var(--font-sans);
+      background: var(--bg-app);
+      color: var(--text-primary);
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    body.modal-open { overflow: hidden; }
+
+    button, input, textarea, select {
+      font-family: inherit;
+      font-size: inherit;
+      color: inherit;
+    }
+
+    button { cursor: pointer; border: none; background: none; touch-action: manipulation; }
+
+    /* Auth Screen */
+    .auth-screen {
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: calc(20px + var(--safe-top)) 16px calc(24px + var(--safe-bottom));
+      background: radial-gradient(circle at top right, var(--indigo-soft), transparent 45%),
+                  radial-gradient(circle at bottom left, var(--emerald-soft), transparent 45%),
+                  var(--bg-app);
+    }
+    .auth-screen.hidden { display: none; }
+
+    .auth-top-bar {
+      width: 100%;
+      max-width: 450px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 450px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 22px;
+      padding: 24px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .auth-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: var(--bg-surface-2);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 4px;
+      margin-bottom: 18px;
+      gap: 4px;
+    }
+
+    .auth-tab {
+      min-height: 42px;
+      border-radius: 9px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+    .auth-tab.active { background: var(--indigo); color: #fff; }
+
+    .auth-group { margin-bottom: 14px; }
+    .auth-label { display: block; font-size: 0.84rem; font-weight: 700; margin-bottom: 6px; }
+
+    .auth-divider {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 16px 0;
+      color: var(--text-muted);
+      font-size: 0.76rem;
+      font-weight: 700;
+    }
+    .auth-divider::before, .auth-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-color);
+    }
+
+    .oauth-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .oauth-btn {
+      min-height: 46px;
+      padding: 10px 12px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+      background: var(--bg-surface-2);
+      font-weight: 700;
+      font-size: 0.88rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .oauth-btn:hover { border-color: var(--indigo); background: var(--indigo-soft); }
+
+    .guest-btn {
+      width: 100%;
+      min-height: 44px;
+      margin-top: 12px;
+      border-radius: var(--radius-md);
+      border: 1.5px dashed var(--indigo);
+      background: var(--indigo-soft);
+      color: var(--indigo);
+      font-weight: 700;
+      font-size: 0.88rem;
+    }
+    .guest-btn:hover { background: var(--indigo); color: #fff; }
+
+    .auth-status {
+      display: none;
+      margin-bottom: 14px;
+      padding: 11px 14px;
+      border-radius: var(--radius-md);
+      font-size: 0.84rem;
+      font-weight: 600;
+    }
+    .auth-status.error { display: block; background: var(--rose-soft); color: var(--rose); }
+    .auth-status.success { display: block; background: var(--emerald-soft); color: var(--emerald); }
+
+    /* App Shell */
+    .app-shell { display: none; min-height: 100dvh; width: 100%; }
+    .app-shell.visible { display: flex; }
+
+    .sidebar {
+      width: var(--sidebar-width);
+      background: var(--bg-surface);
+      border-right: 1px solid var(--border-color);
+      padding: 20px 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      z-index: 40;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 4px 8px 16px;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 14px;
+    }
+
+    .brand-logo {
+      width: 38px;
+      height: 38px;
+      border-radius: 11px;
+      background: linear-gradient(135deg, var(--indigo), #8b5cf6);
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .brand-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--indigo), var(--emerald));
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .brand-sub { font-size: 0.72rem; color: var(--text-muted); }
+
+    .nav-list { display: flex; flex-direction: column; gap: 6px; }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      border-radius: var(--radius-md);
+      color: var(--text-secondary);
+      font-weight: 600;
+      font-size: 0.92rem;
+      text-align: left;
+      width: 100%;
+    }
+    .nav-item:hover { background: var(--bg-surface-2); color: var(--text-primary); }
+    .nav-item.active { background: var(--indigo-soft); color: var(--indigo); }
+
+    .sidebar-footer-card {
+      background: linear-gradient(135deg, var(--indigo-soft), var(--emerald-soft));
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-bento);
+      padding: 14px;
+    }
+    .sidebar-footer-card h4 { font-size: 0.85rem; font-weight: 700; margin-bottom: 4px; }
+    .sidebar-footer-card p { font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 10px; }
+
+    .main-wrapper {
+      flex: 1;
+      margin-left: var(--sidebar-width);
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      min-height: var(--topbar-height);
+      background: var(--bg-glass);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 10px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .mobile-brand { display: none; align-items: center; gap: 8px; font-weight: 800; font-size: 1.05rem; color: var(--indigo); }
+
+    .gamification-bar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; flex: 1; min-width: 0; }
+
+    .level-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      padding: 5px 11px;
+      border-radius: 99px;
+    }
+    .level-badge {
+      background: linear-gradient(135deg, var(--indigo), #8b5cf6);
+      color: #fff;
+      font-weight: 800;
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 99px;
+      white-space: nowrap;
+    }
+    .xp-progress-wrap { display: flex; flex-direction: column; gap: 3px; min-width: 96px; }
+    .xp-meta { display: flex; justify-content: space-between; font-size: 0.7rem; font-weight: 700; color: var(--text-secondary); gap: 6px; }
+    .xp-track { width: 100%; height: 6px; background: var(--bg-surface-2); border-radius: 99px; overflow: hidden; }
+    .xp-fill { height: 100%; background: linear-gradient(90deg, var(--amber), #fbbf24); border-radius: 99px; width: 0%; transition: width 0.4s ease; }
+
+    .stat-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 11px;
+      border-radius: 99px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      white-space: nowrap;
+    }
+    .stat-chip.streak { color: var(--amber); background: var(--amber-soft); border-color: rgba(245, 158, 11, 0.3); }
+    .stat-chip.minutes { color: var(--emerald); background: var(--emerald-soft); border-color: rgba(16, 185, 129, 0.3); }
+
+    .topbar-actions { display: flex; align-items: center; gap: 8px; }
+
+    .user-pill-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 40px;
+      padding: 6px 11px;
+      border-radius: 11px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+    .user-pill-btn:hover { border-color: var(--indigo); color: var(--indigo); }
+
+    .user-avatar-mini {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--indigo-soft);
+      color: var(--indigo);
+      display: grid;
+      place-items: center;
+      font-size: 0.72rem;
+      font-weight: 800;
+      overflow: hidden;
+    }
+    .user-avatar-mini img { width: 100%; height: 100%; object-fit: cover; }
+
+    .theme-toggle {
+      width: 40px;
+      height: 40px;
+      border-radius: 11px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      display: grid;
+      place-items: center;
+      font-size: 1rem;
+    }
+
+    /* Subject Bar (Môn học cấp 3) */
+    .subject-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border-color);
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .subject-bar::-webkit-scrollbar { display: none; }
+    .subject-bar-label {
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+    .subject-chips-row { display: flex; align-items: center; gap: 7px; }
+    .subject-chip {
+      min-height: 34px;
+      padding: 6px 12px;
+      border-radius: 99px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-surface-2);
+      color: var(--text-secondary);
+      font-size: 0.8rem;
+      font-weight: 700;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .subject-chip:hover { border-color: var(--indigo); color: var(--indigo); }
+    .subject-chip.active { background: var(--indigo); border-color: var(--indigo); color: #fff; }
+
+    .subject-tag-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: 99px;
+      font-size: 0.7rem;
+      font-weight: 800;
+      background: var(--indigo-soft);
+      color: var(--indigo);
+      margin-right: 6px;
+    }
+
+    /* Content & Bento */
+    .content-container { padding: 22px; max-width: 1320px; width: 100%; margin: 0 auto; flex: 1; }
+    .view-section { display: none; }
+    .view-section.active { display: block; }
+
+    .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
+    .bento-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-bento);
+      padding: 18px;
+      box-shadow: var(--shadow-sm);
+      min-width: 0;
+    }
+
+    .col-12 { grid-column: span 12; }
+    .col-7 { grid-column: span 7; }
+    .col-6 { grid-column: span 6; }
+    .col-5 { grid-column: span 5; }
+    .col-3 { grid-column: span 3; }
+
+    .card-header { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+    .card-title { font-size: 1.02rem; font-weight: 700; }
+    .card-subtitle { font-size: 0.82rem; color: var(--text-secondary); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      min-height: 42px;
+      padding: 9px 16px;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: 0.88rem;
+      white-space: nowrap;
+    }
+    .btn:active { transform: scale(0.98); }
+    .btn-primary { background: var(--indigo); color: #fff; }
+    .btn-primary:hover { background: var(--indigo-hover); }
+    .btn-emerald { background: var(--emerald); color: #fff; }
+    .btn-emerald:hover { background: var(--emerald-hover); }
+    .btn-outline { background: var(--bg-surface-2); border: 1px solid var(--border-color); color: var(--text-primary); }
+    .btn-outline:hover { border-color: var(--indigo); color: var(--indigo); }
+    .btn-danger-soft { background: var(--rose-soft); color: var(--rose); }
+    .btn-sm { min-height: 36px; padding: 6px 12px; font-size: 0.8rem; border-radius: 10px; }
+
+    .input, .textarea, .select {
+      width: 100%;
+      background: var(--bg-surface-2);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 10px 13px;
+      color: var(--text-primary);
+      outline: none;
+    }
+    .input:focus, .textarea:focus, .select:focus {
+      border-color: var(--indigo);
+      box-shadow: 0 0 0 3px var(--indigo-soft);
+      background: var(--bg-surface);
+    }
+
+    .badge { display: inline-flex; align-items: center; padding: 4px 10px; border-radius: 99px; font-size: 0.74rem; font-weight: 700; }
+    .badge-indigo { background: var(--indigo-soft); color: var(--indigo); }
+    .badge-emerald { background: var(--emerald-soft); color: var(--emerald); }
+    .badge-amber { background: var(--amber-soft); color: var(--amber); }
+
+    /* Hero & KPIs */
+    .hero-banner {
+      background: linear-gradient(135deg, #4f46e5 0%, #6366f1 55%, #10b981 100%);
+      color: #fff;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+      padding: 24px;
+    }
+    .hero-banner h1 { font-size: 1.4rem; font-weight: 800; margin-bottom: 4px; }
+    .hero-banner p { font-size: 0.9rem; opacity: 0.94; }
+    .hero-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn-hero-white { background: #fff; color: #4f46e5; font-weight: 700; }
+    .btn-hero-glass { background: rgba(255, 255, 255, 0.2); color: #fff; border: 1px solid rgba(255, 255, 255, 0.35); }
+
+    .kpi-card { display: flex; align-items: center; gap: 12px; }
+    .kpi-icon { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; font-size: 1.2rem; flex-shrink: 0; }
+    .kpi-value { font-size: 1.3rem; font-weight: 800; }
+    .kpi-label { font-size: 0.78rem; color: var(--text-secondary); }
+
+    .weekly-chart {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+      align-items: end;
+      height: 195px;
+      padding-top: 16px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .chart-col { display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end; gap: 6px; }
+    .chart-bar-bg { width: 100%; max-width: 38px; height: 140px; background: var(--bg-surface-2); border-radius: 8px; display: flex; align-items: flex-end; overflow: hidden; }
+    .chart-bar-fill { width: 100%; background: var(--indigo); border-radius: 8px; min-height: 5px; }
+    .chart-col.today .chart-bar-fill { background: var(--emerald); }
+    .chart-mins { font-size: 0.7rem; font-weight: 700; color: var(--text-secondary); }
+    .chart-day { font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); margin-top: 6px; }
+
+    .todo-form { display: flex; gap: 8px; margin-bottom: 12px; }
+    .todo-list { display: flex; flex-direction: column; gap: 8px; max-height: 250px; overflow-y: auto; }
+    .todo-item { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 12px; background: var(--bg-surface-2); border: 1px solid var(--border-color); border-radius: var(--radius-md); }
+    .todo-item.completed { opacity: 0.65; }
+    .todo-left { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; }
+    .todo-checkbox { width: 26px; height: 26px; border-radius: 7px; border: 2px solid var(--indigo); display: grid; place-items: center; flex-shrink: 0; color: #fff; }
+    .todo-item.completed .todo-checkbox { background: var(--emerald); border-color: var(--emerald); }
+    .todo-text { font-size: 0.88rem; font-weight: 500; word-break: break-word; }
+    .todo-item.completed .todo-text { text-decoration: line-through; color: var(--text-muted); }
+
+    /* Focus / Pomodoro / Sound */
+    .pomo-modes { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 16px; }
+    .mode-btn { min-height: 36px; padding: 7px 13px; border-radius: 99px; font-size: 0.82rem; font-weight: 600; background: var(--bg-surface-2); color: var(--text-secondary); border: 1px solid var(--border-color); }
+    .mode-btn.active { background: var(--indigo); color: #fff; border-color: var(--indigo); }
+    .timer-display { font-size: 2.8rem; font-weight: 800; font-variant-numeric: tabular-nums; margin: 12px 0 6px; }
+    .timer-status { font-size: 0.86rem; color: var(--text-secondary); margin-bottom: 18px; }
+    .pomo-controls { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+
+    .sound-channel { background: var(--bg-surface-2); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 12px; margin-bottom: 10px; }
+    .sound-header { display: flex; justify-content: space-between; font-size: 0.88rem; font-weight: 700; margin-bottom: 8px; }
+    .range-slider { width: 100%; height: 7px; border-radius: 99px; background: var(--border-strong); cursor: pointer; }
+
+    /* Flashcards */
+    .deck-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+    .deck-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+    .deck-pill { min-height: 36px; padding: 7px 13px; border-radius: 11px; background: var(--bg-surface); border: 1px solid var(--border-color); font-weight: 600; font-size: 0.84rem; color: var(--text-secondary); }
+    .deck-pill.active { background: var(--indigo); color: #fff; border-color: var(--indigo); }
+
+    .flashcard-stage { perspective: 1100px; width: 100%; max-width: 660px; height: 290px; margin: 10px auto 18px; cursor: pointer; }
+    .flashcard-inner { position: relative; width: 100%; height: 100%; transition: transform 0.55s ease; transform-style: preserve-3d; -webkit-transform-style: preserve-3d; }
+    .flashcard-inner.flipped { transform: rotateY(180deg); -webkit-transform: rotateY(180deg); }
+    .flashcard-face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; background: var(--bg-surface); border: 2px solid var(--border-color); border-radius: 20px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; align-items: center; text-align: center; box-shadow: var(--shadow-md); }
+    .flashcard-face.back { transform: rotateY(180deg); -webkit-transform: rotateY(180deg); background: var(--indigo-soft); border-color: var(--indigo); }
+    .fc-content { font-size: 1.18rem; font-weight: 700; white-space: pre-line; overflow-y: auto; max-height: 175px; }
+    .fc-controls-row, .fc-mastery-row { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+
+    /* Quiz */
+    .quiz-box { max-width: 740px; margin: 0 auto; }
+    .quiz-question-card { background: var(--bg-surface-2); border: 1px solid var(--border-color); border-radius: var(--radius-bento); padding: 18px; margin: 14px 0; font-size: 1.1rem; font-weight: 700; text-align: center; }
+    .quiz-options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .quiz-option { min-height: 52px; padding: 12px 14px; border-radius: var(--radius-md); background: var(--bg-surface); border: 2px solid var(--border-color); text-align: left; font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 10px; }
+    .quiz-option.correct { border-color: var(--emerald); background: var(--emerald-soft); color: var(--emerald); }
+    .quiz-option.wrong { border-color: var(--rose); background: var(--rose-soft); color: var(--rose); }
+
+    /* AI Chat */
+    .chat-window { height: 300px; overflow-y: auto; background: var(--bg-surface-2); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px; display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; }
+    .chat-msg { max-width: 88%; padding: 10px 14px; border-radius: 12px; font-size: 0.88rem; white-space: pre-wrap; }
+    .chat-msg.ai { align-self: flex-start; background: var(--bg-surface); border: 1px solid var(--border-color); }
+    .chat-msg.user { align-self: flex-end; background: var(--indigo); color: #fff; }
+    .prompt-chips { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+    .prompt-chip { min-height: 32px; font-size: 0.76rem; padding: 5px 10px; border-radius: 99px; background: var(--indigo-soft); color: var(--indigo); font-weight: 600; }
+
+    /* Modal & Toast */
+    .modal-backdrop { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.55); z-index: 60; display: none; place-items: center; padding: 16px; }
+    .modal-backdrop.open { display: grid; }
+    .modal-dialog { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 18px; width: 100%; max-width: 520px; max-height: 86dvh; overflow-y: auto; padding: 20px; }
+
+    .toast-container { position: fixed; bottom: calc(18px + var(--safe-bottom)); right: max(16px, var(--safe-right)); z-index: 80; display: flex; flex-direction: column; gap: 8px; }
+    .toast { background: var(--bg-surface); border: 1px solid var(--border-color); border-left: 4px solid var(--indigo); padding: 11px 15px; border-radius: 11px; box-shadow: var(--shadow-md); font-size: 0.86rem; font-weight: 600; }
+
+    /* Mobile Bottom Nav */
+    .bottom-nav {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: calc(var(--bottom-nav-height) + var(--safe-bottom));
+      padding: 4px calc(4px + var(--safe-right)) calc(4px + var(--safe-bottom)) calc(4px + var(--safe-left));
+      background: var(--bg-glass);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-top: 1px solid var(--border-color);
+      z-index: 45;
+      grid-template-columns: repeat(5, 1fr);
+    }
+    .bottom-nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-height: 44px; font-size: 0.7rem; font-weight: 600; color: var(--text-secondary); border-radius: 9px; }
+    .bottom-nav-btn.active { color: var(--indigo); background: var(--indigo-soft); }
+
+    @media (max-width: 1024px) {
+      .col-7, .col-6, .col-5 { grid-column: span 12; }
+      .col-3 { grid-column: span 6; }
+    }
+
+    @media (max-width: 768px) {
+      input, textarea, select { font-size: 16px; }
+      .sidebar { display: none; }
+      .main-wrapper { margin-left: 0; padding-bottom: calc(var(--bottom-nav-height) + var(--safe-bottom) + 16px); }
+      .bottom-nav { display: grid; }
+      .mobile-brand { display: flex; }
+      .topbar, .subject-bar { padding: 8px 12px; }
+      .content-container { padding: 14px 12px; }
+      .quiz-options-grid { grid-template-columns: 1fr; }
+      .flashcard-stage { height: 255px; }
+      .toast-container { bottom: calc(var(--bottom-nav-height) + var(--safe-bottom) + 10px); left: 12px; right: 12px; }
+    }
+
+    @media (max-width: 480px) {
+      .oauth-grid { grid-template-columns: 1fr; }
+      .col-3 { grid-column: span 12; }
+    }
+  </style>
+</head>
+<body>
+  <!-- MÀN HÌNH ĐĂNG NHẬP / ĐĂNG KÝ / KHÁCH -->
+  <section class="auth-screen" id="authScreen">
+    <div class="auth-top-bar">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <div class="brand-logo">⚡</div>
+        <div>
+          <div class="brand-title">StudyFlow</div>
+          <div class="brand-sub">Học tập cấp 3 thông minh</div>
+        </div>
+      </div>
+      <button type="button" class="theme-toggle" id="authThemeBtn" title="Đổi giao diện">🌓</button>
+    </div>
+
+    <div class="auth-card">
+      <div class="auth-tabs" role="tablist">
+        <button type="button" class="auth-tab active" id="tabLogin">Đăng nhập</button>
+        <button type="button" class="auth-tab" id="tabRegister">Đăng ký</button>
+      </div>
+
+      <div class="auth-status" id="authStatus"></div>
+
+      <form id="authForm">
+        <div class="auth-group" id="nameGroup" style="display:none;">
+          <label class="auth-label" for="displayNameInput">Tên hiển thị</label>
+          <input class="input" type="text" id="displayNameInput" placeholder="Ví dụ: Tấn Tài" />
+        </div>
+        <div class="auth-group">
+          <label class="auth-label" for="emailInput">Email</label>
+          <input class="input" type="email" id="emailInput" placeholder="ban@example.com" required />
+        </div>
+        <div class="auth-group">
+          <label class="auth-label" for="passwordInput">Mật khẩu</label>
+          <input class="input" type="password" id="passwordInput" placeholder="Ít nhất 6 ký tự" required />
+        </div>
+        <button type="submit" class="btn btn-primary" id="submitAuthBtn" style="width:100%;">Đăng nhập</button>
+      </form>
+
+      <div class="auth-divider">HOẶC ĐĂNG NHẬP VỚI</div>
+
+      <div class="oauth-grid">
+        <button type="button" class="oauth-btn" id="googleLoginBtn"><span>G</span> Google</button>
+        <button type="button" class="oauth-btn" id="facebookLoginBtn"><span>f</span> Facebook</button>
+      </div>
+
+      <button type="button" class="guest-btn" id="guestContinueBtn">
+        🚀 Tiếp tục với tư cách Khách (Vào trang web ngay)
+      </button>
+    </div>
+  </section>
+
+  <!-- GIAO DIỆN CHÍNH -->
+  <div class="app-shell" id="appShell">
+    <aside class="sidebar">
+      <div>
+        <div class="brand">
+          <div class="brand-logo">⚡</div>
+          <div>
+            <div class="brand-title">StudyFlow</div>
+            <div class="brand-sub">Cấp 3 & Gamification</div>
+          </div>
+        </div>
+        <nav class="nav-list">
+          <button class="nav-item active" data-view="dashboard">📊 Tổng quan</button>
+          <button class="nav-item" data-view="focus">⏱️ Góc Tập Trung</button>
+          <button class="nav-item" data-view="flashcards">🗂️ Thẻ Ghi Nhớ 3D</button>
+          <button class="nav-item" data-view="quiz">⚡ Đấu Trường Quiz</button>
+          <button class="nav-item" data-view="ai">🤖 Trợ Lý AI</button>
+        </nav>
+      </div>
+
+      <div class="sidebar-footer-card">
+        <h4 id="sidebarRankTitle">🏅 Học giả Tập sự</h4>
+        <p>Hoàn thành Pomodoro, Flashcard & Quiz để tăng XP.</p>
+        <button class="btn btn-primary btn-sm" style="width:100%;" onclick="switchView('focus')">+50 XP Phiên học</button>
+      </div>
+    </aside>
+
+    <div class="main-wrapper">
+      <header class="topbar">
+        <div class="mobile-brand">⚡ StudyFlow</div>
+
+        <div class="gamification-bar">
+          <div class="level-pill">
+            <span class="level-badge" id="topLevelBadge">Cấp 1</span>
+            <div class="xp-progress-wrap">
+              <div class="xp-meta">
+                <span id="topXpText">0 / 100 XP</span>
+                <span style="color:var(--amber)" id="topTotalXp">40 XP</span>
+              </div>
+              <div class="xp-track"><div class="xp-fill" id="topXpBar"></div></div>
+            </div>
+          </div>
+
+          <div class="stat-chip streak">🔥 <span id="topStreak">1 ngày</span></div>
+          <div class="stat-chip minutes">⏱️ <span id="topMinutes">0 phút</span></div>
+        </div>
+
+        <div class="topbar-actions">
+          <button class="user-pill-btn" id="accountSwitchBtn">
+            <span class="user-avatar-mini" id="topUserAvatar">K</span>
+            <span id="topUserName">Khách</span>
+            <span style="color:var(--indigo); font-size:0.75rem;" id="topAuthActionLabel">• Đăng nhập</span>
+          </button>
+          <button class="theme-toggle" id="themeToggleBtn" title="Đổi giao diện">🌓</button>
+        </div>
+      </header>
+
+      <!-- THANH CHỌN CÁC MÔN CẤP 3 -->
+      <div class="subject-bar">
+        <span class="subject-bar-label">📚 MÔN CẤP 3:</span>
+        <div class="subject-chips-row" id="subjectChipsContainer"></div>
+      </div>
+
+      <main class="content-container">
+        <!-- DASHBOARD -->
+        <section id="view-dashboard" class="view-section active">
+          <div class="bento-grid">
+            <div class="bento-card hero-banner col-12">
+              <div>
+                <h1 id="dashGreeting">Xin chào! ✨</h1>
+                <p id="dashSubGreeting">Chọn môn học cấp 3 ở thanh trên để lọc thẻ, ghi chú và mục tiêu.</p>
+              </div>
+              <div class="hero-actions">
+                <button class="btn btn-hero-white" onclick="switchView('focus')">⏱️ Bắt đầu học</button>
+                <button class="btn btn-hero-glass" onclick="switchView('flashcards')">🗂️ Ôn Flashcard</button>
+              </div>
+            </div>
+
+            <div class="bento-card kpi-card col-3">
+              <div class="kpi-icon" style="background:var(--indigo-soft); color:var(--indigo);">⏱️</div>
+              <div><div class="kpi-value" id="kpiMinutes">0 phút</div><div class="kpi-label">Hôm nay</div></div>
+            </div>
+            <div class="bento-card kpi-card col-3">
+              <div class="kpi-icon" style="background:var(--emerald-soft); color:var(--emerald);">✅</div>
+              <div><div class="kpi-value" id="kpiMastered">0 / 0</div><div class="kpi-label">Thẻ đã thuộc</div></div>
+            </div>
+            <div class="bento-card kpi-card col-3">
+              <div class="kpi-icon" style="background:var(--amber-soft); color:var(--amber);">⭐</div>
+              <div><div class="kpi-value" id="kpiXp" style="color:var(--amber)">40 XP</div><div class="kpi-label">Kinh nghiệm</div></div>
+            </div>
+            <div class="bento-card kpi-card col-3">
+              <div class="kpi-icon" style="background:var(--rose-soft); color:var(--rose);">🔥</div>
+              <div><div class="kpi-value" id="kpiStreak">1 ngày</div><div class="kpi-label">Chuỗi Streak</div></div>
+            </div>
+
+            <div class="bento-card col-7">
+              <div class="card-header">
+                <div class="card-title">📊 Thời gian học 7 ngày</div>
+                <span class="badge badge-emerald" id="weeklyTotalBadge">Tuần này: 0 phút</span>
+              </div>
+              <div class="weekly-chart" id="weeklyChartContainer"></div>
+            </div>
+
+            <div class="bento-card col-5">
+              <div class="card-header">
+                <div class="card-title">✅ Mục tiêu hôm nay (+20 XP)</div>
+                <span class="badge badge-indigo" id="todoCountBadge">0/0</span>
+              </div>
+              <form class="todo-form" id="todoForm">
+                <input type="text" id="todoInput" class="input" placeholder="Thêm mục tiêu cho môn đang chọn..." required />
+                <button type="submit" class="btn btn-primary">Thêm</button>
+              </form>
+              <div class="todo-list" id="todoList"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- FOCUS -->
+        <section id="view-focus" class="view-section">
+          <div class="bento-grid">
+            <div class="bento-card col-6" style="text-align:center;">
+              <div class="card-header">
+                <div class="card-title" id="pomoSubjectTitle">⏱️ Pomodoro</div>
+                <span class="badge badge-amber">+50 XP / phiên</span>
+              </div>
+              <div class="pomo-modes" id="pomoModes">
+                <button class="mode-btn active" data-mins="25">25 phút</button>
+                <button class="mode-btn" data-mins="45">45 phút</button>
+                <button class="mode-btn" data-mins="5">Nghỉ 5p</button>
+              </div>
+              <div class="timer-display" id="timerDisplay">25:00</div>
+              <div class="timer-status" id="timerStatusText">Sẵn sàng tập trung</div>
+              <div class="pomo-controls">
+                <button class="btn btn-primary" id="pomoStartBtn">▶ Bắt đầu</button>
+                <button class="btn btn-outline" id="pomoResetBtn">↺ Đặt lại</button>
+                <button class="btn btn-emerald btn-sm" id="pomoCompleteBtn">✓ Hoàn thành</button>
+              </div>
+            </div>
+
+            <div class="col-6" style="display:flex; flex-direction:column; gap:16px;">
+              <div class="bento-card">
+                <div class="card-header">
+                  <div class="card-title">🎧 Âm thanh nền</div>
+                  <button class="btn btn-outline btn-sm" id="muteAllSoundsBtn">Tắt hết</button>
+                </div>
+                <div class="sound-channel">
+                  <div class="sound-header"><span>🌧️ Tiếng mưa</span><span id="volLabelRain">0%</span></div>
+                  <input type="range" class="range-slider" id="volRain" min="0" max="100" value="0" />
+                </div>
+                <div class="sound-channel" style="margin-bottom:0;">
+                  <div class="sound-header"><span>🎹 Lo-fi nhẹ</span><span id="volLabelLofi">0%</span></div>
+                  <input type="range" class="range-slider" id="volLofi" min="0" max="100" value="0" />
+                </div>
+              </div>
+
+              <div class="bento-card">
+                <div class="card-header">
+                  <div class="card-title" id="notesSubjectTitle">📝 Ghi chú theo môn</div>
+                  <span class="badge badge-emerald" id="notesSaveStatus">Đã lưu</span>
+                </div>
+                <textarea id="quickNotesArea" class="textarea" rows="4" placeholder="Ghi công thức, dàn ý môn học..."></textarea>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- FLASHCARDS -->
+        <section id="view-flashcards" class="view-section">
+          <div class="deck-toolbar">
+            <div class="deck-pills" id="deckPillsContainer"></div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <button class="btn btn-outline btn-sm" id="openAddCardBtn">+ Thêm thẻ</button>
+              <button class="btn btn-primary btn-sm" id="openCreateDeckBtn">+ Bộ thẻ mới</button>
+            </div>
+          </div>
+
+          <div class="bento-card">
+            <div class="card-header">
+              <div>
+                <div class="card-title" id="activeDeckTitle">Bộ thẻ</div>
+                <div class="card-subtitle" id="activeDeckProgress">Chạm vào thẻ để lật</div>
+              </div>
+              <span class="badge badge-indigo" id="fcCounterBadge">1 / 1</span>
+            </div>
+
+            <div class="flashcard-stage" id="flashcardStage">
+              <div class="flashcard-inner" id="flashcardInner">
+                <div class="flashcard-face front">
+                  <span class="badge badge-amber" id="fcStatusFront">Đang học</span>
+                  <div class="fc-content" id="fcFrontText">Đang tải...</div>
+                  <div style="font-size:0.76rem; color:var(--text-muted);">Chạm để xem đáp án</div>
+                </div>
+                <div class="flashcard-face back">
+                  <span class="badge badge-emerald" id="fcStatusBack">Đáp án</span>
+                  <div class="fc-content" id="fcBackText">Đang tải...</div>
+                  <div style="font-size:0.76rem; color:var(--text-muted);">Đánh dấu bên dưới</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="fc-controls-row">
+              <button class="btn btn-outline btn-sm" id="fcPrevBtn">← Trước</button>
+              <button class="btn btn-outline btn-sm" id="fcFlipBtn">🔄 Lật thẻ</button>
+              <button class="btn btn-outline btn-sm" id="fcNextBtn">Tiếp →</button>
+            </div>
+
+            <div class="fc-mastery-row">
+              <button class="btn btn-outline btn-sm" id="fcReviewBtn" style="border-color:var(--amber); color:var(--amber);">🔁 Cần ôn lại</button>
+              <button class="btn btn-emerald btn-sm" id="fcMasteredBtn">✓ Đã thuộc (+10 XP)</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- QUIZ -->
+        <section id="view-quiz" class="view-section">
+          <div class="quiz-box">
+            <div class="bento-card" id="quizSetupPanel">
+              <div class="card-title" style="margin-bottom:12px;">⚡ Đấu Trường Trắc Nghiệm</div>
+              <div style="display:grid; gap:12px;">
+                <select id="quizDeckSelect" class="select"></select>
+                <button class="btn btn-primary" id="startQuizBtn">🚀 Bắt đầu Quiz</button>
+              </div>
+            </div>
+
+            <div class="bento-card" id="quizPlayPanel" style="display:none;">
+              <div class="card-header">
+                <span class="badge badge-indigo" id="quizProgressLabel">Câu 1 / 5</span>
+                <span class="badge badge-amber" id="quizScoreLabel">Điểm: 0</span>
+                <span class="badge badge-emerald" id="quizTimeLabel">15s</span>
+              </div>
+              <div class="quiz-question-card" id="quizQuestionText"></div>
+              <div class="quiz-options-grid" id="quizOptionsGrid"></div>
+            </div>
+
+            <div class="bento-card" id="quizResultPanel" style="display:none; text-align:center;">
+              <h2 style="font-size:1.35rem; font-weight:800; margin-bottom:8px;">🏆 Kết quả Quiz</h2>
+              <p id="quizResultSummary" style="margin-bottom:16px; font-weight:700; color:var(--emerald);"></p>
+              <button class="btn btn-primary" id="quizBackSetupBtn">Làm lại / Đổi bộ</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- AI -->
+        <section id="view-ai" class="view-section">
+          <div class="bento-card">
+            <div class="card-header">
+              <div class="card-title">🤖 Trợ Lý StudyBot</div>
+              <button class="btn btn-outline btn-sm" id="aiClearChatBtn">Xóa chat</button>
+            </div>
+            <div class="chat-window" id="aiChatWindow"></div>
+            <div class="prompt-chips">
+              <button type="button" class="prompt-chip" data-prompt="Giải thích ngắn gọn kiến thức trọng tâm của môn đang chọn.">💡 Tóm tắt môn đang chọn</button>
+              <button type="button" class="prompt-chip" data-prompt="Cho 3 câu hỏi trắc nghiệm cấp 3 kèm đáp án.">📝 Ra đề trắc nghiệm</button>
+            </div>
+            <form id="aiChatForm" style="display:flex; gap:8px;">
+              <input type="text" id="aiChatInput" class="input" placeholder="Nhập câu hỏi cho StudyBot..." required />
+              <button type="submit" class="btn btn-primary">Gửi</button>
+            </form>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <nav class="bottom-nav">
+      <button class="bottom-nav-btn active" data-view="dashboard">📊 Tổng quan</button>
+      <button class="bottom-nav-btn" data-view="focus">⏱️ Học</button>
+      <button class="bottom-nav-btn" data-view="flashcards">🗂️ Thẻ</button>
+      <button class="bottom-nav-btn" data-view="quiz">⚡ Quiz</button>
+      <button class="bottom-nav-btn" data-view="ai">🤖 AI</button>
+    </nav>
+  </div>
+
+  <!-- MODAL TẠO BỘ THẺ -->
+  <div class="modal-backdrop" id="modalCreateDeck">
+    <div class="modal-dialog">
+      <div class="card-header">
+        <div class="card-title">+ Tạo bộ thẻ mới</div>
+        <button class="btn btn-outline btn-sm" onclick="closeModal('modalCreateDeck')">✕</button>
+      </div>
+      <form id="createDeckForm">
+        <div style="margin-bottom:12px;">
+          <label class="auth-label">Tên bộ thẻ</label>
+          <input type="text" id="newDeckName" class="input" placeholder="VD: Hóa 12 - Este Lipit" required />
+        </div>
+        <div style="margin-bottom:10px;">
+          <label class="auth-label">Thẻ 1 (Mặt trước / Mặt sau)</label>
+          <div style="display:grid; gap:8px;">
+            <input type="text" id="card1Front" class="input" placeholder="Câu hỏi / Khái niệm" required />
+            <input type="text" id="card1Back" class="input" placeholder="Đáp án / Giải thích" required />
+          </div>
+        </div>
+        <div style="margin-bottom:14px;">
+          <label class="auth-label">Thẻ 2 (Mặt trước / Mặt sau)</label>
+          <div style="display:grid; gap:8px;">
+            <input type="text" id="card2Front" class="input" placeholder="Câu hỏi / Khái niệm" />
+            <input type="text" id="card2Back" class="input" placeholder="Đáp án / Giải thích" />
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Lưu bộ thẻ</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL THÊM THẺ -->
+  <div class="modal-backdrop" id="modalAddCard">
+    <div class="modal-dialog">
+      <div class="card-header">
+        <div class="card-title">+ Thêm thẻ vào bộ hiện tại</div>
+        <button class="btn btn-outline btn-sm" onclick="closeModal('modalAddCard')">✕</button>
+      </div>
+      <form id="addCardForm">
+        <div style="margin-bottom:12px;">
+          <label class="auth-label">Mặt trước</label>
+          <input type="text" id="addCardFront" class="input" required />
+        </div>
+        <div style="margin-bottom:14px;">
+          <label class="auth-label">Mặt sau</label>
+          <input type="text" id="addCardBack" class="input" required />
+        </div>
+        <button type="submit" class="btn btn-emerald" style="width:100%;">Thêm thẻ</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script>
+    /* 1. FIREBASE AUTH & SESSION */
+    const FIREBASE_CONFIG = {
+      apiKey: "YOUR_FIREBASE_API_KEY",
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      appId: "YOUR_FIREBASE_APP_ID"
+    };
+
+    const apiKey = "";
+    const isFirebaseReady = !FIREBASE_CONFIG.apiKey.startsWith("YOUR_") && window.firebase;
+    let auth = null;
+    let currentUser = null;
+
+    if (isFirebaseReady) {
+      if (!firebase.apps.length) firebase.initializeApp(FIREBASE_CONFIG);
+      auth = firebase.auth();
+      auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(() => {});
+    }
+
+    let authMode = "login";
+    const authStatus = document.getElementById("authStatus");
+    const nameGroup = document.getElementById("nameGroup");
+    const submitAuthBtn = document.getElementById("submitAuthBtn");
+
+    function showAuthMsg(msg, type = "error") {
+      authStatus.textContent = msg;
+      authStatus.className = `auth-status ${type}`;
+    }
+
+    document.getElementById("tabLogin").addEventListener("click", () => {
+      authMode = "login";
+      authStatus.className = "auth-status";
+      document.getElementById("tabLogin").classList.add("active");
+      document.getElementById("tabRegister").classList.remove("active");
+      nameGroup.style.display = "none";
+      submitAuthBtn.textContent = "Đăng nhập";
+    });
+
+    document.getElementById("tabRegister").addEventListener("click", () => {
+      authMode = "register";
+      authStatus.className = "auth-status";
+      document.getElementById("tabRegister").classList.add("active");
+      document.getElementById("tabLogin").classList.remove("active");
+      nameGroup.style.display = "block";
+      submitAuthBtn.textContent = "Tạo tài khoản";
+    });
+
+    async function doOAuth(providerName) {
+      if (!auth) {
+        showAuthMsg("Chưa cấu hình FIREBASE_CONFIG. Bấm nút 'Tiếp tục với tư cách Khách' bên dưới để vào web ngay.");
+        return;
+      }
+      const provider = providerName === "google"
+        ? new firebase.auth.GoogleAuthProvider()
+        : new firebase.auth.FacebookAuthProvider();
+      try {
+        await auth.signInWithPopup(provider);
+      } catch (err) {
+        if (err?.code === "auth/popup-blocked" || err?.code === "auth/operation-not-supported-in-this-environment") {
+          await auth.signInWithRedirect(provider);
+        } else {
+          showAuthMsg(err?.message || "Lỗi đăng nhập");
+        }
+      }
+    }
+
+    document.getElementById("googleLoginBtn").addEventListener("click", () => doOAuth("google"));
+    document.getElementById("facebookLoginBtn").addEventListener("click", () => doOAuth("facebook"));
+
+    document.getElementById("authForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("emailInput").value.trim();
+      const password = document.getElementById("passwordInput").value;
+      const displayName = document.getElementById("displayNameInput").value.trim();
+
+      if (!auth) {
+        const uid = "user_" + btoa(unescape(encodeURIComponent(email))).replace(/[^a-zA-Z0-9]/g, "").slice(0, 14);
+        const profile = { uid, displayName: displayName || email.split("@")[0], email, photoURL: null, isGuest: false };
+        localStorage.setItem("studyflow_local_user", JSON.stringify(profile));
+        enterApp(profile);
+        return;
+      }
+
+      try {
+        if (authMode === "register") {
+          const cred = await auth.createUserWithEmailAndPassword(email, password);
+          if (displayName && cred.user) await cred.user.updateProfile({ displayName });
+          showAuthMsg("Đăng ký thành công!", "success");
+        } else {
+          await auth.signInWithEmailAndPassword(email, password);
+        }
+      } catch (err) {
+        showAuthMsg(err?.message || "Sai email hoặc mật khẩu.");
+      }
+    });
+
+    document.getElementById("guestContinueBtn").addEventListener("click", () => {
+      localStorage.setItem("studyflow_guest", "1");
+      localStorage.removeItem("studyflow_local_user");
+      enterApp({ uid: "guest", displayName: "Khách", email: "", photoURL: null, isGuest: true });
+    });
+
+    document.getElementById("accountSwitchBtn").addEventListener("click", async () => {
+      stopTimer();
+      localStorage.removeItem("studyflow_guest");
+      localStorage.removeItem("studyflow_local_user");
+      if (auth && auth.currentUser) await auth.signOut();
+      currentUser = null;
+      document.getElementById("appShell").classList.remove("visible");
+      document.getElementById("authScreen").classList.remove("hidden");
+    });
+
+    function enterApp(profile) {
+      currentUser = profile;
+      document.getElementById("authScreen").classList.add("hidden");
+      document.getElementById("appShell").classList.add("visible");
+
+      const name = profile.displayName || "Học viên";
+      document.getElementById("topUserName").textContent = name;
+      document.getElementById("topAuthActionLabel").textContent = profile.isGuest ? "• Đăng nhập" : "• Thoát";
+      const av = document.getElementById("topUserAvatar");
+      if (profile.photoURL) av.innerHTML = `<img src="${escapeHTML(profile.photoURL)}" alt="" />`;
+      else av.textContent = name.charAt(0).toUpperCase();
+
+      state = loadState();
+      renderAll();
+    }
+
+    /* 2. CÁC MÔN HỌC CẤP 3 & DỮ LIỆU MẶC ĐỊNH */
+    const THPT_SUBJECTS = [
+      { id: "all", name: "Tất cả môn", icon: "🌟" },
+      { id: "toan", name: "Toán", icon: "📐" },
+      { id: "ly", name: "Vật Lý", icon: "⚛️" },
+      { id: "hoa", name: "Hóa Học", icon: "🧪" },
+      { id: "van", name: "Ngữ Văn", icon: "✍️" },
+      { id: "sinh", name: "Sinh Học", icon: "🧬" },
+      { id: "su", name: "Lịch Sử", icon: "🏛️" },
+      { id: "dia", name: "Địa Lý", icon: "🌏" },
+      { id: "anh", name: "Tiếng Anh", icon: "🔤" },
+      { id: "tin", name: "Tin Học", icon: "💻" },
+      { id: "ktpl", name: "GDKT & PL", icon: "⚖️" },
+      { id: "congnghe", name: "Công Nghệ", icon: "🔧" }
+    ];
+
+    function getSubject(id) {
+      return THPT_SUBJECTS.find(s => s.id === id) || THPT_SUBJECTS[1];
+    }
+
+    const DEFAULT_DECKS = [
+      {
+        id: "d-toan", subject: "toan", title: "Toán - Hàm số & Lượng giác", isDefault: true,
+        cards: [
+          { id: "m1", front: "sin²x + cos²x bằng mấy?", back: "Bằng 1.", mastered: false },
+          { id: "m2", front: "Đạo hàm của sin(x) là gì?", back: "cos(x).", mastered: false }
+        ]
+      },
+      {
+        id: "d-ly", subject: "ly", title: "Vật Lý - Dao động & Sóng", isDefault: true,
+        cards: [
+          { id: "l1", front: "Công thức chu kì con lắc lò xo?", back: "T = 2π·√(m/k).", mastered: false },
+          { id: "l2", front: "Công thức bước sóng λ?", back: "λ = v / f = v·T.", mastered: false }
+        ]
+      },
+      {
+        id: "d-hoa", subject: "hoa", title: "Hóa Học - Este & Polime", isDefault: true,
+        cards: [
+          { id: "h1", front: "CTTQ este no, đơn chức, mạch hở?", back: "CₙH₂ₙO₂ (n ≥ 2).", mastered: false },
+          { id: "h2", front: "Phản ứng trùng hợp là gì?", back: "Cộng hợp nhiều phân tử monome tạo polime.", mastered: false }
+        ]
+      },
+      {
+        id: "d-van", subject: "van", title: "Ngữ Văn - Nghị luận & Tu từ", isDefault: true,
+        cards: [
+          { id: "v1", front: "Phân biệt Ẩn dụ và Hoán dụ?", back: "Ẩn dụ: nét tương đồng. Hoán dụ: quan hệ gần gũi.", mastered: false }
+        ]
+      },
+      {
+        id: "d-sinh", subject: "sinh", title: "Sinh Học - Di truyền", isDefault: true,
+        cards: [
+          { id: "s1", front: "Nguyên tắc bổ sung trên ADN?", back: "A - T (2 liên kết H), G - X (3 liên kết H).", mastered: false }
+        ]
+      },
+      {
+        id: "d-su", subject: "su", title: "Lịch Sử - Việt Nam", isDefault: true,
+        cards: [
+          { id: "u1", front: "Ngày 02/09/1945 có ý nghĩa gì?", back: "Khai sinh nước Việt Nam Dân chủ Cộng hòa.", mastered: false }
+        ]
+      },
+      {
+        id: "d-dia", subject: "dia", title: "Địa Lý - Việt Nam", isDefault: true,
+        cards: [
+          { id: "g1", front: "Đặc điểm khí hậu nước ta?", back: "Nhiệt đới ẩm gió mùa, phân hóa đa dạng.", mastered: false }
+        ]
+      },
+      {
+        id: "d-anh", subject: "anh", title: "Tiếng Anh - Từ vựng", isDefault: true,
+        cards: [
+          { id: "a1", front: "Break the ice", back: "Phá vỡ sự ngại ngùng ban đầu.", mastered: false }
+        ]
+      },
+      {
+        id: "d-tin", subject: "tin", title: "Tin Học - Thuật toán", isDefault: true,
+        cards: [
+          { id: "t1", front: "Độ phức tạp Binary Search?", back: "O(log₂ n).", mastered: false }
+        ]
+      }
+    ];
+
+    function getTodayKey() {
+      const d = new Date();
+      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+    }
+
+    function getDayIdx() {
+      const d = new Date().getDay();
+      return d === 0 ? 6 : d - 1;
+    }
+
+    function defaultState() {
+      return {
+        theme: localStorage.getItem("studyflow_theme") || "light",
+        activeSubject: "toan",
+        notesBySubject: { toan: "" },
+        xp: 40,
+        streak: 1,
+        lastDate: getTodayKey(),
+        weeklyMinutes: [20, 35, 25, 40, 30, 15, 0],
+        todos: [
+          { id: "td1", text: "Ôn công thức cơ bản", subject: "toan", completed: false, xpGiven: false },
+          { id: "td2", text: "Hoàn thành 1 phiên tập trung", subject: "ly", completed: false, xpGiven: false }
+        ],
+        decks: JSON.parse(JSON.stringify(DEFAULT_DECKS)),
+        activeDeckId: "d-toan",
+        chat: [{ role: "ai", text: "Xin chào! Chọn môn học ở thanh trên và hỏi mình bất kỳ bài cấp 3 nào nhé." }]
+      };
+    }
+
+    let state = defaultState();
+
+    function loadState() {
+      const base = defaultState();
+      try {
+        const raw = localStorage.getItem(`sf_v3_${currentUser?.uid || "guest"}`);
+        if (!raw) return base;
+        const p = JSON.parse(raw);
+        return {
+          ...base,
+          ...p,
+          notesBySubject: p.notesBySubject && typeof p.notesBySubject === "object" ? p.notesBySubject : base.notesBySubject,
+          weeklyMinutes: Array.isArray(p.weeklyMinutes) && p.weeklyMinutes.length === 7 ? p.weeklyMinutes : base.weeklyMinutes,
+          todos: Array.isArray(p.todos) ? p.todos : base.todos,
+          decks: Array.isArray(p.decks) && p.decks.length ? p.decks : base.decks,
+          chat: Array.isArray(p.chat) && p.chat.length ? p.chat : base.chat
+        };
+      } catch {
+        return base;
+      }
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem(`sf_v3_${currentUser?.uid || "guest"}`, JSON.stringify(state));
+      } catch {}
+    }
+
+    function escapeHTML(s) {
+      return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+
+    function toast(msg) {
+      const box = document.getElementById("toastContainer");
+      const el = document.createElement("div");
+      el.className = "toast";
+      el.textContent = msg;
+      box.appendChild(el);
+      setTimeout(() => el.remove(), 2600);
+    }
+
+    function addXP(pts) {
+      state.xp += pts;
+      saveState();
+      updateStatsUI();
+      toast(`+${pts} XP`);
+    }
+
+    function addMinutes(m) {
+      const idx = getDayIdx();
+      state.weeklyMinutes[idx] = (state.weeklyMinutes[idx] || 0) + m;
+      saveState();
+      updateStatsUI();
+      renderChart();
+    }
+
+    /* 3. THEME & NAVIGATION */
+    function applyTheme(t) {
+      document.documentElement.setAttribute("data-theme", t);
+      localStorage.setItem("studyflow_theme", t);
+    }
+    function toggleTheme() {
+      const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      state.theme = next;
+      saveState();
+      applyTheme(next);
+    }
+    document.getElementById("themeToggleBtn").addEventListener("click", toggleTheme);
+    document.getElementById("authThemeBtn").addEventListener("click", toggleTheme);
+
+    function switchView(view) {
+      document.querySelectorAll(".view-section").forEach(v => v.classList.toggle("active", v.id === `view-${view}`));
+      document.querySelectorAll("[data-view]").forEach(b => b.classList.toggle("active", b.dataset.view === view));
+      if (view === "quiz") fillQuizSelect();
+      if (view === "flashcards") renderFlashcards();
+    }
+    document.querySelectorAll("[data-view]").forEach(btn => btn.addEventListener("click", () => switchView(btn.dataset.view)));
+
+    /* 4. SUBJECTS (MÔN CẤP 3) */
+    function renderSubjectsBar() {
+      const wrap = document.getElementById("subjectChipsContainer");
+      wrap.innerHTML = THPT_SUBJECTS.map(s =>
+        `<button type="button" class="subject-chip ${state.activeSubject === s.id ? "active" : ""}" data-sid="${s.id}">${s.icon} ${s.name}</button>`
+      ).join("");
+
+      wrap.querySelectorAll(".subject-chip").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const prev = state.activeSubject;
+          const notesEl = document.getElementById("quickNotesArea");
+          if (notesEl && prev && prev !== "all") state.notesBySubject[prev] = notesEl.value;
+          state.activeSubject = btn.dataset.sid;
+          saveState();
+          applySubjectChanges();
+        });
+      });
+    }
+
+    function applySubjectChanges() {
+      renderSubjectsBar();
+      const sub = getSubject(state.activeSubject);
+      const name = currentUser?.displayName || "Học viên";
+      document.getElementById("dashGreeting").textContent = `Xin chào, ${name}! ✨`;
+      document.getElementById("dashSubGreeting").textContent =
+        state.activeSubject === "all"
+          ? "Đang xem tất cả các môn cấp 3."
+          : `Môn đang chọn: ${sub.icon} ${sub.name}`;
+
+      document.getElementById("pomoSubjectTitle").textContent =
+        state.activeSubject === "all" ? "⏱️ Pomodoro" : `⏱️ Pomodoro • ${sub.icon} ${sub.name}`;
+      document.getElementById("notesSubjectTitle").textContent =
+        state.activeSubject === "all" ? "📝 Ghi chú (Toán)" : `📝 Ghi chú • ${sub.icon} ${sub.name}`;
+
+      const notesEl = document.getElementById("quickNotesArea");
+      const noteKey = state.activeSubject === "all" ? "toan" : state.activeSubject;
+      notesEl.value = state.notesBySubject[noteKey] || "";
+      notesEl.placeholder = `Ghi chú cho môn ${getSubject(noteKey).name}...`;
+
+      if (state.activeSubject !== "all") {
+        const match = state.decks.filter(d => d.subject === state.activeSubject);
+        if (match.length && !match.some(d => d.id === state.activeDeckId)) {
+          state.activeDeckId = match[0].id;
+          cardIdx = 0;
+          flipped = false;
+        }
+      }
+      renderFlashcards();
+    }
+
+    document.getElementById("quickNotesArea").addEventListener("input", (e) => {
+      const noteKey = state.activeSubject === "all" ? "toan" : state.activeSubject;
+      state.notesBySubject[noteKey] = e.target.value;
+      saveState();
+    });
+
+    /* 5. STATS, CHART, TODOS */
+    function updateStatsUI() {
+      const lv = Math.floor(state.xp / 100) + 1;
+      const rem = state.xp % 100;
+      const todayMins = state.weeklyMinutes[getDayIdx()] || 0;
+      let total = 0, mastered = 0;
+      state.decks.forEach(d => { total += d.cards.length; mastered += d.cards.filter(c => c.mastered).length; });
+
+      document.getElementById("topLevelBadge").textContent = `Cấp ${lv}`;
+      document.getElementById("topXpText").textContent = `${rem} / 100 XP`;
+      document.getElementById("topTotalXp").textContent = `${state.xp} XP`;
+      document.getElementById("topXpBar").style.width = `${rem}%`;
+      document.getElementById("topStreak").textContent = `${state.streak} ngày`;
+      document.getElementById("topMinutes").textContent = `${todayMins} phút`;
+
+      document.getElementById("kpiMinutes").textContent = `${todayMins} phút`;
+      document.getElementById("kpiMastered").textContent = `${mastered} / ${total}`;
+      document.getElementById("kpiXp").textContent = `${state.xp} XP`;
+      document.getElementById("kpiStreak").textContent = `${state.streak} ngày`;
+    }
+
+    function renderChart() {
+      const days = ["T2", "T3", "T4", "T5", "T6", "T7", "CN"];
+      const today = getDayIdx();
+      const max = Math.max(40, ...state.weeklyMinutes);
+      const sum = state.weeklyMinutes.reduce((a, b) => a + b, 0);
+      document.getElementById("weeklyTotalBadge").textContent = `Tuần này: ${sum} phút`;
+      document.getElementById("weeklyChartContainer").innerHTML = days.map((d, i) => {
+        const m = state.weeklyMinutes[i] || 0;
+        const pct = Math.min(100, Math.round((m / max) * 100));
+        return `<div class="chart-col ${i === today ? "today" : ""}">
+          <span class="chart-mins">${m}p</span>
+          <div class="chart-bar-bg"><div class="chart-bar-fill" style="height:${pct}%"></div></div>
+          <span class="chart-day">${d}</span>
+        </div>`;
+      }).join("");
+    }
+
+    function renderTodos() {
+      const list = document.getElementById("todoList");
+      const done = state.todos.filter(t => t.completed).length;
+      document.getElementById("todoCountBadge").textContent = `${done}/${state.todos.length}`;
+      list.innerHTML = state.todos.map(t => {
+        const sub = getSubject(t.subject);
+        return `<div class="todo-item ${t.completed ? "completed" : ""}">
+          <div class="todo-left">
+            <button type="button" class="todo-checkbox" onclick="toggleTodo('${t.id}')">${t.completed ? "✓" : ""}</button>
+            <span class="todo-text"><span class="subject-tag-pill">${sub.icon} ${sub.name}</span>${escapeHTML(t.text)}</span>
+          </div>
+          <button type="button" class="btn btn-danger-soft btn-sm" onclick="delTodo('${t.id}')">✕</button>
+        </div>`;
+      }).join("");
+    }
+
+    document.getElementById("todoForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const inp = document.getElementById("todoInput");
+      const txt = inp.value.trim();
+      if (!txt) return;
+      state.todos.unshift({
+        id: "td-" + Date.now(),
+        text: txt,
+        subject: state.activeSubject === "all" ? "toan" : state.activeSubject,
+        completed: false,
+        xpGiven: false
+      });
+      inp.value = "";
+      saveState();
+      renderTodos();
+    });
+
+    function toggleTodo(id) {
+      const t = state.todos.find(x => x.id === id);
+      if (!t) return;
+      t.completed = !t.completed;
+      if (t.completed && !t.xpGiven) { t.xpGiven = true; addXP(20); }
+      saveState();
+      renderTodos();
+    }
+
+    function delTodo(id) {
+      state.todos = state.todos.filter(x => x.id !== id);
+      saveState();
+      renderTodos();
+    }
+
+    /* 6. POMODORO & SOUND */
+    let pomoMins = 25, pomoSec = 25 * 60, pomoTimer = null, pomoOn = false;
+    function showPomo() {
+      document.getElementById("timerDisplay").textContent =
+        `${String(Math.floor(pomoSec / 60)).padStart(2, "0")}:${String(pomoSec % 60).padStart(2, "0")}`;
+    }
+    function stopTimer() {
+      pomoOn = false;
+      clearInterval(pomoTimer);
+      document.getElementById("pomoStartBtn").textContent = "▶ Bắt đầu";
+    }
+    document.querySelectorAll("#pomoModes .mode-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        stopTimer();
+        document.querySelectorAll("#pomoModes .mode-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        pomoMins = parseInt(btn.dataset.mins, 10);
+        pomoSec = pomoMins * 60;
+        showPomo();
+      });
+    });
+    document.getElementById("pomoStartBtn").addEventListener("click", () => {
+      if (pomoOn) { stopTimer(); return; }
+      pomoOn = true;
+      document.getElementById("pomoStartBtn").textContent = "⏸ Tạm dừng";
+      pomoTimer = setInterval(() => {
+        if (pomoSec > 0) { pomoSec--; showPomo(); }
+        else { donePomo(); }
+      }, 1000);
+    });
+    function donePomo() {
+      stopTimer();
+      addMinutes(pomoMins);
+      addXP(50);
+      pomoSec = pomoMins * 60;
+      showPomo();
+    }
+    document.getElementById("pomoResetBtn").addEventListener("click", () => { stopTimer(); pomoSec = pomoMins * 60; showPomo(); });
+    document.getElementById("pomoCompleteBtn").addEventListener("click", donePomo);
+
+    let actx = null, rainGain = null, lofiOsc = null, lofiGain = null;
+    function setupAudio() {
+      if (!actx) {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (!AC) return;
+        actx = new AC();
+        const buf = actx.createBuffer(1, actx.sampleRate * 2, actx.sampleRate);
+        const ch = buf.getChannelData(0);
+        for (let i = 0; i < ch.length; i++) ch[i] = Math.random() * 2 - 1;
+        const src = actx.createBufferSource();
+        src.buffer = buf; src.loop = true;
+        const flt = actx.createBiquadFilter(); flt.type = "lowpass"; flt.frequency.value = 900;
+        rainGain = actx.createGain(); rainGain.gain.value = 0;
+        src.connect(flt); flt.connect(rainGain); rainGain.connect(actx.destination); src.start();
+
+        lofiOsc = actx.createOscillator(); lofiOsc.type = "sine"; lofiOsc.frequency.value = 220;
+        lofiGain = actx.createGain(); lofiGain.gain.value = 0;
+        lofiOsc.connect(lofiGain); lofiGain.connect(actx.destination); lofiOsc.start();
+      }
+      if (actx && actx.state === "suspended") actx.resume().catch(() => {});
+    }
+    document.getElementById("volRain").addEventListener("input", (e) => {
+      const v = +e.target.value;
+      document.getElementById("volLabelRain").textContent = `${v}%`;
+      if (v > 0) setupAudio();
+      if (rainGain && actx) rainGain.gain.setTargetAtTime((v / 100) * 0.35, actx.currentTime, 0.05);
+    });
+    document.getElementById("volLofi").addEventListener("input", (e) => {
+      const v = +e.target.value;
+      document.getElementById("volLabelLofi").textContent = `${v}%`;
+      if (v > 0) setupAudio();
+      if (lofiGain && actx) lofiGain.gain.setTargetAtTime((v / 100) * 0.12, actx.currentTime, 0.05);
+    });
+    document.getElementById("muteAllSoundsBtn").addEventListener("click", () => {
+      ["volRain", "volLofi"].forEach(id => { const el = document.getElementById(id); el.value = 0; el.dispatchEvent(new Event("input")); });
+    });
+
+    /* 7. FLASHCARDS */
+    let cardIdx = 0, flipped = false;
+    function visibleDecks() {
+      if (state.activeSubject === "all") return state.decks;
+      const m = state.decks.filter(d => d.subject === state.activeSubject);
+      return m.length ? m : state.decks;
+    }
+    function curDeck() {
+      const list = visibleDecks();
+      return list.find(d => d.id === state.activeDeckId) || state.decks.find(d => d.id === state.activeDeckId) || list[0];
+    }
+
+    function renderFlashcards() {
+      const deck = curDeck();
+      const pills = visibleDecks();
+      document.getElementById("deckPillsContainer").innerHTML = pills.map(d =>
+        `<button type="button" class="deck-pill ${d.id === deck.id ? "active" : ""}" onclick="pickDeck('${d.id}')">${escapeHTML(d.title)}</button>`
+      ).join("");
+
+      document.getElementById("activeDeckTitle").textContent = deck.title;
+      const done = deck.cards.filter(c => c.mastered).length;
+      document.getElementById("activeDeckProgress").textContent = `Đã thuộc ${done}/${deck.cards.length} thẻ`;
+      if (!deck.cards.length) return;
+      if (cardIdx >= deck.cards.length) cardIdx = 0;
+      const c = deck.cards[cardIdx];
+      document.getElementById("fcCounterBadge").textContent = `${cardIdx + 1} / ${deck.cards.length}`;
+      document.getElementById("fcFrontText").textContent = c.front;
+      document.getElementById("fcBackText").textContent = c.back;
+      document.getElementById("fcStatusFront").textContent = c.mastered ? "✓ Đã thuộc" : "Đang học";
+      document.getElementById("flashcardInner").classList.toggle("flipped", flipped);
+    }
+
+    function pickDeck(id) { state.activeDeckId = id; cardIdx = 0; flipped = false; saveState(); renderFlashcards(); }
+    document.getElementById("flashcardStage").addEventListener("click", () => { flipped = !flipped; document.getElementById("flashcardInner").classList.toggle("flipped", flipped); });
+    document.getElementById("fcFlipBtn").addEventListener("click", () => { flipped = !flipped; document.getElementById("flashcardInner").classList.toggle("flipped", flipped); });
+    document.getElementById("fcNextBtn").addEventListener("click", () => { const d = curDeck(); if (!d.cards.length) return; flipped = false; cardIdx = (cardIdx + 1) % d.cards.length; renderFlashcards(); });
+    document.getElementById("fcPrevBtn").addEventListener("click", () => { const d = curDeck(); if (!d.cards.length) return; flipped = false; cardIdx = (cardIdx - 1 + d.cards.length) % d.cards.length; renderFlashcards(); });
+    document.getElementById("fcReviewBtn").addEventListener("click", () => { const d = curDeck(); if (!d.cards.length) return; d.cards[cardIdx].mastered = false; saveState(); updateStatsUI(); flipped = false; cardIdx = (cardIdx + 1) % d.cards.length; renderFlashcards(); });
+    document.getElementById("fcMasteredBtn").addEventListener("click", () => {
+      const d = curDeck(); if (!d.cards.length) return;
+      if (!d.cards[cardIdx].mastered) { d.cards[cardIdx].mastered = true; addXP(10); }
+      saveState(); updateStatsUI(); flipped = false; cardIdx = (cardIdx + 1) % d.cards.length; renderFlashcards();
+    });
+
+    function openModal(id) { document.getElementById(id).classList.add("open"); document.body.classList.add("modal-open"); }
+    function closeModal(id) { document.getElementById(id).classList.remove("open"); document.body.classList.remove("modal-open"); }
+
+    document.getElementById("openCreateDeckBtn").addEventListener("click", () => openModal("modalCreateDeck"));
+    document.getElementById("createDeckForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const title = document.getElementById("newDeckName").value.trim();
+      const cards = [{ id: "c1-" + Date.now(), front: document.getElementById("card1Front").value.trim(), back: document.getElementById("card1Back").value.trim(), mastered: false }];
+      const f2 = document.getElementById("card2Front").value.trim();
+      const b2 = document.getElementById("card2Back").value.trim();
+      if (f2 && b2) cards.push({ id: "c2-" + Date.now(), front: f2, back: b2, mastered: false });
+      const nd = { id: "deck-" + Date.now(), subject: state.activeSubject === "all" ? "toan" : state.activeSubject, title, isDefault: false, cards };
+      state.decks.push(nd); state.activeDeckId = nd.id; cardIdx = 0; flipped = false;
+      saveState(); closeModal("modalCreateDeck"); renderFlashcards(); updateStatsUI(); addXP(15);
+    });
+
+    document.getElementById("openAddCardBtn").addEventListener("click", () => openModal("modalAddCard"));
+    document.getElementById("addCardForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const d = curDeck();
+      d.cards.push({ id: "ac-" + Date.now(), front: document.getElementById("addCardFront").value.trim(), back: document.getElementById("addCardBack").value.trim(), mastered: false });
+      document.getElementById("addCardFront").value = ""; document.getElementById("addCardBack").value = "";
+      cardIdx = d.cards.length - 1; flipped = false;
+      saveState(); closeModal("modalAddCard"); renderFlashcards(); updateStatsUI(); toast("Đã thêm thẻ!");
+    });
+
+    /* 8. QUIZ */
+    let qList = [], qPos = 0, qScore = 0, qRight = 0, qInt = null, qSec = 15;
+    function fillQuizSelect() {
+      const sel = document.getElementById("quizDeckSelect");
+      sel.innerHTML = `<option value="all">🌟 Tất cả môn</option>` + state.decks.map(d => `<option value="${d.id}">${escapeHTML(d.title)}</option>`).join("");
+      if (state.activeSubject !== "all") {
+        const m = state.decks.find(d => d.subject === state.activeSubject);
+        if (m) sel.value = m.id;
+      }
+    }
+    document.getElementById("startQuizBtn").addEventListener("click", () => {
+      const v = document.getElementById("quizDeckSelect").value;
+      const pool = v === "all" ? state.decks.flatMap(d => d.cards) : (state.decks.find(d => d.id === v)?.cards || []);
+      const allBacks = state.decks.flatMap(d => d.cards.map(c => c.back));
+      qList = pool.slice(0, 5).map(c => {
+        const wrong = allBacks.filter(b => b !== c.back).slice(0, 3);
+        while (wrong.length < 3) wrong.push("Đáp án khác");
+        const opts = [c.back, ...wrong].sort(() => Math.random() - 0.5);
+        return { q: c.front, ans: c.back, opts };
+      });
+      if (!qList.length) return;
+      qPos = 0; qScore = 0; qRight = 0;
+      document.getElementById("quizSetupPanel").style.display = "none";
+      document.getElementById("quizResultPanel").style.display = "none";
+      document.getElementById("quizPlayPanel").style.display = "block";
+      showQ();
+    });
+    function showQ() {
+      clearInterval(qInt);
+      const item = qList[qPos];
+      document.getElementById("quizProgressLabel").textContent = `Câu ${qPos + 1} / ${qList.length}`;
+      document.getElementById("quizScoreLabel").textContent = `Điểm: ${qScore}`;
+      document.getElementById("quizQuestionText").textContent = item.q;
+      const g = document.getElementById("quizOptionsGrid");
+      g.innerHTML = item.opts.map(o => `<button type="button" class="quiz-option">${escapeHTML(o)}</button>`).join("");
+      g.querySelectorAll(".quiz-option").forEach(btn => {
+        btn.addEventListener("click", () => ansQ(btn, btn.textContent === item.ans, item.ans));
+      });
+      qSec = 15;
+      document.getElementById("quizTimeLabel").textContent = "15s";
+      qInt = setInterval(() => {
+        qSec--;
+        document.getElementById("quizTimeLabel").textContent = `${Math.max(0, qSec)}s`;
+        if (qSec <= 0) ansQ(null, false, item.ans);
+      }, 1000);
+    }
+    function ansQ(btn, ok, ans) {
+      clearInterval(qInt);
+      document.querySelectorAll("#quizOptionsGrid .quiz-option").forEach(b => {
+        b.disabled = true;
+        if (b.textContent === ans) b.classList.add("correct");
+      });
+      if (btn && !ok) btn.classList.add("wrong");
+      if (ok) { qRight++; qScore += 100; }
+      setTimeout(() => {
+        qPos++;
+        if (qPos < qList.length) showQ();
+        else {
+          document.getElementById("quizPlayPanel").style.display = "none";
+          document.getElementById("quizResultPanel").style.display = "block";
+          const xpGain = qRight * 15;
+          document.getElementById("quizResultSummary").textContent = `Đúng ${qRight}/${qList.length} câu • Điểm ${qScore} • +${xpGain} XP`;
+          if (xpGain) addXP(xpGain);
+        }
+      }, 900);
+    }
+    document.getElementById("quizBackSetupBtn").addEventListener("click", () => {
+      document.getElementById("quizResultPanel").style.display = "none";
+      document.getElementById("quizSetupPanel").style.display = "block";
+    });
+
+    /* 9. AI CHAT */
+    function showChat() {
+      const w = document.getElementById("aiChatWindow");
+      w.innerHTML = state.chat.map(m => `<div class="chat-msg ${m.role === "user" ? "user" : "ai"}">${escapeHTML(m.text)}</div>`).join("");
+      w.scrollTop = w.scrollHeight;
+    }
+    async function askBot(txt) {
+      if (!txt.trim()) return;
+      state.chat.push({ role: "user", text: txt.trim() });
+      saveState(); showChat();
+      if (!apiKey) {
+        state.chat.push({ role: "ai", text: `Môn ${getSubject(state.activeSubject).name}: Bạn hãy ôn nắm vững định nghĩa, công thức/ý chính rồi làm Flashcard và Quiz để nhớ lâu nhé.` });
+        saveState(); showChat(); return;
+      }
+      try {
+        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ contents: [{ parts: [{ text: `Học sinh cấp 3 hỏi môn ${getSubject(state.activeSubject).name}: ${txt}` }] }] })
+        });
+        const j = await res.json();
+        const reply = j?.candidates?.[0]?.content?.parts?.[0]?.text || "Chưa có phản hồi.";
+        state.chat.push({ role: "ai", text: reply });
+      } catch {
+        state.chat.push({ role: "ai", text: "Không kết nối được AI lúc này." });
+      }
+      saveState(); showChat();
+    }
+    document.getElementById("aiChatForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const inp = document.getElementById("aiChatInput");
+      askBot(inp.value); inp.value = "";
+    });
+    document.querySelectorAll(".prompt-chip[data-prompt]").forEach(c => c.addEventListener("click", () => askBot(c.dataset.prompt)));
+    document.getElementById("aiClearChatBtn").addEventListener("click", () => {
+      state.chat = [{ role: "ai", text: "Đã xóa lịch sử chat." }]; saveState(); showChat();
+    });
+
+    function renderAll() {
+      applyTheme(state.theme || "light");
+      updateStatsUI();
+      renderChart();
+      renderTodos();
+      showPomo();
+      showChat();
+      fillQuizSelect();
+      applySubjectChanges();
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      applyTheme(localStorage.getItem("studyflow_theme") || "light");
+      if (auth) {
+        auth.onAuthStateChanged((u) => {
+          if (u) {
+            localStorage.removeItem("studyflow_guest");
+            enterApp({ uid: u.uid, displayName: u.displayName || u.email?.split("@")[0] || "Học viên", email: u.email || "", photoURL: u.photoURL || null, isGuest: false });
+          } else if (localStorage.getItem("studyflow_guest") === "1") {
+            enterApp({ uid: "guest", displayName: "Khách", email: "", photoURL: null, isGuest: true });
+          }
+        });
+      } else {
+        const loc = localStorage.getItem("studyflow_local_user");
+        if (loc) { try { enterApp(JSON.parse(loc)); return; } catch {} }
+        if (localStorage.getItem("studyflow_guest") === "1") {
+          enterApp({ uid: "guest", displayName: "Khách", email: "", photoURL: null, isGuest: true });
+        }
+      }
+    });
+  </script>
+</body>
+</html>
