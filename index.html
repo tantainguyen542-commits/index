@@ -279,6 +279,7 @@
       text-align: left;
       width: 100%;
     }
+    .nav-item svg { width: 19px; height: 19px; flex-shrink: 0; }
     .nav-item:hover { background: var(--bg-surface-2); color: var(--text-primary); }
     .nav-item.active { background: var(--indigo-soft); color: var(--indigo); }
 
@@ -399,7 +400,7 @@
       font-size: 1rem;
     }
 
-    /* Subject Bar (Môn học cấp 3) */
+    /* Subject Bar */
     .subject-bar {
       display: flex;
       align-items: center;
@@ -431,6 +432,7 @@
       display: inline-flex;
       align-items: center;
       gap: 5px;
+      transition: var(--transition);
     }
     .subject-chip:hover { border-color: var(--indigo); color: var(--indigo); }
     .subject-chip.active { background: var(--indigo); border-color: var(--indigo); color: #fff; }
@@ -450,7 +452,11 @@
     /* Content & Bento */
     .content-container { padding: 22px; max-width: 1320px; width: 100%; margin: 0 auto; flex: 1; }
     .view-section { display: none; }
-    .view-section.active { display: block; }
+    .view-section.active { display: block; animation: fadeIn 0.25s ease; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
     .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
     .bento-card {
@@ -463,9 +469,11 @@
     }
 
     .col-12 { grid-column: span 12; }
+    .col-8 { grid-column: span 8; }
     .col-7 { grid-column: span 7; }
     .col-6 { grid-column: span 6; }
     .col-5 { grid-column: span 5; }
+    .col-4 { grid-column: span 4; }
     .col-3 { grid-column: span 3; }
 
     .card-header { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
@@ -483,6 +491,7 @@
       font-weight: 600;
       font-size: 0.88rem;
       white-space: nowrap;
+      transition: var(--transition);
     }
     .btn:active { transform: scale(0.98); }
     .btn-primary { background: var(--indigo); color: #fff; }
@@ -527,7 +536,7 @@
       padding: 24px;
     }
     .hero-banner h1 { font-size: 1.4rem; font-weight: 800; margin-bottom: 4px; }
-    .hero-banner p { font-size: 0.9rem; opacity: 0.94; }
+    .hero-banner p { font-size: 0.9rem; opacity: 0.94; max-width: 680px; }
     .hero-actions { display: flex; gap: 10px; flex-wrap: wrap; }
     .btn-hero-white { background: #fff; color: #4f46e5; font-weight: 700; }
     .btn-hero-glass { background: rgba(255, 255, 255, 0.2); color: #fff; border: 1px solid rgba(255, 255, 255, 0.35); }
@@ -548,7 +557,7 @@
     }
     .chart-col { display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end; gap: 6px; }
     .chart-bar-bg { width: 100%; max-width: 38px; height: 140px; background: var(--bg-surface-2); border-radius: 8px; display: flex; align-items: flex-end; overflow: hidden; }
-    .chart-bar-fill { width: 100%; background: var(--indigo); border-radius: 8px; min-height: 5px; }
+    .chart-bar-fill { width: 100%; background: var(--indigo); border-radius: 8px; min-height: 5px; transition: height 0.45s ease; }
     .chart-col.today .chart-bar-fill { background: var(--emerald); }
     .chart-mins { font-size: 0.7rem; font-weight: 700; color: var(--text-secondary); }
     .chart-day { font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); margin-top: 6px; }
@@ -558,27 +567,111 @@
     .todo-item { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 12px; background: var(--bg-surface-2); border: 1px solid var(--border-color); border-radius: var(--radius-md); }
     .todo-item.completed { opacity: 0.65; }
     .todo-left { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; }
-    .todo-checkbox { width: 26px; height: 26px; border-radius: 7px; border: 2px solid var(--indigo); display: grid; place-items: center; flex-shrink: 0; color: #fff; }
+    .todo-checkbox { width: 26px; height: 26px; border-radius: 7px; border: 2px solid var(--indigo); display: grid; place-items: center; flex-shrink: 0; color: #fff; font-weight: 800; }
     .todo-item.completed .todo-checkbox { background: var(--emerald); border-color: var(--emerald); }
     .todo-text { font-size: 0.88rem; font-weight: 500; word-break: break-word; }
     .todo-item.completed .todo-text { text-decoration: line-through; color: var(--text-muted); }
 
+    /* Roadmap, Practice & Periodic Test */
+    .grade-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+    .grade-tab {
+      min-height: 36px;
+      padding: 6px 14px;
+      border-radius: 99px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-surface-2);
+      color: var(--text-secondary);
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+    .grade-tab.active {
+      background: var(--indigo);
+      border-color: var(--indigo);
+      color: #fff;
+    }
+
+    .roadmap-step-card {
+      border: 1px solid var(--border-color);
+      background: var(--bg-surface-2);
+      border-radius: var(--radius-md);
+      padding: 15px;
+      margin-bottom: 12px;
+    }
+    .roadmap-step-card.completed-step {
+      border-color: rgba(16, 185, 129, 0.45);
+      background: var(--emerald-soft);
+    }
+    .roadmap-step-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+    .roadmap-step-title { font-size: 0.98rem; font-weight: 800; }
+    .practice-box {
+      background: var(--bg-surface);
+      border: 1px dashed var(--border-strong);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      margin-top: 8px;
+    }
+    .practice-q { font-size: 0.88rem; font-weight: 700; margin-bottom: 8px; }
+    .practice-choices { display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
+    .practice-choice-btn {
+      text-align: left;
+      padding: 8px 12px;
+      border-radius: 9px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-surface-2);
+      font-size: 0.84rem;
+      font-weight: 600;
+    }
+    .practice-choice-btn.right { border-color: var(--emerald); background: var(--emerald-soft); color: var(--emerald); }
+    .practice-choice-btn.wrong { border-color: var(--rose); background: var(--rose-soft); color: var(--rose); }
+
+    .periodic-test-card {
+      border: 1px solid var(--border-color);
+      background: var(--bg-surface-2);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      margin-bottom: 10px;
+    }
+    .test-q-block {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+
     /* Focus / Pomodoro / Sound */
-    .pomo-modes { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 16px; }
+    .pomo-modes { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 14px; }
     .mode-btn { min-height: 36px; padding: 7px 13px; border-radius: 99px; font-size: 0.82rem; font-weight: 600; background: var(--bg-surface-2); color: var(--text-secondary); border: 1px solid var(--border-color); }
     .mode-btn.active { background: var(--indigo); color: #fff; border-color: var(--indigo); }
-    .timer-display { font-size: 2.8rem; font-weight: 800; font-variant-numeric: tabular-nums; margin: 12px 0 6px; }
-    .timer-status { font-size: 0.86rem; color: var(--text-secondary); margin-bottom: 18px; }
+    .custom-mins-row { display: none; align-items: center; justify-content: center; gap: 8px; margin-bottom: 14px; }
+    .custom-mins-row.visible { display: flex; }
+
+    .timer-ring-container { position: relative; width: 210px; height: 210px; margin: 10px auto 16px; display: grid; place-items: center; }
+    .timer-svg { width: 210px; height: 210px; transform: rotate(-90deg); }
+    .timer-track { fill: none; stroke: var(--bg-surface-2); stroke-width: 11; }
+    .timer-progress { fill: none; stroke: var(--indigo); stroke-width: 11; stroke-linecap: round; transition: stroke-dashoffset 0.35s linear, stroke 0.3s ease; }
+    .timer-center { position: absolute; text-align: center; }
+    .timer-display { font-size: 2.45rem; font-weight: 800; font-variant-numeric: tabular-nums; line-height: 1.1; }
+    .timer-status { font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px; font-weight: 600; }
     .pomo-controls { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
 
     .sound-channel { background: var(--bg-surface-2); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 12px; margin-bottom: 10px; }
+    .sound-channel.playing { border-color: var(--indigo); }
     .sound-header { display: flex; justify-content: space-between; font-size: 0.88rem; font-weight: 700; margin-bottom: 8px; }
+    .sound-vol-val { font-size: 0.8rem; color: var(--indigo); font-weight: 800; }
     .range-slider { width: 100%; height: 7px; border-radius: 99px; background: var(--border-strong); cursor: pointer; }
 
     /* Flashcards */
     .deck-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
     .deck-pills { display: flex; gap: 8px; flex-wrap: wrap; }
-    .deck-pill { min-height: 36px; padding: 7px 13px; border-radius: 11px; background: var(--bg-surface); border: 1px solid var(--border-color); font-weight: 600; font-size: 0.84rem; color: var(--text-secondary); }
+    .deck-pill { min-height: 36px; padding: 7px 13px; border-radius: 11px; background: var(--bg-surface); border: 1px solid var(--border-color); font-weight: 600; font-size: 0.84rem; color: var(--text-secondary); display: inline-flex; align-items: center; gap: 6px; }
     .deck-pill.active { background: var(--indigo); color: #fff; border-color: var(--indigo); }
 
     .flashcard-stage { perspective: 1100px; width: 100%; max-width: 660px; height: 290px; margin: 10px auto 18px; cursor: pointer; }
@@ -586,32 +679,46 @@
     .flashcard-inner.flipped { transform: rotateY(180deg); -webkit-transform: rotateY(180deg); }
     .flashcard-face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; background: var(--bg-surface); border: 2px solid var(--border-color); border-radius: 20px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; align-items: center; text-align: center; box-shadow: var(--shadow-md); }
     .flashcard-face.back { transform: rotateY(180deg); -webkit-transform: rotateY(180deg); background: var(--indigo-soft); border-color: var(--indigo); }
-    .fc-content { font-size: 1.18rem; font-weight: 700; white-space: pre-line; overflow-y: auto; max-height: 175px; }
+    .fc-top-meta { width: 100%; display: flex; justify-content: space-between; align-items: center; font-size: 0.74rem; font-weight: 700; color: var(--text-muted); }
+    .fc-content { font-size: 1.18rem; font-weight: 700; white-space: pre-line; overflow-y: auto; max-height: 175px; padding: 0 8px; }
+    .fc-hint { font-size: 0.76rem; color: var(--text-muted); }
     .fc-controls-row, .fc-mastery-row { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
 
     /* Quiz */
-    .quiz-box { max-width: 740px; margin: 0 auto; }
-    .quiz-question-card { background: var(--bg-surface-2); border: 1px solid var(--border-color); border-radius: var(--radius-bento); padding: 18px; margin: 14px 0; font-size: 1.1rem; font-weight: 700; text-align: center; }
+    .quiz-box { max-width: 760px; margin: 0 auto; }
+    .quiz-hud { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+    .combo-badge { padding: 5px 12px; border-radius: 99px; font-weight: 800; font-size: 0.8rem; background: var(--amber-soft); color: var(--amber); }
+    .combo-badge.hot { background: linear-gradient(135deg, #f59e0b, #ef4444); color: #fff; }
+    .quiz-timer-bar { width: 100%; height: 8px; background: var(--bg-surface-2); border-radius: 99px; overflow: hidden; margin-bottom: 16px; }
+    .quiz-timer-fill { height: 100%; width: 100%; background: linear-gradient(90deg, var(--emerald), var(--amber)); transition: width 0.1s linear; }
+    .quiz-question-card { background: var(--bg-surface-2); border: 1px solid var(--border-color); border-radius: var(--radius-bento); padding: 18px; margin: 12px 0; font-size: 1.1rem; font-weight: 700; text-align: center; }
     .quiz-options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
     .quiz-option { min-height: 52px; padding: 12px 14px; border-radius: var(--radius-md); background: var(--bg-surface); border: 2px solid var(--border-color); text-align: left; font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 10px; }
     .quiz-option.correct { border-color: var(--emerald); background: var(--emerald-soft); color: var(--emerald); }
     .quiz-option.wrong { border-color: var(--rose); background: var(--rose-soft); color: var(--rose); }
+    .opt-letter { width: 26px; height: 26px; border-radius: 7px; background: var(--bg-surface-2); display: grid; place-items: center; font-weight: 800; font-size: 0.8rem; flex-shrink: 0; }
 
     /* AI Chat */
-    .chat-window { height: 300px; overflow-y: auto; background: var(--bg-surface-2); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px; display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; }
-    .chat-msg { max-width: 88%; padding: 10px 14px; border-radius: 12px; font-size: 0.88rem; white-space: pre-wrap; }
+    .chat-window { height: 320px; overflow-y: auto; background: var(--bg-surface-2); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px; display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; }
+    .chat-msg { max-width: 88%; padding: 11px 14px; border-radius: 12px; font-size: 0.88rem; white-space: pre-wrap; word-break: break-word; }
     .chat-msg.ai { align-self: flex-start; background: var(--bg-surface); border: 1px solid var(--border-color); }
     .chat-msg.user { align-self: flex-end; background: var(--indigo); color: #fff; }
     .prompt-chips { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
     .prompt-chip { min-height: 32px; font-size: 0.76rem; padding: 5px 10px; border-radius: 99px; background: var(--indigo-soft); color: var(--indigo); font-weight: 600; }
 
     /* Modal & Toast */
-    .modal-backdrop { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.55); z-index: 60; display: none; place-items: center; padding: 16px; }
+    .modal-backdrop { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.58); backdrop-filter: blur(4px); z-index: 60; display: none; place-items: center; padding: 16px; }
     .modal-backdrop.open { display: grid; }
-    .modal-dialog { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 18px; width: 100%; max-width: 520px; max-height: 86dvh; overflow-y: auto; padding: 20px; }
+    .modal-dialog { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 18px; width: 100%; max-width: 560px; max-height: 88dvh; overflow-y: auto; padding: 20px; box-shadow: var(--shadow-lg); }
+    .card-pair-row { display: grid; grid-template-columns: 1fr 1fr auto; gap: 8px; margin-bottom: 10px; align-items: center; }
 
-    .toast-container { position: fixed; bottom: calc(18px + var(--safe-bottom)); right: max(16px, var(--safe-right)); z-index: 80; display: flex; flex-direction: column; gap: 8px; }
-    .toast { background: var(--bg-surface); border: 1px solid var(--border-color); border-left: 4px solid var(--indigo); padding: 11px 15px; border-radius: 11px; box-shadow: var(--shadow-md); font-size: 0.86rem; font-weight: 600; }
+    .toast-container { position: fixed; bottom: calc(18px + var(--safe-bottom)); right: max(16px, var(--safe-right)); z-index: 80; display: flex; flex-direction: column; gap: 8px; pointer-events: none; }
+    .toast { background: var(--bg-surface); border: 1px solid var(--border-color); border-left: 4px solid var(--indigo); padding: 11px 15px; border-radius: 11px; box-shadow: var(--shadow-md); font-size: 0.86rem; font-weight: 600; display: flex; align-items: center; gap: 8px; pointer-events: auto; }
+    .toast.xp { border-left-color: var(--amber); }
+    .toast.success { border-left-color: var(--emerald); }
+
+    .spinner { width: 17px; height: 17px; border: 2.5px solid rgba(255, 255, 255, 0.35); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; display: inline-block; }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
     /* Mobile Bottom Nav */
     .bottom-nav {
@@ -629,11 +736,11 @@
       z-index: 45;
       grid-template-columns: repeat(5, 1fr);
     }
-    .bottom-nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-height: 44px; font-size: 0.7rem; font-weight: 600; color: var(--text-secondary); border-radius: 9px; }
+    .bottom-nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-height: 44px; font-size: 0.68rem; font-weight: 600; color: var(--text-secondary); border-radius: 9px; }
     .bottom-nav-btn.active { color: var(--indigo); background: var(--indigo-soft); }
 
     @media (max-width: 1024px) {
-      .col-7, .col-6, .col-5 { grid-column: span 12; }
+      .col-8, .col-7, .col-6, .col-5, .col-4 { grid-column: span 12; }
       .col-3 { grid-column: span 6; }
     }
 
@@ -648,6 +755,7 @@
       .quiz-options-grid { grid-template-columns: 1fr; }
       .flashcard-stage { height: 255px; }
       .toast-container { bottom: calc(var(--bottom-nav-height) + var(--safe-bottom) + 10px); left: 12px; right: 12px; }
+      .card-pair-row { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 480px) {
@@ -657,23 +765,27 @@
   </style>
 </head>
 <body>
-  <!-- MÀN HÌNH ĐĂNG NHẬP / ĐĂNG KÝ / KHÁCH -->
+  <!-- MÀN HÌNH ĐĂNG NHẬP / ĐĂNG KÝ / CHẾ ĐỘ KHÁCH -->
   <section class="auth-screen" id="authScreen">
     <div class="auth-top-bar">
       <div style="display:flex; align-items:center; gap:10px;">
-        <div class="brand-logo">⚡</div>
+        <div class="brand-logo">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+          </svg>
+        </div>
         <div>
           <div class="brand-title">StudyFlow</div>
-          <div class="brand-sub">Học tập cấp 3 thông minh</div>
+          <div class="brand-sub">Lộ trình & Luyện tập cấp 3 chuẩn SGK</div>
         </div>
       </div>
-      <button type="button" class="theme-toggle" id="authThemeBtn" title="Đổi giao diện">🌓</button>
+      <button type="button" class="theme-toggle" id="authThemeBtn" title="Đổi giao diện Sáng / Tối">🌓</button>
     </div>
 
     <div class="auth-card">
       <div class="auth-tabs" role="tablist">
-        <button type="button" class="auth-tab active" id="tabLogin">Đăng nhập</button>
-        <button type="button" class="auth-tab" id="tabRegister">Đăng ký</button>
+        <button type="button" class="auth-tab active" id="tabLogin" role="tab">Đăng nhập</button>
+        <button type="button" class="auth-tab" id="tabRegister" role="tab">Đăng ký</button>
       </div>
 
       <div class="auth-status" id="authStatus"></div>
@@ -681,56 +793,88 @@
       <form id="authForm">
         <div class="auth-group" id="nameGroup" style="display:none;">
           <label class="auth-label" for="displayNameInput">Tên hiển thị</label>
-          <input class="input" type="text" id="displayNameInput" placeholder="Ví dụ: Tấn Tài" />
+          <input class="input" type="text" id="displayNameInput" placeholder="Ví dụ: Tấn Tài" autocomplete="name" />
         </div>
         <div class="auth-group">
           <label class="auth-label" for="emailInput">Email</label>
-          <input class="input" type="email" id="emailInput" placeholder="ban@example.com" required />
+          <input class="input" type="email" id="emailInput" placeholder="ban@example.com" autocomplete="email" required />
         </div>
         <div class="auth-group">
           <label class="auth-label" for="passwordInput">Mật khẩu</label>
-          <input class="input" type="password" id="passwordInput" placeholder="Ít nhất 6 ký tự" required />
+          <input class="input" type="password" id="passwordInput" placeholder="Ít nhất 6 ký tự" autocomplete="current-password" required />
         </div>
         <button type="submit" class="btn btn-primary" id="submitAuthBtn" style="width:100%;">Đăng nhập</button>
       </form>
 
-      <div class="auth-divider">HOẶC ĐĂNG NHẬP VỚI</div>
+      <div class="auth-divider">HOẶC ĐĂNG NHẬP NHANH VỚI</div>
 
       <div class="oauth-grid">
-        <button type="button" class="oauth-btn" id="googleLoginBtn"><span>G</span> Google</button>
-        <button type="button" class="oauth-btn" id="facebookLoginBtn"><span>f</span> Facebook</button>
+        <button type="button" class="oauth-btn" id="googleLoginBtn">
+          <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.4 1 3.5 3.6 1.6 7.4l3.7 2.8C6.2 7.2 8.9 5 12 5z"/><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.6l3.7 2.9c2.2-2 3.7-5 3.7-8.7z"/><path fill="#FBBC05" d="M5.3 14.8c-.2-.8-.4-1.6-.4-2.5s.2-1.7.4-2.5L1.6 7C.6 9 0 11.2 0 13.5s.6 4.5 1.6 6.5l3.7-2.8z"/><path fill="#34A853" d="M12 24c3.2 0 6-1.1 8-3l-3.7-2.9c1.1.7-2.5 1.2-4.3 1.2-3.1 0-5.8-2.1-6.7-5l-3.7 2.8C3.5 21.1 7.4 24 12 24z"/></svg>
+          Google
+        </button>
+        <button type="button" class="oauth-btn" id="facebookLoginBtn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.07C24 5.41 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.04V9.41c0-3.02 1.8-4.7 4.54-4.7 1.31 0 2.68.24 2.68.24v2.97h-1.5c-1.5 0-1.96.93-1.96 1.89v2.26h3.32l-.53 3.5h-2.8V24C19.62 23.1 24 18.1 24 12.07z"/></svg>
+          Facebook
+        </button>
       </div>
 
       <button type="button" class="guest-btn" id="guestContinueBtn">
-        🚀 Tiếp tục với tư cách Khách (Vào trang web ngay)
+        🚀 Tiếp tục với tư cách Khách (Vào học ngay)
       </button>
     </div>
   </section>
 
-  <!-- GIAO DIỆN CHÍNH -->
+  <!-- GIAO DIỆN CHÍNH STUDYFLOW -->
   <div class="app-shell" id="appShell">
     <aside class="sidebar">
       <div>
         <div class="brand">
-          <div class="brand-logo">⚡</div>
+          <div class="brand-logo">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+            </svg>
+          </div>
           <div>
             <div class="brand-title">StudyFlow</div>
-            <div class="brand-sub">Cấp 3 & Gamification</div>
+            <div class="brand-sub">Lộ trình cấp 3 & XP</div>
           </div>
         </div>
+
         <nav class="nav-list">
-          <button class="nav-item active" data-view="dashboard">📊 Tổng quan</button>
-          <button class="nav-item" data-view="focus">⏱️ Góc Tập Trung</button>
-          <button class="nav-item" data-view="flashcards">🗂️ Thẻ Ghi Nhớ 3D</button>
-          <button class="nav-item" data-view="quiz">⚡ Đấu Trường Quiz</button>
-          <button class="nav-item" data-view="ai">🤖 Trợ Lý AI</button>
+          <button class="nav-item active" data-view="dashboard">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg>
+            Tổng quan
+          </button>
+          <button class="nav-item" data-view="roadmap">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            Lộ Trình & Kiểm Tra
+          </button>
+          <button class="nav-item" data-view="focus">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Góc Tập Trung
+          </button>
+          <button class="nav-item" data-view="flashcards">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="M7 15h10"/><path d="M7 9h6"/></svg>
+            Thẻ Ghi Nhớ 3D
+          </button>
+          <button class="nav-item" data-view="quiz">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            Đấu Trường Quiz
+          </button>
+          <button class="nav-item" data-view="ai">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a4 4 0 0 1 4 4v2h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2V6a4 4 0 0 1 4-4z"/><circle cx="9" cy="13" r="1"/><circle cx="15" cy="13" r="1"/></svg>
+            Trợ Lý AI
+          </button>
         </nav>
       </div>
 
       <div class="sidebar-footer-card">
         <h4 id="sidebarRankTitle">🏅 Học giả Tập sự</h4>
-        <p>Hoàn thành Pomodoro, Flashcard & Quiz để tăng XP.</p>
-        <button class="btn btn-primary btn-sm" style="width:100%;" onclick="switchView('focus')">+50 XP Phiên học</button>
+        <p id="sidebarRankDesc">Hoàn thành Lộ trình, Practice & Test định kỳ để bứt phá XP!</p>
+        <button class="btn btn-primary btn-sm" style="width:100%;" onclick="switchView('roadmap')">
+          🗺️ Mở Lộ trình SGK
+        </button>
       </div>
     </aside>
 
@@ -739,19 +883,23 @@
         <div class="mobile-brand">⚡ StudyFlow</div>
 
         <div class="gamification-bar">
-          <div class="level-pill">
+          <div class="level-pill" title="Cấp độ và điểm kinh nghiệm">
             <span class="level-badge" id="topLevelBadge">Cấp 1</span>
             <div class="xp-progress-wrap">
               <div class="xp-meta">
                 <span id="topXpText">0 / 100 XP</span>
-                <span style="color:var(--amber)" id="topTotalXp">40 XP</span>
+                <span style="color:var(--amber)" id="topTotalXp">Tổng: 40 XP</span>
               </div>
               <div class="xp-track"><div class="xp-fill" id="topXpBar"></div></div>
             </div>
           </div>
 
-          <div class="stat-chip streak">🔥 <span id="topStreak">1 ngày</span></div>
-          <div class="stat-chip minutes">⏱️ <span id="topMinutes">0 phút</span></div>
+          <div class="stat-chip streak" title="Chuỗi ngày học liên tiếp">
+            <span>🔥</span><span id="topStreak">1 ngày</span>
+          </div>
+          <div class="stat-chip minutes" title="Tổng thời gian học hôm nay">
+            <span>⏱️</span><span id="topMinutes">0 phút hôm nay</span>
+          </div>
         </div>
 
         <div class="topbar-actions">
@@ -760,51 +908,55 @@
             <span id="topUserName">Khách</span>
             <span style="color:var(--indigo); font-size:0.75rem;" id="topAuthActionLabel">• Đăng nhập</span>
           </button>
-          <button class="theme-toggle" id="themeToggleBtn" title="Đổi giao diện">🌓</button>
+          <button class="theme-toggle" id="themeToggleBtn" title="Đổi giao diện Sáng / Tối">🌓</button>
         </div>
       </header>
 
-      <!-- THANH CHỌN CÁC MÔN CẤP 3 -->
-      <div class="subject-bar">
+      <!-- THANH CHỌN MÔN HỌC CẤP 3 -->
+      <div class="subject-bar" id="subjectBar">
         <span class="subject-bar-label">📚 MÔN CẤP 3:</span>
         <div class="subject-chips-row" id="subjectChipsContainer"></div>
       </div>
 
       <main class="content-container">
-        <!-- DASHBOARD -->
+        <!-- VIEW 1: DASHBOARD -->
         <section id="view-dashboard" class="view-section active">
           <div class="bento-grid">
             <div class="bento-card hero-banner col-12">
               <div>
-                <h1 id="dashGreeting">Xin chào! ✨</h1>
-                <p id="dashSubGreeting">Chọn môn học cấp 3 ở thanh trên để lọc thẻ, ghi chú và mục tiêu.</p>
+                <h1 id="dashGreeting">Chào buổi học, Nhà chinh phục tri thức! ✨</h1>
+                <p id="dashSubGreeting">Lộ trình học tập bám sát SGK cấp 3 (GDPT 2018), kèm Practice từng chặng và Test định kì.</p>
               </div>
               <div class="hero-actions">
-                <button class="btn btn-hero-white" onclick="switchView('focus')">⏱️ Bắt đầu học</button>
-                <button class="btn btn-hero-glass" onclick="switchView('flashcards')">🗂️ Ôn Flashcard</button>
+                <button class="btn btn-hero-white" onclick="switchView('roadmap')">🗺️ Học theo Lộ trình SGK</button>
+                <button class="btn btn-hero-glass" onclick="switchView('focus')">⏱️ Bắt đầu Pomodoro</button>
+                <button class="btn btn-hero-glass" onclick="switchView('flashcards')">🗂️ Ôn Flashcard 3D</button>
               </div>
             </div>
 
             <div class="bento-card kpi-card col-3">
               <div class="kpi-icon" style="background:var(--indigo-soft); color:var(--indigo);">⏱️</div>
-              <div><div class="kpi-value" id="kpiMinutes">0 phút</div><div class="kpi-label">Hôm nay</div></div>
+              <div><div class="kpi-value" id="kpiMinutes">0 phút</div><div class="kpi-label">Thời gian học hôm nay</div></div>
             </div>
             <div class="bento-card kpi-card col-3">
-              <div class="kpi-icon" style="background:var(--emerald-soft); color:var(--emerald);">✅</div>
-              <div><div class="kpi-value" id="kpiMastered">0 / 0</div><div class="kpi-label">Thẻ đã thuộc</div></div>
+              <div class="kpi-icon" style="background:var(--emerald-soft); color:var(--emerald);">🗺️</div>
+              <div><div class="kpi-value" id="kpiRoadmapDone">0 / 0</div><div class="kpi-label">Chặng lộ trình hoàn tất</div></div>
             </div>
             <div class="bento-card kpi-card col-3">
               <div class="kpi-icon" style="background:var(--amber-soft); color:var(--amber);">⭐</div>
-              <div><div class="kpi-value" id="kpiXp" style="color:var(--amber)">40 XP</div><div class="kpi-label">Kinh nghiệm</div></div>
+              <div><div class="kpi-value" id="kpiXp" style="color:var(--amber)">40 XP</div><div class="kpi-label">Điểm kinh nghiệm</div></div>
             </div>
             <div class="bento-card kpi-card col-3">
               <div class="kpi-icon" style="background:var(--rose-soft); color:var(--rose);">🔥</div>
-              <div><div class="kpi-value" id="kpiStreak">1 ngày</div><div class="kpi-label">Chuỗi Streak</div></div>
+              <div><div class="kpi-value" id="kpiStreak">1 ngày</div><div class="kpi-label">Chuỗi ngày Streak</div></div>
             </div>
 
             <div class="bento-card col-7">
               <div class="card-header">
-                <div class="card-title">📊 Thời gian học 7 ngày</div>
+                <div>
+                  <div class="card-title">📊 Thống kê thời gian học 7 ngày</div>
+                  <div class="card-subtitle">Tổng hợp số phút tập trung mỗi ngày trong tuần</div>
+                </div>
                 <span class="badge badge-emerald" id="weeklyTotalBadge">Tuần này: 0 phút</span>
               </div>
               <div class="weekly-chart" id="weeklyChartContainer"></div>
@@ -812,11 +964,14 @@
 
             <div class="bento-card col-5">
               <div class="card-header">
-                <div class="card-title">✅ Mục tiêu hôm nay (+20 XP)</div>
+                <div>
+                  <div class="card-title">✅ Mục tiêu hôm nay</div>
+                  <div class="card-subtitle">Hoàn thành mỗi việc nhận ngay <strong style="color:var(--amber)">+20 XP</strong></div>
+                </div>
                 <span class="badge badge-indigo" id="todoCountBadge">0/0</span>
               </div>
               <form class="todo-form" id="todoForm">
-                <input type="text" id="todoInput" class="input" placeholder="Thêm mục tiêu cho môn đang chọn..." required />
+                <input type="text" id="todoInput" class="input" placeholder="Nhập mục tiêu cho môn đang chọn..." required />
                 <button type="submit" class="btn btn-primary">Thêm</button>
               </form>
               <div class="todo-list" id="todoList"></div>
@@ -824,217 +979,373 @@
           </div>
         </section>
 
-        <!-- FOCUS -->
+        <!-- VIEW 2: LỘ TRÌNH SGK, PRACTICE & TEST ĐỊNH KÌ -->
+        <section id="view-roadmap" class="view-section">
+          <div class="bento-grid">
+            <div class="bento-card col-12">
+              <div class="card-header">
+                <div>
+                  <div class="card-title" id="roadmapHeaderTitle">🗺️ Lộ Trình Học Tập Theo SGK Cấp 3</div>
+                  <div class="card-subtitle" id="roadmapHeaderSub">Chọn khối lớp 10, 11, 12 để xem mạch kiến thức SGK, làm Practice từng chặng và thi Test định kì</div>
+                </div>
+                <div class="grade-tabs" id="gradeTabsContainer">
+                  <button type="button" class="grade-tab active" data-grade="10">Lớp 10</button>
+                  <button type="button" class="grade-tab" data-grade="11">Lớp 11</button>
+                  <button type="button" class="grade-tab" data-grade="12">Lớp 12</button>
+                </div>
+              </div>
+
+              <div id="roadmapStepsList"></div>
+            </div>
+
+            <div class="bento-card col-12">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">📝 Bài Kiểm Tra Định Kì (Periodic Test)</div>
+                  <div class="card-subtitle">Đánh giá năng lực theo từng giai đoạn của môn & khối lớp đang chọn (+40 XP khi hoàn thành)</div>
+                </div>
+                <span class="badge badge-indigo" id="testHistoryBadge">Chưa có bài test nào</span>
+              </div>
+
+              <div id="periodicTestList"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- VIEW 3: FOCUS SPACE -->
         <section id="view-focus" class="view-section">
           <div class="bento-grid">
             <div class="bento-card col-6" style="text-align:center;">
               <div class="card-header">
-                <div class="card-title" id="pomoSubjectTitle">⏱️ Pomodoro</div>
-                <span class="badge badge-amber">+50 XP / phiên</span>
+                <div class="card-title" id="pomoSubjectTitle">⏱️ Đồng hồ Pomodoro</div>
+                <span class="badge badge-amber">Hoàn thành phiên: +50 XP</span>
               </div>
+
               <div class="pomo-modes" id="pomoModes">
-                <button class="mode-btn active" data-mins="25">25 phút</button>
-                <button class="mode-btn" data-mins="45">45 phút</button>
-                <button class="mode-btn" data-mins="5">Nghỉ 5p</button>
+                <button class="mode-btn active" data-mode="focus" data-mins="25">Học tập (25p)</button>
+                <button class="mode-btn" data-mode="short" data-mins="5">Nghỉ ngắn (5p)</button>
+                <button class="mode-btn" data-mode="long" data-mins="15">Nghỉ dài (15p)</button>
+                <button class="mode-btn" data-mode="custom" data-mins="45">Tùy chỉnh</button>
               </div>
-              <div class="timer-display" id="timerDisplay">25:00</div>
-              <div class="timer-status" id="timerStatusText">Sẵn sàng tập trung</div>
+
+              <div class="custom-mins-row" id="customMinsRow">
+                <label for="customMinsInput" style="font-size:0.85rem;font-weight:600;">Số phút:</label>
+                <input type="number" id="customMinsInput" class="input" style="width:90px;text-align:center;" min="1" max="180" value="45" />
+                <button class="btn btn-outline btn-sm" id="applyCustomMinsBtn">Áp dụng</button>
+              </div>
+
+              <div class="timer-ring-container">
+                <svg class="timer-svg" viewBox="0 0 220 220">
+                  <circle class="timer-track" cx="110" cy="110" r="95"></circle>
+                  <circle class="timer-progress" id="timerProgressCircle" cx="110" cy="110" r="95" stroke-dasharray="596.9" stroke-dashoffset="0"></circle>
+                </svg>
+                <div class="timer-center">
+                  <div class="timer-display" id="timerDisplay">25:00</div>
+                  <div class="timer-status" id="timerStatusText">Sẵn sàng tập trung</div>
+                </div>
+              </div>
+
               <div class="pomo-controls">
                 <button class="btn btn-primary" id="pomoStartBtn">▶ Bắt đầu</button>
                 <button class="btn btn-outline" id="pomoResetBtn">↺ Đặt lại</button>
-                <button class="btn btn-emerald btn-sm" id="pomoCompleteBtn">✓ Hoàn thành</button>
+                <button class="btn btn-emerald btn-sm" id="pomoCompleteBtn">✓ Hoàn thành phiên</button>
               </div>
             </div>
 
             <div class="col-6" style="display:flex; flex-direction:column; gap:16px;">
               <div class="bento-card">
                 <div class="card-header">
-                  <div class="card-title">🎧 Âm thanh nền</div>
-                  <button class="btn btn-outline btn-sm" id="muteAllSoundsBtn">Tắt hết</button>
+                  <div>
+                    <div class="card-title">🎧 Trình trộn âm thanh nền</div>
+                    <div class="card-subtitle">Kéo thanh trượt để bật âm thanh tổng hợp trực tiếp</div>
+                  </div>
+                  <button class="btn btn-outline btn-sm" id="muteAllSoundsBtn">Tắt tất cả</button>
                 </div>
-                <div class="sound-channel">
-                  <div class="sound-header"><span>🌧️ Tiếng mưa</span><span id="volLabelRain">0%</span></div>
+
+                <div class="sound-channel" id="channel-rain">
+                  <div class="sound-header"><span>🌧️ Tiếng mưa rơi (Rain Noise)</span><span class="sound-vol-val" id="volLabelRain">0%</span></div>
                   <input type="range" class="range-slider" id="volRain" min="0" max="100" value="0" />
                 </div>
-                <div class="sound-channel" style="margin-bottom:0;">
-                  <div class="sound-header"><span>🎹 Lo-fi nhẹ</span><span id="volLabelLofi">0%</span></div>
+
+                <div class="sound-channel" id="channel-waves">
+                  <div class="sound-header"><span>🌊 Gió & Sóng nhẹ (Pink Noise)</span><span class="sound-vol-val" id="volLabelWaves">0%</span></div>
+                  <input type="range" class="range-slider" id="volWaves" min="0" max="100" value="0" />
+                </div>
+
+                <div class="sound-channel" id="channel-lofi" style="margin-bottom:0;">
+                  <div class="sound-header"><span>🎹 Hợp âm Lo-fi thư giãn</span><span class="sound-vol-val" id="volLabelLofi">0%</span></div>
                   <input type="range" class="range-slider" id="volLofi" min="0" max="100" value="0" />
                 </div>
               </div>
 
-              <div class="bento-card">
+              <div class="bento-card" style="flex:1; display:flex; flex-direction:column;">
                 <div class="card-header">
-                  <div class="card-title" id="notesSubjectTitle">📝 Ghi chú theo môn</div>
-                  <span class="badge badge-emerald" id="notesSaveStatus">Đã lưu</span>
+                  <div class="card-title" id="notesSubjectTitle">📝 Sổ ghi chú nhanh</div>
+                  <span class="badge badge-emerald" id="notesSaveStatus">Đã tự động lưu</span>
                 </div>
-                <textarea id="quickNotesArea" class="textarea" rows="4" placeholder="Ghi công thức, dàn ý môn học..."></textarea>
+                <textarea id="quickNotesArea" class="textarea" rows="4" style="flex:1; resize:vertical;" placeholder="Ghi công thức, dàn ý, lưu ý môn học..."></textarea>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px; gap:8px; flex-wrap:wrap;">
+                  <span style="font-size:0.78rem; color:var(--text-muted);" id="notesCharCount">0 ký tự</span>
+                  <button class="btn btn-outline btn-sm" onclick="sendNotesToAI()">✨ Tạo Flashcard từ ghi chú này</button>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        <!-- FLASHCARDS -->
+        <!-- VIEW 4: FLASHCARDS 3D -->
         <section id="view-flashcards" class="view-section">
           <div class="deck-toolbar">
             <div class="deck-pills" id="deckPillsContainer"></div>
             <div style="display:flex; gap:8px; flex-wrap:wrap;">
-              <button class="btn btn-outline btn-sm" id="openAddCardBtn">+ Thêm thẻ</button>
-              <button class="btn btn-primary btn-sm" id="openCreateDeckBtn">+ Bộ thẻ mới</button>
+              <button class="btn btn-outline btn-sm" id="openAddCardModalBtn">+ Thêm thẻ vào bộ</button>
+              <button class="btn btn-primary btn-sm" id="openCreateDeckModalBtn">+ Tạo bộ thẻ mới</button>
             </div>
           </div>
 
           <div class="bento-card">
             <div class="card-header">
               <div>
-                <div class="card-title" id="activeDeckTitle">Bộ thẻ</div>
-                <div class="card-subtitle" id="activeDeckProgress">Chạm vào thẻ để lật</div>
+                <div class="card-title" id="activeDeckTitle">Bộ thẻ ghi nhớ</div>
+                <div class="card-subtitle" id="activeDeckProgress">Đã thuộc: 0 / 0 thẻ • Chạm vào thẻ hoặc nhấn Space để lật</div>
               </div>
-              <span class="badge badge-indigo" id="fcCounterBadge">1 / 1</span>
+              <div style="display:flex; gap:8px; align-items:center;">
+                <span class="badge badge-indigo" id="fcCounterBadge">Thẻ 1 / 1</span>
+                <button class="btn btn-danger-soft btn-sm" id="deleteDeckBtn" style="display:none;">Xóa bộ</button>
+              </div>
             </div>
 
-            <div class="flashcard-stage" id="flashcardStage">
+            <div class="flashcard-stage" id="flashcardStage" tabindex="0" role="button">
               <div class="flashcard-inner" id="flashcardInner">
                 <div class="flashcard-face front">
-                  <span class="badge badge-amber" id="fcStatusFront">Đang học</span>
+                  <div class="fc-top-meta">
+                    <span>MẶT TRƯỚC • CÂU HỎI / KHÁI NIỆM</span>
+                    <span id="fcStatusTag" class="badge badge-amber">Đang học</span>
+                  </div>
                   <div class="fc-content" id="fcFrontText">Đang tải...</div>
-                  <div style="font-size:0.76rem; color:var(--text-muted);">Chạm để xem đáp án</div>
+                  <div class="fc-hint">🔄 Chạm vào thẻ hoặc phím <strong>Space</strong> để xem đáp án</div>
                 </div>
                 <div class="flashcard-face back">
-                  <span class="badge badge-emerald" id="fcStatusBack">Đáp án</span>
+                  <div class="fc-top-meta">
+                    <span style="color:var(--indigo)">MẶT SAU • ĐÁP ÁN / GIẢI THÍCH</span>
+                    <span id="fcStatusTagBack" class="badge badge-amber">Đang học</span>
+                  </div>
                   <div class="fc-content" id="fcBackText">Đang tải...</div>
-                  <div style="font-size:0.76rem; color:var(--text-muted);">Đánh dấu bên dưới</div>
+                  <div class="fc-hint">✅ Đánh dấu mức độ ghi nhớ bên dưới</div>
                 </div>
               </div>
             </div>
 
             <div class="fc-controls-row">
-              <button class="btn btn-outline btn-sm" id="fcPrevBtn">← Trước</button>
+              <button class="btn btn-outline btn-sm" id="fcPrevBtn">← Thẻ trước</button>
               <button class="btn btn-outline btn-sm" id="fcFlipBtn">🔄 Lật thẻ</button>
-              <button class="btn btn-outline btn-sm" id="fcNextBtn">Tiếp →</button>
+              <button class="btn btn-outline btn-sm" id="fcShuffleBtn">🔀 Xáo trộn</button>
+              <button class="btn btn-outline btn-sm" id="fcNextBtn">Thẻ tiếp →</button>
             </div>
 
             <div class="fc-mastery-row">
-              <button class="btn btn-outline btn-sm" id="fcReviewBtn" style="border-color:var(--amber); color:var(--amber);">🔁 Cần ôn lại</button>
+              <button class="btn btn-outline btn-sm" id="fcNeedReviewBtn" style="border-color:var(--amber); color:var(--amber);">🔁 Cần ôn lại</button>
               <button class="btn btn-emerald btn-sm" id="fcMasteredBtn">✓ Đã thuộc (+10 XP)</button>
             </div>
           </div>
         </section>
 
-        <!-- QUIZ -->
+        <!-- VIEW 5: SPEED QUIZ -->
         <section id="view-quiz" class="view-section">
           <div class="quiz-box">
             <div class="bento-card" id="quizSetupPanel">
-              <div class="card-title" style="margin-bottom:12px;">⚡ Đấu Trường Trắc Nghiệm</div>
-              <div style="display:grid; gap:12px;">
-                <select id="quizDeckSelect" class="select"></select>
-                <button class="btn btn-primary" id="startQuizBtn">🚀 Bắt đầu Quiz</button>
+              <div class="card-header">
+                <div>
+                  <div class="card-title">⚡ Đấu Trường Trắc Nghiệm (Speed Quiz)</div>
+                  <div class="card-subtitle">Trả lời nhanh trong 15 giây mỗi câu để kích hoạt chuỗi Combo x2, x3 XP!</div>
+                </div>
+              </div>
+
+              <div style="display:grid; gap:14px;">
+                <div>
+                  <label class="auth-label" for="quizDeckSelect">Chọn chủ đề / Bộ thẻ luyện tập:</label>
+                  <select id="quizDeckSelect" class="select"></select>
+                </div>
+                <div>
+                  <label class="auth-label" for="quizCountSelect">Số lượng câu hỏi:</label>
+                  <select id="quizCountSelect" class="select">
+                    <option value="5">5 câu hỏi (Khởi động nhanh)</option>
+                    <option value="8" selected>8 câu hỏi (Tiêu chuẩn)</option>
+                    <option value="12">12 câu hỏi (Thử thách cao độ)</option>
+                  </select>
+                </div>
+                <button class="btn btn-primary" id="startQuizBtn" style="width:100%; padding:13px;">🚀 Bắt đầu thi đấu ngay</button>
               </div>
             </div>
 
             <div class="bento-card" id="quizPlayPanel" style="display:none;">
-              <div class="card-header">
-                <span class="badge badge-indigo" id="quizProgressLabel">Câu 1 / 5</span>
-                <span class="badge badge-amber" id="quizScoreLabel">Điểm: 0</span>
-                <span class="badge badge-emerald" id="quizTimeLabel">15s</span>
+              <div class="quiz-hud">
+                <span class="badge badge-indigo" id="quizProgressLabel">Câu 1 / 8</span>
+                <span class="combo-badge" id="quizComboBadge">🔥 Combo x1</span>
+                <span class="badge badge-emerald" id="quizScoreLabel">Điểm: 0</span>
+                <span class="badge badge-amber" id="quizTimeLabel">⏳ 15.0s</span>
               </div>
+              <div class="quiz-timer-bar"><div class="quiz-timer-fill" id="quizTimerFill"></div></div>
               <div class="quiz-question-card" id="quizQuestionText"></div>
               <div class="quiz-options-grid" id="quizOptionsGrid"></div>
             </div>
 
             <div class="bento-card" id="quizResultPanel" style="display:none; text-align:center;">
-              <h2 style="font-size:1.35rem; font-weight:800; margin-bottom:8px;">🏆 Kết quả Quiz</h2>
-              <p id="quizResultSummary" style="margin-bottom:16px; font-weight:700; color:var(--emerald);"></p>
-              <button class="btn btn-primary" id="quizBackSetupBtn">Làm lại / Đổi bộ</button>
+              <div style="font-size:2.6rem; margin-bottom:6px;">🏆</div>
+              <h2 style="font-size:1.35rem; font-weight:800; margin-bottom:6px;">Hoàn thành Đấu Trường!</h2>
+              <div class="bento-grid" style="margin:16px 0; text-align:center;">
+                <div class="bento-card col-3" style="padding:12px;"><div class="kpi-value" id="resScore" style="color:var(--indigo)">0</div><div class="kpi-label">Tổng điểm</div></div>
+                <div class="bento-card col-3" style="padding:12px;"><div class="kpi-value" id="resXp" style="color:var(--amber)">+0 XP</div><div class="kpi-label">XP nhận được</div></div>
+                <div class="bento-card col-3" style="padding:12px;"><div class="kpi-value" id="resAccuracy" style="color:var(--emerald)">0%</div><div class="kpi-label">Độ chính xác</div></div>
+                <div class="bento-card col-3" style="padding:12px;"><div class="kpi-value" id="resMaxCombo">x1</div><div class="kpi-label">Combo cao nhất</div></div>
+              </div>
+              <div id="quizReviewList" style="text-align:left; margin-bottom:16px; display:flex; flex-direction:column; gap:8px;"></div>
+              <div style="display:flex; justify-content:center; gap:10px; flex-wrap:wrap;">
+                <button class="btn btn-primary" id="quizRetryBtn">🔄 Chơi lại</button>
+                <button class="btn btn-outline" id="quizBackSetupBtn">Chọn bộ khác</button>
+              </div>
             </div>
           </div>
         </section>
 
-        <!-- AI -->
+        <!-- VIEW 6: TRỢ LÝ AI -->
         <section id="view-ai" class="view-section">
-          <div class="bento-card">
-            <div class="card-header">
-              <div class="card-title">🤖 Trợ Lý StudyBot</div>
-              <button class="btn btn-outline btn-sm" id="aiClearChatBtn">Xóa chat</button>
+          <div class="bento-grid">
+            <div class="bento-card col-5">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">✨ Tạo Flashcard tự động từ bài học</div>
+                  <div class="card-subtitle">Dán đoạn văn bản SGK/ghi chú, AI trích xuất thành thẻ học (+30 XP)</div>
+                </div>
+              </div>
+              <div style="display:flex; flex-direction:column; gap:12px;">
+                <div>
+                  <label class="auth-label" for="aiDeckTitleInput">Tên bộ thẻ (tùy chọn):</label>
+                  <input type="text" id="aiDeckTitleInput" class="input" placeholder="VD: Hóa 12 - Polime trọng tâm" />
+                </div>
+                <div>
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
+                    <label class="auth-label" for="aiSourceText" style="margin-bottom:0;">Nội dung bài giảng / Ghi chú:</label>
+                    <button type="button" class="prompt-chip" id="aiFillSampleBtn">Dán bài mẫu</button>
+                  </div>
+                  <textarea id="aiSourceText" class="textarea" rows="7" placeholder="Dán đoạn kiến thức, định nghĩa, công thức vào đây..."></textarea>
+                </div>
+                <button class="btn btn-emerald" id="aiGenerateCardsBtn" style="width:100%;">🪄 Tạo bộ Flashcard bằng AI</button>
+                <div id="aiGenResultBox" style="display:none; background:var(--emerald-soft); border:1px solid var(--emerald); border-radius:12px; padding:12px;">
+                  <div style="font-weight:700; color:var(--emerald); margin-bottom:6px;" id="aiGenSummary"></div>
+                  <button class="btn btn-primary btn-sm" id="aiJumpToDeckBtn" style="width:100%;">Học bộ thẻ vừa tạo ngay →</button>
+                </div>
+              </div>
             </div>
-            <div class="chat-window" id="aiChatWindow"></div>
-            <div class="prompt-chips">
-              <button type="button" class="prompt-chip" data-prompt="Giải thích ngắn gọn kiến thức trọng tâm của môn đang chọn.">💡 Tóm tắt môn đang chọn</button>
-              <button type="button" class="prompt-chip" data-prompt="Cho 3 câu hỏi trắc nghiệm cấp 3 kèm đáp án.">📝 Ra đề trắc nghiệm</button>
+
+            <div class="bento-card col-7" style="display:flex; flex-direction:column;">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">🤖 Gia sư AI (StudyBot)</div>
+                  <div class="card-subtitle">Giải thích bài học theo SGK cấp 3, gợi ý phương pháp giải</div>
+                </div>
+                <button class="btn btn-outline btn-sm" id="aiClearChatBtn">Xóa lịch sử</button>
+              </div>
+              <div class="chat-window" id="aiChatWindow"></div>
+              <div class="prompt-chips">
+                <button type="button" class="prompt-chip" data-prompt="Giải thích trọng tâm kiến thức SGK của môn và lớp mình đang chọn.">💡 Trọng tâm SGK môn này</button>
+                <button type="button" class="prompt-chip" data-prompt="Tóm tắt ghi chú hiện tại của mình thành các ý ngắn gọn dễ nhớ.">📝 Tóm tắt ghi chú</button>
+                <button type="button" class="prompt-chip" data-prompt="Gợi ý lộ trình ôn tập hiệu quả cho môn này.">🗺️ Mẹo học lộ trình</button>
+              </div>
+              <form id="aiChatForm" style="display:flex; gap:8px;">
+                <input type="text" id="aiChatInput" class="input" placeholder="Đặt câu hỏi cho Gia sư AI..." required />
+                <button type="submit" class="btn btn-primary" id="aiChatSendBtn">Gửi</button>
+              </form>
             </div>
-            <form id="aiChatForm" style="display:flex; gap:8px;">
-              <input type="text" id="aiChatInput" class="input" placeholder="Nhập câu hỏi cho StudyBot..." required />
-              <button type="submit" class="btn btn-primary">Gửi</button>
-            </form>
           </div>
         </section>
       </main>
     </div>
 
+    <!-- MOBILE BOTTOM NAV -->
     <nav class="bottom-nav">
       <button class="bottom-nav-btn active" data-view="dashboard">📊 Tổng quan</button>
+      <button class="bottom-nav-btn" data-view="roadmap">🗺️ Lộ trình</button>
       <button class="bottom-nav-btn" data-view="focus">⏱️ Học</button>
       <button class="bottom-nav-btn" data-view="flashcards">🗂️ Thẻ</button>
-      <button class="bottom-nav-btn" data-view="quiz">⚡ Quiz</button>
       <button class="bottom-nav-btn" data-view="ai">🤖 AI</button>
     </nav>
   </div>
 
-  <!-- MODAL TẠO BỘ THẺ -->
+  <!-- MODAL LÀM BÀI KIỂM TRA ĐỊNH KÌ -->
+  <div class="modal-backdrop" id="modalPeriodicTest">
+    <div class="modal-dialog" style="max-width:640px;">
+      <div class="card-header">
+        <div>
+          <div class="card-title" id="periodicTestModalTitle">Bài kiểm tra định kì</div>
+          <div class="card-subtitle" id="periodicTestModalSub">Chọn đáp án cho từng câu rồi nộp bài</div>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="closeModal('modalPeriodicTest')">✕</button>
+      </div>
+      <div id="periodicTestQuestionsContainer"></div>
+      <div id="periodicTestScoreBanner" style="display:none; margin-bottom:12px; padding:12px; border-radius:12px; background:var(--emerald-soft); color:var(--emerald); font-weight:800;"></div>
+      <div style="display:flex; justify-content:flex-end; gap:10px; flex-wrap:wrap;">
+        <button type="button" class="btn btn-outline" onclick="closeModal('modalPeriodicTest')">Đóng</button>
+        <button type="button" class="btn btn-primary" id="submitPeriodicTestBtn">Nộp bài kiểm tra</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL TẠO BỘ THẺ MỚI -->
   <div class="modal-backdrop" id="modalCreateDeck">
     <div class="modal-dialog">
       <div class="card-header">
-        <div class="card-title">+ Tạo bộ thẻ mới</div>
+        <div class="card-title">🗂️ Tạo bộ thẻ ghi nhớ mới</div>
         <button class="btn btn-outline btn-sm" onclick="closeModal('modalCreateDeck')">✕</button>
       </div>
       <form id="createDeckForm">
-        <div style="margin-bottom:12px;">
-          <label class="auth-label">Tên bộ thẻ</label>
-          <input type="text" id="newDeckName" class="input" placeholder="VD: Hóa 12 - Este Lipit" required />
-        </div>
-        <div style="margin-bottom:10px;">
-          <label class="auth-label">Thẻ 1 (Mặt trước / Mặt sau)</label>
-          <div style="display:grid; gap:8px;">
-            <input type="text" id="card1Front" class="input" placeholder="Câu hỏi / Khái niệm" required />
-            <input type="text" id="card1Back" class="input" placeholder="Đáp án / Giải thích" required />
-          </div>
-        </div>
         <div style="margin-bottom:14px;">
-          <label class="auth-label">Thẻ 2 (Mặt trước / Mặt sau)</label>
-          <div style="display:grid; gap:8px;">
-            <input type="text" id="card2Front" class="input" placeholder="Câu hỏi / Khái niệm" />
-            <input type="text" id="card2Back" class="input" placeholder="Đáp án / Giải thích" />
-          </div>
+          <label class="auth-label" for="newDeckName">Tên bộ thẻ *</label>
+          <input type="text" id="newDeckName" class="input" placeholder="VD: Vật Lý 12 - Dao động điều hòa" required />
         </div>
-        <button type="submit" class="btn btn-primary" style="width:100%;">Lưu bộ thẻ</button>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+          <label class="auth-label" style="margin-bottom:0;">Danh sách thẻ (Mặt trước / Mặt sau)</label>
+          <button type="button" class="btn btn-outline btn-sm" id="addPairRowBtn">+ Thêm dòng</button>
+        </div>
+        <div id="newDeckPairsContainer"></div>
+        <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:16px;">
+          <button type="button" class="btn btn-outline" onclick="closeModal('modalCreateDeck')">Hủy</button>
+          <button type="submit" class="btn btn-primary">Lưu bộ thẻ</button>
+        </div>
       </form>
     </div>
   </div>
 
-  <!-- MODAL THÊM THẺ -->
+  <!-- MODAL THÊM THẺ VÀO BỘ -->
   <div class="modal-backdrop" id="modalAddCard">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="max-width:460px;">
       <div class="card-header">
-        <div class="card-title">+ Thêm thẻ vào bộ hiện tại</div>
+        <div class="card-title">➕ Thêm thẻ mới vào bộ hiện tại</div>
         <button class="btn btn-outline btn-sm" onclick="closeModal('modalAddCard')">✕</button>
       </div>
-      <form id="addCardForm">
+      <form id="addSingleCardForm">
         <div style="margin-bottom:12px;">
-          <label class="auth-label">Mặt trước</label>
-          <input type="text" id="addCardFront" class="input" required />
+          <label class="auth-label" for="singleCardFront">Mặt trước *</label>
+          <textarea id="singleCardFront" class="textarea" rows="3" placeholder="Nhập câu hỏi hoặc khái niệm..." required></textarea>
         </div>
         <div style="margin-bottom:14px;">
-          <label class="auth-label">Mặt sau</label>
-          <input type="text" id="addCardBack" class="input" required />
+          <label class="auth-label" for="singleCardBack">Mặt sau *</label>
+          <textarea id="singleCardBack" class="textarea" rows="3" placeholder="Nhập đáp án hoặc giải thích..." required></textarea>
         </div>
-        <button type="submit" class="btn btn-emerald" style="width:100%;">Thêm thẻ</button>
+        <div style="display:flex; justify-content:flex-end; gap:10px;">
+          <button type="button" class="btn btn-outline" onclick="closeModal('modalAddCard')">Hủy</button>
+          <button type="submit" class="btn btn-emerald">Thêm thẻ</button>
+        </div>
       </form>
     </div>
   </div>
 
-  <div class="toast-container" id="toastContainer"></div>
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
 
   <script>
-    /* 1. FIREBASE AUTH & SESSION */
+    /* ==========================================================================
+       1. FIREBASE AUTHENTICATION & SESSION MANAGEMENT
+       ========================================================================== */
     const FIREBASE_CONFIG = {
       apiKey: "YOUR_FIREBASE_API_KEY",
       authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
@@ -1043,11 +1354,11 @@
     };
 
     const apiKey = "";
-    const isFirebaseReady = !FIREBASE_CONFIG.apiKey.startsWith("YOUR_") && window.firebase;
+    const isFirebaseConfigured = !FIREBASE_CONFIG.apiKey.startsWith("YOUR_") && window.firebase;
     let auth = null;
-    let currentUser = null;
+    let currentUserProfile = null;
 
-    if (isFirebaseReady) {
+    if (isFirebaseConfigured) {
       if (!firebase.apps.length) firebase.initializeApp(FIREBASE_CONFIG);
       auth = firebase.auth();
       auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(() => {});
@@ -1057,33 +1368,31 @@
     const authStatus = document.getElementById("authStatus");
     const nameGroup = document.getElementById("nameGroup");
     const submitAuthBtn = document.getElementById("submitAuthBtn");
+    const passwordInput = document.getElementById("passwordInput");
 
-    function showAuthMsg(msg, type = "error") {
+    function showAuthStatus(msg, type = "error") {
       authStatus.textContent = msg;
       authStatus.className = `auth-status ${type}`;
     }
 
-    document.getElementById("tabLogin").addEventListener("click", () => {
-      authMode = "login";
+    function setAuthMode(nextMode) {
+      authMode = nextMode;
       authStatus.className = "auth-status";
-      document.getElementById("tabLogin").classList.add("active");
-      document.getElementById("tabRegister").classList.remove("active");
-      nameGroup.style.display = "none";
-      submitAuthBtn.textContent = "Đăng nhập";
-    });
+      const isReg = authMode === "register";
+      document.getElementById("tabLogin").classList.toggle("active", !isReg);
+      document.getElementById("tabRegister").classList.toggle("active", isReg);
+      nameGroup.style.display = isReg ? "block" : "none";
+      submitAuthBtn.textContent = isReg ? "Tạo tài khoản" : "Đăng nhập";
+      passwordInput.setAttribute("autocomplete", isReg ? "new-password" : "current-password");
+    }
 
-    document.getElementById("tabRegister").addEventListener("click", () => {
-      authMode = "register";
+    document.getElementById("tabLogin").addEventListener("click", () => setAuthMode("login"));
+    document.getElementById("tabRegister").addEventListener("click", () => setAuthMode("register"));
+
+    async function signInWithOAuth(providerName) {
       authStatus.className = "auth-status";
-      document.getElementById("tabRegister").classList.add("active");
-      document.getElementById("tabLogin").classList.remove("active");
-      nameGroup.style.display = "block";
-      submitAuthBtn.textContent = "Tạo tài khoản";
-    });
-
-    async function doOAuth(providerName) {
       if (!auth) {
-        showAuthMsg("Chưa cấu hình FIREBASE_CONFIG. Bấm nút 'Tiếp tục với tư cách Khách' bên dưới để vào web ngay.");
+        showAuthStatus("Chưa cấu hình FIREBASE_CONFIG. Bấm nút 'Tiếp tục với tư cách Khách' bên dưới để vào học ngay.", "error");
         return;
       }
       const provider = providerName === "google"
@@ -1095,25 +1404,26 @@
         if (err?.code === "auth/popup-blocked" || err?.code === "auth/operation-not-supported-in-this-environment") {
           await auth.signInWithRedirect(provider);
         } else {
-          showAuthMsg(err?.message || "Lỗi đăng nhập");
+          showAuthStatus(err?.message || "Đã xảy ra lỗi xác thực.", "error");
         }
       }
     }
 
-    document.getElementById("googleLoginBtn").addEventListener("click", () => doOAuth("google"));
-    document.getElementById("facebookLoginBtn").addEventListener("click", () => doOAuth("facebook"));
+    document.getElementById("googleLoginBtn").addEventListener("click", () => signInWithOAuth("google"));
+    document.getElementById("facebookLoginBtn").addEventListener("click", () => signInWithOAuth("facebook"));
 
     document.getElementById("authForm").addEventListener("submit", async (e) => {
       e.preventDefault();
+      authStatus.className = "auth-status";
       const email = document.getElementById("emailInput").value.trim();
-      const password = document.getElementById("passwordInput").value;
+      const password = passwordInput.value;
       const displayName = document.getElementById("displayNameInput").value.trim();
 
       if (!auth) {
-        const uid = "user_" + btoa(unescape(encodeURIComponent(email))).replace(/[^a-zA-Z0-9]/g, "").slice(0, 14);
-        const profile = { uid, displayName: displayName || email.split("@")[0], email, photoURL: null, isGuest: false };
-        localStorage.setItem("studyflow_local_user", JSON.stringify(profile));
-        enterApp(profile);
+        const localUid = "local_" + btoa(unescape(encodeURIComponent(email))).replace(/[^a-zA-Z0-9]/g, "").slice(0, 16);
+        const profile = { uid: localUid, displayName: displayName || email.split("@")[0], email, photoURL: null, isGuest: false };
+        localStorage.setItem("studyflow_local_account", JSON.stringify(profile));
+        enterAppWithUser(profile);
         return;
       }
 
@@ -1121,50 +1431,52 @@
         if (authMode === "register") {
           const cred = await auth.createUserWithEmailAndPassword(email, password);
           if (displayName && cred.user) await cred.user.updateProfile({ displayName });
-          showAuthMsg("Đăng ký thành công!", "success");
+          showAuthStatus("Đăng ký tài khoản thành công!", "success");
         } else {
           await auth.signInWithEmailAndPassword(email, password);
         }
       } catch (err) {
-        showAuthMsg(err?.message || "Sai email hoặc mật khẩu.");
+        showAuthStatus(err?.message || "Email hoặc mật khẩu không chính xác.", "error");
       }
     });
 
     document.getElementById("guestContinueBtn").addEventListener("click", () => {
-      localStorage.setItem("studyflow_guest", "1");
-      localStorage.removeItem("studyflow_local_user");
-      enterApp({ uid: "guest", displayName: "Khách", email: "", photoURL: null, isGuest: true });
+      localStorage.setItem("studyflow_guest_mode", "1");
+      localStorage.removeItem("studyflow_local_account");
+      enterAppWithUser({ uid: "guest", displayName: "Khách học tập", email: "Lưu cục bộ", photoURL: null, isGuest: true });
     });
 
     document.getElementById("accountSwitchBtn").addEventListener("click", async () => {
-      stopTimer();
-      localStorage.removeItem("studyflow_guest");
-      localStorage.removeItem("studyflow_local_user");
+      pausePomodoro();
+      localStorage.removeItem("studyflow_guest_mode");
+      localStorage.removeItem("studyflow_local_account");
       if (auth && auth.currentUser) await auth.signOut();
-      currentUser = null;
+      currentUserProfile = null;
       document.getElementById("appShell").classList.remove("visible");
       document.getElementById("authScreen").classList.remove("hidden");
     });
 
-    function enterApp(profile) {
-      currentUser = profile;
+    function enterAppWithUser(profile) {
+      currentUserProfile = profile;
       document.getElementById("authScreen").classList.add("hidden");
       document.getElementById("appShell").classList.add("visible");
 
-      const name = profile.displayName || "Học viên";
-      document.getElementById("topUserName").textContent = name;
-      document.getElementById("topAuthActionLabel").textContent = profile.isGuest ? "• Đăng nhập" : "• Thoát";
+      const shortName = profile.displayName || "Học viên";
+      document.getElementById("topUserName").textContent = shortName;
+      document.getElementById("topAuthActionLabel").textContent = profile.isGuest ? "• Đăng nhập" : "• Đăng xuất";
+
       const av = document.getElementById("topUserAvatar");
-      if (profile.photoURL) av.innerHTML = `<img src="${escapeHTML(profile.photoURL)}" alt="" />`;
-      else av.textContent = name.charAt(0).toUpperCase();
+      if (profile.photoURL) av.innerHTML = `<img src="${escapeHTML(profile.photoURL)}" alt="Avatar" />`;
+      else av.textContent = shortName.charAt(0).toUpperCase();
 
       state = loadState();
-      renderAll();
+      refreshAllAppViews();
     }
 
-    /* 2. CÁC MÔN HỌC CẤP 3 & DỮ LIỆU MẶC ĐỊNH */
+    /* ==========================================================================
+       2. CÁC MÔN HỌC CẤP 3 & LỘ TRÌNH SGK CHUẨN BỘ GD&ĐT (GDPT 2018)
+       ========================================================================== */
     const THPT_SUBJECTS = [
-      { id: "all", name: "Tất cả môn", icon: "🌟" },
       { id: "toan", name: "Toán", icon: "📐" },
       { id: "ly", name: "Vật Lý", icon: "⚛️" },
       { id: "hoa", name: "Hóa Học", icon: "🧪" },
@@ -1178,602 +1490,2010 @@
       { id: "congnghe", name: "Công Nghệ", icon: "🔧" }
     ];
 
-    function getSubject(id) {
-      return THPT_SUBJECTS.find(s => s.id === id) || THPT_SUBJECTS[1];
+    function getSubjectObj(id) {
+      return THPT_SUBJECTS.find(s => s.id === id) || THPT_SUBJECTS[0];
     }
+
+    const SGK_CURRICULUM = {
+      toan: {
+        "10": [
+          {
+            id: "toan-10-1",
+            weekLabel: "Chặng 1 • Tuần 1–4",
+            title: "Mệnh đề, Tập hợp & Bất phương trình bậc nhất hai ẩn",
+            sgkTopic: "SGK Toán 10 (GDPT 2018) – Chương I & II",
+            practice: {
+              q: "Tập hợp A = {x ∈ ℝ | -2 < x ≤ 3} viết dưới dạng khoảng/nửa khoảng là gì?",
+              choices: ["(-2; 3]", "[-2; 3)", "(-2; 3)", "[-2; 3]"],
+              answerIndex: 0,
+              explain: "Dấu '<' là ngoặc tròn '(', dấu '≤' là ngoặc vuông ']' nên được (-2; 3]."
+            }
+          },
+          {
+            id: "toan-10-2",
+            weekLabel: "Chặng 2 • Tuần 5–10",
+            title: "Hàm số bậc hai, Hệ thức lượng trong tam giác & Vectơ",
+            sgkTopic: "SGK Toán 10 (GDPT 2018) – Chương III, IV & V",
+            practice: {
+              q: "Định lí Côsin trong tam giác ABC phát biểu rằng a² bằng biểu thức nào?",
+              choices: [
+                "b² + c² - 2bc·cosA",
+                "b² + c² + 2bc·cosA",
+                "b² - c² - 2bc·cosA",
+                "a² + b² - 2ab·cosC"
+              ],
+              answerIndex: 0,
+              explain: "Theo định lí Côsin: a² = b² + c² - 2bc·cosA."
+            }
+          }
+        ],
+        "11": [
+          {
+            id: "toan-11-1",
+            weekLabel: "Chặng 1 • Tuần 1–5",
+            title: "Hàm số lượng giác, Phương trình lượng giác & Dãy số",
+            sgkTopic: "SGK Toán 11 (GDPT 2018) – Chương I & II",
+            practice: {
+              q: "Công thức số hạng tổng quát uₙ của cấp số cộng có số hạng đầu u₁ và công sai d là gì?",
+              choices: ["uₙ = u₁ + (n - 1)d", "uₙ = u₁·dⁿ⁻¹", "uₙ = u₁ + nd", "uₙ = u₁ - (n - 1)d"],
+              answerIndex: 0,
+              explain: "Cấp số cộng: uₙ = u₁ + (n - 1)d."
+            }
+          },
+          {
+            id: "toan-11-2",
+            weekLabel: "Chặng 2 • Tuần 6–12",
+            title: "Giới hạn, Hàm số mũ – lôgarit & Quan hệ vuông góc trong không gian",
+            sgkTopic: "SGK Toán 11 (GDPT 2018) – Chương III, VI & VII",
+            practice: {
+              q: "Với a > 0, a ≠ 1 và x, y > 0, logₐ(xy) bằng gì?",
+              choices: ["logₐx + logₐy", "logₐx · logₐy", "logₐx - logₐy", "logₐ(x + y)"],
+              answerIndex: 0,
+              explain: "Lôgarit của một tích bằng tổng các lôgarit: logₐ(xy) = logₐx + logₐy."
+            }
+          }
+        ],
+        "12": [
+          {
+            id: "toan-12-1",
+            weekLabel: "Chặng 1 • Tuần 1–5",
+            title: "Ứng dụng đạo hàm để khảo sát và vẽ đồ thị hàm số",
+            sgkTopic: "SGK Toán 12 (GDPT 2018) – Chương I",
+            practice: {
+              q: "Nếu hàm số y = f(x) có f'(x) > 0 với mọi x ∈ (a; b) thì kết luận nào đúng?",
+              choices: [
+                "Hàm số đồng biến trên (a; b)",
+                "Hàm số nghịch biến trên (a; b)",
+                "Hàm số đạt cực đại trên (a; b)",
+                "Đồ thị hàm số nằm dưới trục hoành"
+              ],
+              answerIndex: 0,
+              explain: "f'(x) > 0 trên khoảng nào thì hàm số đồng biến trên khoảng đó."
+            }
+          },
+          {
+            id: "toan-12-2",
+            weekLabel: "Chặng 2 • Tuần 6–12",
+            title: "Nguyên hàm, Tích phân & Phương pháp tọa độ Oxyz",
+            sgkTopic: "SGK Toán 12 (GDPT 2018) – Chương IV & V",
+            practice: {
+              q: "Tích phân ∫ₐᵇ f(x)dx có ý nghĩa hình học như thế nào khi f(x) ≥ 0 trên [a; b]?",
+              choices: [
+                "Diện tích hình thang cong giới hạn bởi y = f(x), Ox, x = a, x = b",
+                "Thể tích khối tròn xoay quanh trục Ox",
+                "Độ dài cung đồ thị y = f(x) từ a đến b",
+                "Giá trị lớn nhất của f(x) trên [a; b]"
+              ],
+              answerIndex: 0,
+              explain: "Với f(x) ≥ 0 trên [a; b], ∫ₐᵇ f(x)dx là diện tích hình thang cong tương ứng."
+            }
+          }
+        ],
+        periodicTests: [
+          {
+            id: "test-toan-gk",
+            title: "Kiểm tra Định kì Giữa kì – Môn Toán (SGK)",
+            duration: "10 phút",
+            questions: [
+              { q: "Đạo hàm của hàm số y = x³ - 3x là:", opts: ["3x² - 3", "x² - 3", "3x²", "3x - 3"], ans: 0 },
+              { q: "Giá trị của sin(π/6) bằng:", opts: ["1/2", "√3/2", "√2/2", "0"], ans: 0 },
+              { q: "Cấp số nhân có u₁ = 2, công bội q = 3 thì u₂ bằng:", opts: ["6", "5", "8", "9"], ans: 0 }
+            ]
+          },
+          {
+            id: "test-toan-ck",
+            title: "Kiểm tra Định kì Tổng hợp – Môn Toán (SGK)",
+            duration: "15 phút",
+            questions: [
+              { q: "∫ cos(x)dx bằng:", opts: ["sin(x) + C", "-sin(x) + C", "cos(x) + C", "-cos(x) + C"], ans: 0 },
+              { q: "Vectơ pháp tuyến của mặt phẳng (P): 2x - y + 3z - 1 = 0 là:", opts: ["(2; -1; 3)", "(2; 1; 3)", "(-2; 1; 3)", "(1; -1; 3)"], ans: 0 },
+              { q: "log₂(8) có giá trị bằng:", opts: ["3", "4", "2", "8"], ans: 0 }
+            ]
+          }
+        ]
+      },
+      ly: {
+        "10": [
+          {
+            id: "ly-10-1",
+            weekLabel: "Chặng 1 • Tuần 1–5",
+            title: "Mô tả chuyển động & Ba định luật Newton về chuyển động",
+            sgkTopic: "SGK Vật Lý 10 (GDPT 2018) – Mở đầu & Động lực học",
+            practice: {
+              q: "Theo định luật II Newton, gia tốc của vật cùng hướng với hợp lực và có độ lớn:",
+              choices: ["a = F / m", "a = m / F", "a = F · m", "a = F + m"],
+              answerIndex: 0,
+              explain: "Biểu thức định luật II Newton: F⃗ = m·a⃗ ⇒ a = F / m."
+            }
+          },
+          {
+            id: "ly-10-2",
+            weekLabel: "Chặng 2 • Tuần 6–12",
+            title: "Năng lượng, Công, Công suất & Động lượng",
+            sgkTopic: "SGK Vật Lý 10 (GDPT 2018) – Năng lượng & Động lượng",
+            practice: {
+              q: "Động năng của vật khối lượng m chuyển động với tốc độ v là:",
+              choices: ["Wđ = ½mv²", "Wđ = mv²", "Wđ = mgh", "Wđ = ½m²v"],
+              answerIndex: 0,
+              explain: "Động năng tính theo công thức Wđ = ½mv²."
+            }
+          }
+        ],
+        "11": [
+          {
+            id: "ly-11-1",
+            weekLabel: "Chặng 1 • Tuần 1–6",
+            title: "Dao động điều hòa & Sóng cơ học",
+            sgkTopic: "SGK Vật Lý 11 (GDPT 2018) – Dao động & Sóng",
+            practice: {
+              q: "Trong dao động điều hòa x = Acos(ωt + φ), li độ cực đại của vật là:",
+              choices: ["A", "ωA", "ω²A", "φ"],
+              answerIndex: 0,
+              explain: "A là biên độ dao động, cũng là giá trị li độ cực đại."
+            }
+          },
+          {
+            id: "ly-11-2",
+            weekLabel: "Chặng 2 • Tuần 7–12",
+            title: "Điện trường, Dòng điện không đổi & Từ trường",
+            sgkTopic: "SGK Vật Lý 11 (GDPT 2018) – Điện & Từ",
+            practice: {
+              q: "Cường độ dòng điện không đổi I được xác định bằng:",
+              choices: ["I = Δq / Δt", "I = Δt / Δq", "I = U · R", "I = R / U"],
+              answerIndex: 0,
+              explain: "Dòng điện không đổi: I = Δq / Δt."
+            }
+          }
+        ],
+        "12": [
+          {
+            id: "ly-12-1",
+            weekLabel: "Chặng 1 • Tuần 1–5",
+            title: "Vật lí nhiệt (Nội năng, Nguyên lí I nhiệt động lực học) & Khí lí tưởng",
+            sgkTopic: "SGK Vật Lý 12 (GDPT 2018) – Vật lí nhiệt & Khí lí tưởng",
+            practice: {
+              q: "Trong quá trình đẳng tích của một lượng khí lí tưởng xác định, áp suất tỉ lệ thuận với:",
+              choices: ["Nhiệt độ tuyệt đối T (K)", "Thể tích V", "Nhiệt độ Celsius t (°C)", "Khối lượng riêng ρ"],
+              answerIndex: 0,
+              explain: "Định luật Charles: p/T = hằng số (T tính theo Kelvin)."
+            }
+          },
+          {
+            id: "ly-12-2",
+            weekLabel: "Chặng 2 • Tuần 6–12",
+            title: "Từ trường, Cảm ứng điện từ & Vật lí hạt nhân",
+            sgkTopic: "SGK Vật Lý 12 (GDPT 2018) – Từ trường & Hạt nhân",
+            practice: {
+              q: "Suất điện động cảm ứng trong mạch kín tỉ lệ với:",
+              choices: ["Tốc độ biến thiên từ thông qua mạch", "Độ lớn từ thông ban đầu", "Điện trở của mạch", "Chiều dài dây dẫn"],
+              answerIndex: 0,
+              explain: "Định luật Faraday: e_c = -ΔΦ / Δt."
+            }
+          }
+        ],
+        periodicTests: [
+          {
+            id: "test-ly-gk",
+            title: "Kiểm tra Định kì – Vật Lý (Động lực học & Dao động)",
+            duration: "10 phút",
+            questions: [
+              { q: "Bước sóng λ liên hệ với vận tốc truyền sóng v và tần số f theo công thức:", opts: ["λ = v / f", "λ = v · f", "λ = f / v", "λ = 2πf / v"], ans: 0 },
+              { q: "Đơn vị của công suất trong hệ SI là:", opts: ["W (Oát)", "J (Jun)", "N (Niutơn)", "V (Vôn)"], ans: 0 },
+              { q: "Khi vật dao động điều hòa đi qua vị trí cân bằng thì:", opts: ["Vận tốc đạt cực đại", "Gia tốc đạt cực đại", "Li độ đạt cực đại", "Vận tốc bằng 0"], ans: 0 }
+            ]
+          }
+        ]
+      },
+      hoa: {
+        "10": [
+          {
+            id: "hoa-10-1",
+            weekLabel: "Chặng 1 • Tuần 1–5",
+            title: "Cấu tạo nguyên tử, Bảng tuần hoàn & Liên kết hóa học",
+            sgkTopic: "SGK Hóa Học 10 (GDPT 2018) – Chương I, II & III",
+            practice: {
+              q: "Trong nguyên tử trung hòa về điện, số hạt proton luôn bằng:",
+              choices: ["Số hạt electron", "Số hạt neutron", "Số khối A", "Tổng số hạt mang điện"],
+              answerIndex: 0,
+              explain: "Nguyên tử trung hòa điện có số proton = số electron."
+            }
+          },
+          {
+            id: "hoa-10-2",
+            weekLabel: "Chặng 2 • Tuần 6–12",
+            title: "Phản ứng oxi hóa – khử, Năng lượng hóa học & Tốc độ phản ứng",
+            sgkTopic: "SGK Hóa Học 10 (GDPT 2018) – Chương IV, V & VI",
+            practice: {
+              q: "Chất khử là chất:",
+              choices: ["Nhường electron (số oxi hóa tăng)", "Nhận electron (số oxi hóa giảm)", "Không thay đổi số oxi hóa", "Luôn là kim loại kiềm"],
+              answerIndex: 0,
+              explain: "Khử nhường – O nhận: chất khử nhường electron làm số oxi hóa tăng."
+            }
+          }
+        ],
+        "11": [
+          {
+            id: "hoa-11-1",
+            weekLabel: "Chặng 1 • Tuần 1–6",
+            title: "Cân bằng hóa học, Nitrogen – Sulfur & Đại cương Hóa hữu cơ",
+            sgkTopic: "SGK Hóa Học 11 (GDPT 2018) – Chương I, II & III",
+            practice: {
+              q: "Khi tăng nhiệt độ đối với hệ cân bằng tỏa nhiệt (ΔrH°₂₉₈ < 0), cân bằng chuyển dịch theo chiều:",
+              choices: ["Nghịch (thu nhiệt)", "Thuận (tỏa nhiệt)", "Không chuyển dịch", "Tùy thuộc áp suất"],
+              answerIndex: 0,
+              explain: "Tăng nhiệt độ làm cân bằng chuyển dịch theo chiều thu nhiệt (chiều nghịch)."
+            }
+          },
+          {
+            id: "hoa-11-2",
+            weekLabel: "Chặng 2 • Tuần 7–12",
+            title: "Hydrocarbon (Alkane, Alkene, Alkyne, Arene) & Dẫn xuất halogen – Alcohol – Phenol",
+            sgkTopic: "SGK Hóa Học 11 (GDPT 2018) – Chương IV & V",
+            practice: {
+              q: "Công thức chung của dãy đồng đẳng alkene mạch hở là:",
+              choices: ["CₙH₂ₙ (n ≥ 2)", "CₙH₂ₙ₊₂ (n ≥ 1)", "CₙH₂ₙ₋₂ (n ≥ 2)", "CₙH₂ₙO"],
+              answerIndex: 0,
+              explain: "Alkene no, đơn chức, mạch hở có công thức chung CₙH₂ₙ (n ≥ 2)."
+            }
+          }
+        ],
+        "12": [
+          {
+            id: "hoa-12-1",
+            weekLabel: "Chặng 1 • Tuần 1–5",
+            title: "Ester – Lipid, Carbohydrate & Hợp chất chứa nitrogen (Amine, Amino acid, Peptide, Protein)",
+            sgkTopic: "SGK Hóa Học 12 (GDPT 2018) – Chương I, II & III",
+            practice: {
+              q: "Phản ứng thủy phân este trong môi trường kiềm được gọi là phản ứng:",
+              choices: ["Xà phòng hóa", "Ester hóa", "Trùng ngưng", "Cracking"],
+              answerIndex: 0,
+              explain: "Ester + dung dịch kiềm (đun nóng) tạo muối và ancol gọi là phản ứng xà phòng hóa."
+            }
+          },
+          {
+            id: "hoa-12-2",
+            weekLabel: "Chặng 2 • Tuần 6–12",
+            title: "Polymer, Pin điện – Điện phân & Nguyên tố kim loại",
+            sgkTopic: "SGK Hóa Học 12 (GDPT 2018) – Chương IV, V & VI",
+            practice: {
+              q: "Poly(vinyl chloride) (PVC) được điều chế từ monome nào?",
+              choices: ["Vinyl chloride (CH₂=CH-Cl)", "Ethylene (CH₂=CH₂)", "Styrene (C₆H₅CH=CH₂)", "Buta-1,3-diene"],
+              answerIndex: 0,
+              explain: "PVC tạo thành từ phản ứng trùng hợp vinyl chloride."
+            }
+          }
+        ],
+        periodicTests: [
+          {
+            id: "test-hoa-gk",
+            title: "Kiểm tra Định kì – Hóa Học (Hữu cơ & Vô cơ SGK)",
+            duration: "10 phút",
+            questions: [
+              { q: "Glucose thuộc loại carbohydrate nào?", opts: ["Monosaccharide", "Disaccharide", "Polysaccharide", "Lipid"], ans: 0 },
+              { q: "Ethylene làm mất màu dung dịch Br₂ nhờ có:", opts: ["Liên kết đôi C=C", "Liên kết ba C≡C", "Vòng benzene", "Nhóm -OH"], ans: 0 },
+              { q: "Amino acid là hợp chất hữu cơ tạp chức chứa nhóm:", opts: ["-NH₂ và -COOH", "-OH và -CHO", "-NH₂ và -CHO", "-COOH và -OH"], ans: 0 }
+            ]
+          }
+        ]
+      },
+      van: {
+        "10": [
+          {
+            id: "van-10-1",
+            weekLabel: "Chặng 1 • Tuần 1–6",
+            title: "Thần thoại, Sử thi & Thơ trữ tình trong SGK Ngữ Văn 10",
+            sgkTopic: "SGK Ngữ Văn 10 (GDPT 2018) – Đọc hiểu & Thực hành tiếng Việt",
+            practice: {
+              q: "Đặc trưng nổi bật của sử thi anh hùng trong văn học dân gian là gì?",
+              choices: [
+                "Tái hiện biến cố lớn, nhân vật anh hùng mang tầm vóc cộng đồng",
+                "Truyện ngắn trào phúng châm biếm thói hư tật xấu",
+                "Thơ tứ tuyệt hàm súc thiên về tả cảnh ngụ tình",
+                "Văn chính luận nghị luận sắc bén"
+              ],
+              answerIndex: 0,
+              explain: "Sử thi gắn với biến cố lớn và người anh hùng đại diện cho cộng đồng."
+            }
+          },
+          {
+            id: "van-10-2",
+            weekLabel: "Chặng 2 • Tuần 7–12",
+            title: "Văn bản nghị luận, Văn bản thông tin & Viết bài nghị luận xã hội",
+            sgkTopic: "SGK Ngữ Văn 10 (GDPT 2018) – Viết & Nói nghe",
+            practice: {
+              q: "Luận điểm trong bài văn nghị luận cần đảm bảo yêu cầu nào?",
+              choices: [
+                "Rõ ràng, chính xác, gắn kết chặt chẽ với lí lẽ và bằng chứng",
+                "Càng dài dòng và nhiều thuật ngữ càng tốt",
+                "Không cần liên hệ với vấn đề đặt ra",
+                "Chỉ nêu cảm xúc cá nhân không có lập luận"
+              ],
+              answerIndex: 0,
+              explain: "Luận điểm phải rõ ràng, mạch lạc và được làm sáng tỏ bằng lí lẽ, bằng chứng."
+            }
+          }
+        ],
+        "11": [
+          {
+            id: "van-11-1",
+            weekLabel: "Chặng 1 • Tuần 1–6",
+            title: "Truyện ngắn, Tiểu thuyết & Thơ hiện đại trong SGK Ngữ Văn 11",
+            sgkTopic: "SGK Ngữ Văn 11 (GDPT 2018) – Đọc & Viết văn nghị luận văn học",
+            practice: {
+              q: "Điểm nhìn trần thuật trong tác phẩm tự sự giúp:",
+              choices: [
+                "Định vị góc nhìn, cách tiếp cận sự kiện và chiều sâu tâm lí nhân vật",
+                "Thay thế hoàn toàn cốt truyện và nhân vật",
+                "Biến văn bản tự sự thành văn bản quy phạm pháp luật",
+                "Xóa bỏ yếu tố thời gian nghệ thuật"
+              ],
+              answerIndex: 0,
+              explain: "Điểm nhìn chi phối cách quan sát, đánh giá sự việc và nhân vật."
+            }
+          },
+          {
+            id: "van-11-2",
+            weekLabel: "Chặng 2 • Tuần 7–12",
+            title: "Tùy bút, Tản văn, Bi kịch & Nghị luận xã hội chuyên sâu",
+            sgkTopic: "SGK Ngữ Văn 11 (GDPT 2018) – Đọc hiểu & Viết",
+            practice: {
+              q: "Nét đặc sắc thường thấy của tùy bút và tản văn là:",
+              choices: [
+                "Tính trữ tình, suy tư cá nhân gắn với những quan sát tinh tế đời sống",
+                "Nhân vật bi kịch đối đầu với định mệnh trên sân khấu",
+                "Cốt truyện trinh thám phá án nhiều tuyến",
+                "Văn bản hướng dẫn quy trình kỹ thuật"
+              ],
+              answerIndex: 0,
+              explain: "Tùy bút, tản văn giàu chất trữ tình và dấu ấn trải nghiệm của người viết."
+            }
+          }
+        ],
+        "12": [
+          {
+            id: "van-12-1",
+            weekLabel: "Chặng 1 • Tuần 1–6",
+            title: "Truyện truyền kì, Tiểu thuyết hiện đại & Phóng sự – Nhật kí",
+            sgkTopic: "SGK Ngữ Văn 12 (GDPT 2018) – Đọc hiểu thể loại trọng tâm",
+            practice: {
+              q: "Yếu tố kì ảo trong truyện truyền kì thường dùng để:",
+              choices: [
+                "Tăng tính hấp dẫn, phản ánh hiện thực và gửi gắm tư tưởng nhân văn",
+                "Thay thế toàn bộ bối cảnh lịch sử có thật",
+                "Làm văn bản trở nên khó hiểu hơn",
+                "Loại bỏ xung đột nhân vật"
+              ],
+              answerIndex: 0,
+              explain: "Yếu tố kì ảo tôn bật ý nghĩa hiện thực và thông điệp tư tưởng của tác phẩm."
+            }
+          },
+          {
+            id: "van-12-2",
+            weekLabel: "Chặng 2 • Tuần 7–12",
+            title: "Nghị luận xã hội (200 chữ & bài hoàn chỉnh) & Nghị luận văn học",
+            sgkTopic: "SGK Ngữ Văn 12 (GDPT 2018) – Kĩ năng viết tổng hợp",
+            practice: {
+              q: "Khi viết bài nghị luận so sánh hai tác phẩm/đoạn trích văn học, cần chú trọng:",
+              choices: [
+                "Chỉ ra điểm tương đồng, khác biệt về nội dung/nghệ thuật và lí giải nguyên nhân",
+                "Chép lại nguyên văn hai tác phẩm rồi kết luận",
+                "Chỉ phân tích một tác phẩm duy nhất",
+                "Bỏ qua phần khái quát vấn đề so sánh"
+              ],
+              answerIndex: 0,
+              explain: "Cần làm nổi bật điểm giống, khác và lí giải sự giống/khác đó."
+            }
+          }
+        ],
+        periodicTests: [
+          {
+            id: "test-van-gk",
+            title: "Kiểm tra Định kì – Ngữ Văn (Đọc hiểu & Tiếng Việt SGK)",
+            duration: "10 phút",
+            questions: [
+              { q: "Biện pháp tu từ điệp ngữ có tác dụng chính là:", opts: ["Nhấn mạnh ý, tạo nhịp điệu và tăng sức gợi cảm", "So sánh hai sự vật đối lập", "Thay thế tên riêng bằng đại từ", "Rút gọn chủ ngữ của câu"], ans: 0 },
+              { q: "Đoạn văn nghị luận xã hội ngắn gọn trọng tâm thường yêu cầu:", opts: ["Bám sát vấn đề, lập luận chặt chẽ, dẫn chứng thuyết phục", "Kể chuyện cổ tích dài dòng", "Liệt kê thuật ngữ không giải thích", "Không có câu chủ đề"], ans: 0 }
+            ]
+          }
+        ]
+      },
+      sinh: {
+        "10": [
+          {
+            id: "sinh-10-1",
+            weekLabel: "Chặng 1 • Tuần 1–6",
+            title: "Thành phần hóa học của tế bào & Cấu trúc tế bào nhân sơ – nhân thực",
+            sgkTopic: "SGK Sinh Học 10 (GDPT 2018) – Phần Sinh học tế bào",
+            practice: {
+              q: "Bào quan nào là trung tâm tổng hợp ATP (năng lượng) chủ yếu của tế bào nhân thực?",
+              choices: ["Ti thể", "Ribôxôm", "Không bào", "Lưới nội chất trơn"],
+              answerIndex: 0,
+              explain: "Ti thể thực hiện hô hấp tế bào, tạo phần lớn ATP cho tế bào."
+            }
+          }
+        ],
+        "11": [
+          {
+            id: "sinh-11-1",
+            weekLabel: "Chặng 1 • Tuần 1–6",
+            title: "Trao đổi chất và chuyển hóa năng lượng ở sinh vật (Thực vật & Động vật)",
+            sgkTopic: "SGK Sinh Học 11 (GDPT 2018) – Trao đổi chất & Chuyển hóa năng lượng",
+            practice: {
+              q: "Pha sáng của quang hợp ở thực vật diễn ra ở vị trí nào của lục lạp?",
+              choices: ["Màng tilacôit", "Chất nền strôma", "Màng ngoài ti thể", "Tế bào chất"],
+              answerIndex: 0,
+              explain: "Pha sáng diễn ra trên màng tilacôit, tạo ATP, NADPH và giải phóng O₂."
+            }
+          }
+        ],
+        "12": [
+          {
+            id: "sinh-12-1",
+            weekLabel: "Chặng 1 • Tuần 1–6",
+            title: "Di truyền phân tử (ADN, ARN, Protein), Nhiễm sắc thể & Di truyền học quần thể",
+            sgkTopic: "SGK Sinh Học 12 (GDPT 2018) – Di truyền học & Tiến hóa",
+            practice: {
+              q: "Theo nguyên tắc bổ sung trên phân tử ADN mạch kép, tỉ lệ nào luôn đúng?",
+              choices: ["A = T và G = X", "A = G và T = X", "A = X và T = G", "A + T = G + X luôn đúng"],
+              answerIndex: 0,
+              explain: "Trên mạch kép ADN: A liên kết bổ sung với T, G liên kết bổ sung với X."
+            }
+          }
+        ],
+        periodicTests: [
+          {
+            id: "test-sinh-gk",
+            title: "Kiểm tra Định kì – Sinh Học (Tế bào, Trao đổi chất & Di truyền)",
+            duration: "10 phút",
+            questions: [
+              { q: "Quá trình phiên mã tổng hợp phân tử nào?", opts: ["ARN", "ADN", "Lipit", "Xenlulôzơ"], ans: 0 },
+              { q: "Nhân tố tiến hóa làm thay đổi tần số alen theo hướng xác định là:", opts: ["Chọn lọc tự nhiên", "Giao phối ngẫu nhiên", "Cấu trúc tuổi", "Mật độ cá thể"], ans: 0 }
+            ]
+          }
+        ]
+      },
+      su: {
+        "10": [
+          {
+            id: "su-10-1",
+            weekLabel: "Chặng 1 • Tuần 1–6",
+            title: "Sử học & Văn minh cổ – trung đại thế giới, Đông Nam Á và Việt Nam",
+            sgkTopic: "SGK Lịch Sử 10 (GDPT 2018) – Văn minh cổ trung đại",
+            practice: {
+              q: "Bốn nền văn minh lớn thời cổ đại phương Đông gắn liền với các lưu vực sông lớn là:",
+              choices: [
+                "Ai Cập, Lưỡng Hà, Ấn Độ, Trung Hoa",
+                "Hy Lạp, La Mã, Anh, Pháp",
+                "Nhật Bản, Hàn Quốc, Thái Lan, Lào",
+                "Mỹ, Canada, Brazil, Argentina"
+              ],
+              answerIndex: 0,
+              explain: "Văn minh cổ đại phương Đông hình thành bên các dòng sông lớn: Nin, Ơ-phrát – Tigris, Ấn – Hằng, Hoàng Hà – Trường Giang."
+            }
+          }
+        ],
+        "11": [
+          {
+            id: "su-11-1",
+            weekLabel: "Chặng 1 • Tuần 1–6",
+            title: "Chủ nghĩa xã hội, Chiến tranh thế giới & Đông Nam Á",
+            sgkTopic: "SGK Lịch Sử 11 (GDPT 2018) – Lịch sử thế giới hiện đại",
+            practice: {
+              q: "Hiệp hội các quốc gia Đông Nam Á (ASEAN) được thành lập năm nào?",
+              choices: ["1967", "1945", "1954", "1991"],
+              answerIndex: 0,
+              explain: "ASEAN được thành lập ngày 08/08/1967 tại Băng Cốc (Thái Lan)."
+            }
+          }
+        ],
+        "12": [
+          {
+            id: "su-12-1",
+            weekLabel: "Chặng 1 • Tuần 1–6",
+            title: "Lịch sử Việt Nam (1919–1991) & Thế giới sau Chiến tranh lạnh",
+            sgkTopic: "SGK Lịch Sử 12 (GDPT 2018) – Trọng tâm Lịch sử 12",
+            practice: {
+              q: "Sự kiện ngày 02/09/1945 tại Quảng trường Ba Đình đánh dấu:",
+              choices: [
+                "Ra đời nước Việt Nam Dân chủ Cộng hòa",
+                "Ký Hiệp định Giơ-ne-vơ",
+                "Giải phóng hoàn toàn miền Nam",
+                "Gia nhập Liên Hợp Quốc"
+              ],
+              answerIndex: 0,
+              explain: "Ngày 02/09/1945 khai sinh nước Việt Nam Dân chủ Cộng hòa."
+            }
+          }
+        ],
+        periodicTests: [
+          {
+            id: "test-su-gk",
+            title: "Kiểm tra Định kì – Lịch Sử (Mốc sự kiện trọng tâm SGK)",
+            duration: "10 phút",
+            questions: [
+              { q: "Chiến thắng Điện Biên Phủ kết thúc năm:", opts: ["1954", "1945", "1975", "1986"], ans: 0 },
+              { q: "Đường lối Đổi mới toàn diện của Việt Nam bắt đầu từ Đại hội VI năm:", opts: ["1986", "1976", "1996", "2001"], ans: 0 }
+            ]
+          }
+        ]
+      },
+      dia: {
+        "10": [
+          {
+            id: "dia-10-1",
+            weekLabel: "Chặng 1 • Tuần 1–6",
+            title: "Bản đồ, Thạch quyển, Khí quyển, Thủy quyển & Địa lí kinh tế – xã hội",
+            sgkTopic: "SGK Địa Lí 10 (GDPT 2018) – Đại cương Địa lí",
+            practice: {
+              q: "Tỉ lệ bản đồ 1 : 200.000 có nghĩa là 1 cm trên bản đồ ứng với ngoài thực địa là:",
+              choices: ["2 km", "200 m", "20 km", "200 km"],
+              answerIndex: 0,
+              explain: "1 cm trên bản đồ = 200.000 cm = 2.000 m = 2 km."
+            }
+          }
+        ],
+        "11": [
+          {
+            id: "dia-11-1",
+            weekLabel: "Chặng 1 • Tuần 1–6",
+            title: "Sự khác biệt về trình độ phát triển kinh tế – xã hội & Địa lí các khu vực/quốc gia",
+            sgkTopic: "SGK Địa Lí 11 (GDPT 2018) – Địa lí thế giới & khu vực",
+            practice: {
+              q: "Chỉ số HDI phản ánh mức độ phát triển con người dựa trên các tiêu chí:",
+              choices: [
+                "Tuổi thọ trung bình, giáo dục và thu nhập bình quân đầu người",
+                "Diện tích lãnh thổ, số lượng đảo và chiều dài bờ biển",
+                "Số lượng sân bay và cảng biển",
+                "Tỉ lệ đô thị hóa tuyệt đối"
+              ],
+              answerIndex: 0,
+              explain: "HDI gồm 3 trụ cột: sức khỏe (tuổi thọ), giáo dục và mức sống (GNI/người)."
+            }
+          }
+        ],
+        "12": [
+          {
+            id: "dia-12-1",
+            weekLabel: "Chặng 1 • Tuần 1–6",
+            title: "Địa lí tự nhiên Việt Nam, Dân cư & Chuyển dịch cơ cấu kinh tế",
+            sgkTopic: "SGK Địa Lí 12 (GDPT 2018) – Địa lí Việt Nam",
+            practice: {
+              q: "Khí hậu Việt Nam có đặc điểm nổi bật là:",
+              choices: [
+                "Nhiệt đới ẩm gió mùa, phân hóa đa dạng theo không gian và thời gian",
+                "Ôn đới lục địa khô hạn quanh năm",
+                "Xích đạo ẩm đồng nhất trên cả nước",
+                "Hàn đới lạnh giá quanh năm"
+              ],
+              answerIndex: 0,
+              explain: "Việt Nam nằm trong vùng nội chí tuyến bán cầu Bắc nên có khí hậu nhiệt đới ẩm gió mùa."
+            }
+          }
+        ],
+        periodicTests: [
+          {
+            id: "test-dia-gk",
+            title: "Kiểm tra Định kì – Địa Lí (Tự nhiên & Kinh tế SGK)",
+            duration: "10 phút",
+            questions: [
+              { q: "Vùng kinh tế trọng điểm phía Nam có trung tâm kinh tế lớn nhất cả nước là:", opts: ["TP. Hồ Chí Minh", "Đà Nẵng", "Cần Thơ", "Hải Phòng"], ans: 0 },
+              { q: "Việt Nam giáp với Biển Đông ở hướng nào?", opts: ["Đông, Nam và Tây Nam", "Chỉ ở phía Bắc", "Chỉ ở phía Tây", "Không giáp biển"], ans: 0 }
+            ]
+          }
+        ]
+      },
+      anh: {
+        "10": [
+          {
+            id: "anh-10-1",
+            weekLabel: "Chặng 1 • Tuần 1–6",
+            title: "Present Simple vs. Present Continuous, Gerunds & To-infinitives",
+            sgkTopic: "SGK Tiếng Anh 10 (GDPT 2018) – Family life, Humans & Environment",
+            practice: {
+              q: "Choose the correct form: 'She usually ______ to school by bike.'",
+              choices: ["goes", "is going", "went", "has gone"],
+              answerIndex: 0,
+              explain: "'Usually' indicates a regular habit → Present Simple: 'goes'."
+            }
+          }
+        ],
+        "11": [
+          {
+            id: "anh-11-1",
+            weekLabel: "Chặng 1 • Tuần 1–6",
+            title: "Past Simple vs. Present Perfect, Participle Clauses & Cleft Sentences",
+            sgkTopic: "SGK Tiếng Anh 11 (GDPT 2018) – Healthy lifestyle, ASEAN & Global warming",
+            practice: {
+              q: "Choose the correct option: 'We ______ in this city since 2018.'",
+              choices: ["have lived", "lived", "are living", "live"],
+              answerIndex: 0,
+              explain: "'Since + mốc thời gian' dùng thì hiện tại hoàn thành: 'have lived'."
+            }
+          }
+        ],
+        "12": [
+          {
+            id: "anh-12-1",
+            weekLabel: "Chặng 1 • Tuần 1–6",
+            title: "Tenses review, Passive Voice, Conditionals & Relative Clauses",
+            sgkTopic: "SGK Tiếng Anh 12 (GDPT 2018) – Life stories, Green living & AI",
+            practice: {
+              q: "Choose the correct sentence (Conditional type 2): 'If I ______ more time, I would read more books.'",
+              choices: ["had", "have", "will have", "had had"],
+              answerIndex: 0,
+              explain: "Câu điều kiện loại 2 diễn tả giả định trái hiện tại: If + S + V2/ed, S + would + V."
+            }
+          }
+        ],
+        periodicTests: [
+          {
+            id: "test-anh-gk",
+            title: "Kiểm tra Định kì – Tiếng Anh (Ngữ pháp & Từ vựng SGK)",
+            duration: "10 phút",
+            questions: [
+              { q: "The project ______ by the students last week.", opts: ["was completed", "completed", "is completed", "completes"], ans: 0 },
+              { q: "Meaning of 'procrastinate' is:", opts: ["Trì hoãn việc cần làm", "Tăng tốc độ", "Khuyến khích", "Đặt câu hỏi"], ans: 0 }
+            ]
+          }
+        ]
+      },
+      tin: {
+        "10": [
+          {
+            id: "tin-10-1",
+            weekLabel: "Chặng 1 • Tuần 1–6",
+            title: "Thông tin – Dữ liệu, Máy tính, Mạng máy tính & An toàn thông tin",
+            sgkTopic: "SGK Tin Học 10 (GDPT 2018) – Khoa học máy tính & Tin học ứng dụng",
+            practice: {
+              q: "Đơn vị cơ bản đo lượng thông tin trong tin học là:",
+              choices: ["Bit", "Pixel", "Hertz", "Volt"],
+              answerIndex: 0,
+              explain: "Bit (0 hoặc 1) là đơn vị nhỏ nhất biểu diễn thông tin."
+            }
+          }
+        ],
+        "11": [
+          {
+            id: "tin-11-1",
+            weekLabel: "Chặng 1 • Tuần 1–6",
+            title: "Hệ điều hành, Phần mềm ứng dụng & Lưu trữ – Tìm kiếm – Quản trị dữ liệu",
+            sgkTopic: "SGK Tin Học 11 (GDPT 2018) – Cơ sở dữ liệu & Lập trình",
+            practice: {
+              q: "Khóa chính (Primary Key) trong bảng cơ sở dữ liệu có đặc điểm:",
+              choices: [
+                "Dùng để nhận diện duy nhất mỗi bản ghi trong bảng",
+                "Cho phép trùng lặp mọi giá trị",
+                "Chỉ dùng cho cột văn bản dài",
+                "Tự động xóa dữ liệu cũ"
+              ],
+              answerIndex: 0,
+              explain: "Khóa chính xác định duy nhất từng bản ghi (hàng) và không trùng nhau."
+            }
+          }
+        ],
+        "12": [
+          {
+            id: "tin-12-1",
+            weekLabel: "Chặng 1 • Tuần 1–6",
+            title: "Giới thiệu Trí tuệ nhân tạo (AI), Mạng cục bộ & Phát triển web/ứng dụng",
+            sgkTopic: "SGK Tin Học 12 (GDPT 2018) – AI, Mạng & Thiết kế web",
+            practice: {
+              q: "Thẻ HTML nào dùng để tạo liên kết tới trang khác?",
+              choices: ["<a>", "<p>", "<table>", "<style>"],
+              answerIndex: 0,
+              explain: "Thẻ <a> với thuộc tính href tạo siêu liên kết trong HTML."
+            }
+          }
+        ],
+        periodicTests: [
+          {
+            id: "test-tin-gk",
+            title: "Kiểm tra Định kì – Tin Học (Kiến thức SGK)",
+            duration: "10 phút",
+            questions: [
+              { q: "Tìm kiếm nhị phân yêu cầu dữ liệu đầu vào phải:", opts: ["Đã được sắp xếp", "Là số nguyên âm", "Có đúng 10 phần tử", "Lưu trên đám mây"], ans: 0 },
+              { q: "Thuộc tính CSS 'display: flex' giúp:", opts: ["Bố trí linh hoạt các phần tử trên một hàng/cột", "Đổi màu phông chữ thành đỏ", "Tải lại trang web", "Mã hóa mật khẩu"], ans: 0 }
+            ]
+          }
+        ]
+      },
+      ktpl: {
+        "10": [
+          {
+            id: "ktpl-10-1",
+            weekLabel: "Chặng 1 • Tuần 1–6",
+            title: "Nền kinh tế và các chủ thể, Thị trường & Cơ chế thị trường",
+            sgkTopic: "SGK Giáo dục Kinh tế và Pháp luật 10 (GDPT 2018)",
+            practice: {
+              q: "Chủ thể nào đóng vai trò sản xuất hàng hóa, dịch vụ đáp ứng nhu cầu xã hội?",
+              choices: ["Chủ thể sản xuất", "Chủ thể trung gian", "Chủ thể tiêu dùng", "Chủ thể quản lí"],
+              answerIndex: 0,
+              explain: "Chủ thể sản xuất tạo ra sản phẩm, dịch vụ cung cấp cho thị trường."
+            }
+          }
+        ],
+        "11": [
+          {
+            id: "ktpl-11-1",
+            weekLabel: "Chặng 1 • Tuần 1–6",
+            title: "Cạnh tranh, Cung – cầu, Lạm phát, Thất nghiệp & Quyền bình đẳng công dân",
+            sgkTopic: "SGK Giáo dục Kinh tế và Pháp luật 11 (GDPT 2018)",
+            practice: {
+              q: "Khi giá cả hàng hóa tăng cao liên tục trên diện rộng trong nền kinh tế, hiện tượng đó gọi là:",
+              choices: ["Lạm phát", "Giảm phát", "Cân bằng cung cầu", "Tích lũy tư bản"],
+              answerIndex: 0,
+              explain: "Lạm phát là tình trạng mức giá chung của nền kinh tế tăng liên tục."
+            }
+          }
+        ],
+        "12": [
+          {
+            id: "ktpl-12-1",
+            weekLabel: "Chặng 1 • Tuần 1–6",
+            title: "Tăng trưởng – phát triển kinh tế, Hội nhập kinh tế quốc tế & Pháp luật đời sống",
+            sgkTopic: "SGK Giáo dục Kinh tế và Pháp luật 12 (GDPT 2018)",
+            practice: {
+              q: "Khởi sự kinh doanh hiệu quả cần bắt đầu từ việc:",
+              choices: [
+                "Xác định ý tưởng khả thi, nghiên cứu thị trường và lập kế hoạch nguồn lực",
+                "Vay vốn tối đa mà không tính toán chi phí",
+                "Sao chép nguyên mẫu không quan tâm pháp luật",
+                "Bỏ qua nhu cầu khách hàng"
+              ],
+              answerIndex: 0,
+              explain: "Cần khảo sát nhu cầu, đánh giá rủi ro và lập kế hoạch kinh doanh rõ ràng."
+            }
+          }
+        ],
+        periodicTests: [
+          {
+            id: "test-ktpl-gk",
+            title: "Kiểm tra Định kì – GDKT & PL (SGK)",
+            duration: "10 phút",
+            questions: [
+              { q: "Khi cầu tăng trong khi cung không đổi, giá cả thị trường có xu hướng:", opts: ["Tăng lên", "Giảm xuống", "Bằng 0", "Không đổi"], ans: 0 },
+              { q: "Công dân đủ bao nhiêu tuổi thì có năng lực hành vi dân sự đầy đủ theo quy định?", opts: ["Đủ 18 tuổi", "Đủ 14 tuổi", "Đủ 16 tuổi", "Đủ 20 tuổi"], ans: 0 }
+            ]
+          }
+        ]
+      },
+      congnghe: {
+        "10": [
+          {
+            id: "cn-10-1",
+            weekLabel: "Chặng 1 • Tuần 1–6",
+            title: "Khái quát về Công nghệ, Vẽ kĩ thuật & Trồng trọt / Thiết kế công nghệ",
+            sgkTopic: "SGK Công Nghệ 10 (GDPT 2018)",
+            practice: {
+              q: "Hình chiếu vuông góc thường gồm các hình chiếu chính nào?",
+              choices: [
+                "Hình chiếu đứng, hình chiếu bằng, hình chiếu cạnh",
+                "Hình chiếu xiên, hình chiếu trục đo, hình cắt",
+                "Hình chiếu đứng và hình phối cảnh",
+                "Chỉ có một hình chiếu duy nhất"
+              ],
+              answerIndex: 0,
+              explain: "Ba hình chiếu vuông góc cơ bản gồm: hình chiếu đứng, hình chiếu bằng và hình chiếu cạnh."
+            }
+          }
+        ],
+        "11": [
+          {
+            id: "cn-11-1",
+            weekLabel: "Chặng 1 • Tuần 1–6",
+            title: "Vẽ kĩ thuật nâng cao, Cơ khí động lực / Chăn nuôi công nghệ cao",
+            sgkTopic: "SGK Công Nghệ 11 (GDPT 2018)",
+            practice: {
+              q: "Động cơ đốt trong biến đổi:",
+              choices: [
+                "Nhiệt năng do đốt cháy nhiên liệu thành cơ năng",
+                "Điện năng thành quang năng",
+                "Thế năng nước thành nhiệt năng",
+                "Hóa năng thành điện năng trực tiếp"
+              ],
+              answerIndex: 0,
+              explain: "Động cơ đốt trong chuyển hóa nhiệt năng của nhiên liệu cháy thành cơ năng."
+            }
+          }
+        ],
+        "12": [
+          {
+            id: "cn-12-1",
+            weekLabel: "Chặng 1 • Tuần 1–6",
+            title: "Kĩ thuật điện – Điện tử / Lâm nghiệp – Thủy sản bền vững",
+            sgkTopic: "SGK Công Nghệ 12 (GDPT 2018)",
+            practice: {
+              q: "Mạch điện xoay chiều ba pha thường sử dụng phổ biến trong:",
+              choices: [
+                "Truyền tải và phân phối điện năng công suất lớn",
+                "Pin đồng hồ đeo tay",
+                "Đèn pin LED 1.5V",
+                "Tai nghe bluetooth nhỏ"
+              ],
+              answerIndex: 0,
+              explain: "Điện ba pha hiệu quả cao cho truyền tải và thiết bị công suất lớn."
+            }
+          }
+        ],
+        periodicTests: [
+          {
+            id: "test-cn-gk",
+            title: "Kiểm tra Định kì – Công Nghệ (SGK)",
+            duration: "10 phút",
+            questions: [
+              { q: "Quy trình thiết kế kĩ thuật bắt đầu từ bước:", opts: ["Xác định vấn đề và yêu cầu thiết kế", "Sản xuất hàng loạt", "Đóng gói vận chuyển", "Kiểm định xuất khẩu"], ans: 0 },
+              { q: "An toàn điện yêu cầu:", opts: ["Ngắt nguồn trước khi sửa chữa, tránh chạm tay trần vào dây dẫn", "Dùng tay ướt thao tác ổ cắm", "Thay cầu chì bằng dây đồng lớn tùy ý", "Để dây trần trên sàn ẩm"], ans: 0 }
+            ]
+          }
+        ]
+      }
+    };
 
     const DEFAULT_DECKS = [
       {
-        id: "d-toan", subject: "toan", title: "Toán - Hàm số & Lượng giác", isDefault: true,
+        id: "deck-toan", subject: "toan", title: "Toán - Lượng giác & Đạo hàm", isDefault: true,
         cards: [
-          { id: "m1", front: "sin²x + cos²x bằng mấy?", back: "Bằng 1.", mastered: false },
-          { id: "m2", front: "Đạo hàm của sin(x) là gì?", back: "cos(x).", mastered: false }
+          { id: "m1", front: "Hệ thức lượng giác cơ bản giữa sin(x) và cos(x)?", back: "sin²(x) + cos²(x) = 1\nSuy ra: 1 + tan²(x) = 1/cos²(x)", mastered: false },
+          { id: "m2", front: "Đạo hàm của (sin x)', (cos x)', (tan x)'?", back: "(sin x)' = cos x\n(cos x)' = -sin x\n(tan x)' = 1 / cos²(x)", mastered: false },
+          { id: "m3", front: "Điều kiện để hàm số đạt cực trị tại x₀?", back: "f'(x₀) = 0 (hoặc không xác định) và f'(x) đổi dấu khi qua x₀.", mastered: false }
         ]
       },
       {
-        id: "d-ly", subject: "ly", title: "Vật Lý - Dao động & Sóng", isDefault: true,
+        id: "deck-ly", subject: "ly", title: "Vật Lý - Dao động & Sóng", isDefault: true,
         cards: [
-          { id: "l1", front: "Công thức chu kì con lắc lò xo?", back: "T = 2π·√(m/k).", mastered: false },
-          { id: "l2", front: "Công thức bước sóng λ?", back: "λ = v / f = v·T.", mastered: false }
+          { id: "l1", front: "Công thức tần số góc ω và chu kì T của con lắc lò xo?", back: "ω = √(k / m)\nT = 2π / ω = 2π · √(m / k)", mastered: false },
+          { id: "l2", front: "Công thức tính bước sóng λ của sóng cơ?", back: "λ = v / f = v · T", mastered: false }
         ]
       },
       {
-        id: "d-hoa", subject: "hoa", title: "Hóa Học - Este & Polime", isDefault: true,
+        id: "deck-hoa", subject: "hoa", title: "Hóa Học - Este, Lipit & Polime", isDefault: true,
         cards: [
-          { id: "h1", front: "CTTQ este no, đơn chức, mạch hở?", back: "CₙH₂ₙO₂ (n ≥ 2).", mastered: false },
-          { id: "h2", front: "Phản ứng trùng hợp là gì?", back: "Cộng hợp nhiều phân tử monome tạo polime.", mastered: false }
+          { id: "h1", front: "Công thức tổng quát của este no, đơn chức, mạch hở?", back: "CₙH₂ₙO₂ (với n ≥ 2)", mastered: false },
+          { id: "h2", front: "Trùng hợp là gì?", back: "Quá trình cộng hợp liên tiếp nhiều phân tử monome tạo thành phân tử lớn (polime).", mastered: false }
         ]
       },
       {
-        id: "d-van", subject: "van", title: "Ngữ Văn - Nghị luận & Tu từ", isDefault: true,
+        id: "deck-van", subject: "van", title: "Ngữ Văn - Nghị luận & Tu từ", isDefault: true,
         cards: [
-          { id: "v1", front: "Phân biệt Ẩn dụ và Hoán dụ?", back: "Ẩn dụ: nét tương đồng. Hoán dụ: quan hệ gần gũi.", mastered: false }
+          { id: "v1", front: "Cấu trúc đoạn văn nghị luận xã hội trọng tâm?", back: "1. Câu chủ đề (luận điểm)\n2. Giải thích – Phân tích – Dẫn chứng\n3. Bình luận & Liên hệ", mastered: false },
+          { id: "v2", front: "Phân biệt Ẩn dụ và Hoán dụ?", back: "Ẩn dụ dựa trên nét tương đồng.\nHoán dụ dựa trên quan hệ gần gũi.", mastered: false }
         ]
       },
       {
-        id: "d-sinh", subject: "sinh", title: "Sinh Học - Di truyền", isDefault: true,
+        id: "deck-sinh", subject: "sinh", title: "Sinh Học - Tế bào & Di truyền", isDefault: true,
         cards: [
-          { id: "s1", front: "Nguyên tắc bổ sung trên ADN?", back: "A - T (2 liên kết H), G - X (3 liên kết H).", mastered: false }
+          { id: "s1", front: "Nguyên tắc bổ sung trên ADN?", back: "A liên kết với T (2 liên kết H), G liên kết với X (3 liên kết H).", mastered: false }
         ]
       },
       {
-        id: "d-su", subject: "su", title: "Lịch Sử - Việt Nam", isDefault: true,
+        id: "deck-su", subject: "su", title: "Lịch Sử - Các mốc trọng tâm", isDefault: true,
         cards: [
-          { id: "u1", front: "Ngày 02/09/1945 có ý nghĩa gì?", back: "Khai sinh nước Việt Nam Dân chủ Cộng hòa.", mastered: false }
+          { id: "u1", front: "Ý nghĩa sự kiện ngày 02/09/1945?", back: "Khai sinh nước Việt Nam Dân chủ Cộng hòa.", mastered: false }
         ]
       },
       {
-        id: "d-dia", subject: "dia", title: "Địa Lý - Việt Nam", isDefault: true,
+        id: "deck-dia", subject: "dia", title: "Địa Lý - Tự nhiên & Kinh tế", isDefault: true,
         cards: [
-          { id: "g1", front: "Đặc điểm khí hậu nước ta?", back: "Nhiệt đới ẩm gió mùa, phân hóa đa dạng.", mastered: false }
+          { id: "d1", front: "Khí hậu Việt Nam mang tính chất gì?", back: "Nhiệt đới ẩm gió mùa, phân hóa đa dạng.", mastered: false }
         ]
       },
       {
-        id: "d-anh", subject: "anh", title: "Tiếng Anh - Từ vựng", isDefault: true,
+        id: "deck-anh", subject: "anh", title: "Tiếng Anh - Từ vựng & Ngữ pháp", isDefault: true,
         cards: [
-          { id: "a1", front: "Break the ice", back: "Phá vỡ sự ngại ngùng ban đầu.", mastered: false }
+          { id: "e1", front: "Break the ice (Idiom)", back: "Phá vỡ sự ngại ngùng ban đầu.", mastered: false },
+          { id: "e2", front: "Ubiquitous (Adj)", back: "Có mặt ở khắp mọi nơi, phổ biến rộng rãi.", mastered: false }
         ]
       },
       {
-        id: "d-tin", subject: "tin", title: "Tin Học - Thuật toán", isDefault: true,
+        id: "deck-tin", subject: "tin", title: "Tin Học - Thuật toán & Web", isDefault: true,
         cards: [
-          { id: "t1", front: "Độ phức tạp Binary Search?", back: "O(log₂ n).", mastered: false }
+          { id: "c1", front: "Độ phức tạp thời gian của Tìm kiếm nhị phân?", back: "O(log₂ n) trên danh sách đã sắp xếp.", mastered: false }
+        ]
+      },
+      {
+        id: "deck-ktpl", subject: "ktpl", title: "GDKT & PL - Kinh tế & Pháp luật", isDefault: true,
+        cards: [
+          { id: "k1", front: "Lạm phát là gì?", back: "Tình trạng mức giá chung của nền kinh tế tăng liên tục.", mastered: false }
+        ]
+      },
+      {
+        id: "deck-congnghe", subject: "congnghe", title: "Công Nghệ - Vẽ kĩ thuật & Điện", isDefault: true,
+        cards: [
+          { id: "n1", front: "Ba hình chiếu vuông góc cơ bản gồm những hình nào?", back: "Hình chiếu đứng, hình chiếu bằng, hình chiếu cạnh.", mastered: false }
         ]
       }
     ];
 
-    function getTodayKey() {
-      const d = new Date();
-      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+    /* ==========================================================================
+       3. LOCALSTORAGE STATE MANAGEMENT
+       ========================================================================== */
+    function getTodayDateKey() {
+      const now = new Date();
+      return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
     }
 
-    function getDayIdx() {
-      const d = new Date().getDay();
-      return d === 0 ? 6 : d - 1;
+    function getDayIndexMonToSun() {
+      const jsDay = new Date().getDay();
+      return jsDay === 0 ? 6 : jsDay - 1;
     }
 
-    function defaultState() {
+    function createDefaultState() {
       return {
         theme: localStorage.getItem("studyflow_theme") || "light",
         activeSubject: "toan",
-        notesBySubject: { toan: "" },
+        activeGrade: "12",
+        notesBySubject: {
+          toan: "SGK Toán 12:\n- Xét tính đơn điệu và cực trị qua dấu y'\n- Tích phân & Hình học tọa độ Oxyz"
+        },
+        completedSteps: [],
+        practiceAnswers: {},
+        testScores: {},
         xp: 40,
         streak: 1,
-        lastDate: getTodayKey(),
-        weeklyMinutes: [20, 35, 25, 40, 30, 15, 0],
+        lastActiveDate: getTodayDateKey(),
+        weeklyMinutes: [25, 40, 30, 50, 35, 20, 0],
         todos: [
-          { id: "td1", text: "Ôn công thức cơ bản", subject: "toan", completed: false, xpGiven: false },
-          { id: "td2", text: "Hoàn thành 1 phiên tập trung", subject: "ly", completed: false, xpGiven: false }
+          { id: "t1", text: "Hoàn thành 1 chặng Lộ trình SGK & Practice", subject: "toan", completed: false, rewarded: false },
+          { id: "t2", text: "Làm 1 bài Kiểm tra định kì", subject: "ly", completed: false, rewarded: false },
+          { id: "t3", text: "Thử sức Đấu trường Speed Quiz", subject: "hoa", completed: false, rewarded: false }
         ],
         decks: JSON.parse(JSON.stringify(DEFAULT_DECKS)),
-        activeDeckId: "d-toan",
-        chat: [{ role: "ai", text: "Xin chào! Chọn môn học ở thanh trên và hỏi mình bất kỳ bài cấp 3 nào nhé." }]
+        activeDeckId: "deck-toan",
+        chatHistory: [
+          {
+            role: "ai",
+            text: "Xin chào! Mình là StudyBot — Gia sư AI cấp 3 chuẩn SGK (GDPT 2018) 🌟\nBạn chọn môn & khối lớp ở thanh trên rồi hỏi mình bất kỳ bài học nào nhé!"
+          }
+        ]
       };
     }
 
-    let state = defaultState();
+    let state = createDefaultState();
 
     function loadState() {
-      const base = defaultState();
+      const defaults = createDefaultState();
       try {
-        const raw = localStorage.getItem(`sf_v3_${currentUser?.uid || "guest"}`);
-        if (!raw) return base;
-        const p = JSON.parse(raw);
+        const key = `studyflow_app_v4_${currentUserProfile?.uid || "guest"}`;
+        const raw = localStorage.getItem(key);
+        if (!raw) {
+          saveState(defaults);
+          return defaults;
+        }
+        const parsed = JSON.parse(raw);
         return {
-          ...base,
-          ...p,
-          notesBySubject: p.notesBySubject && typeof p.notesBySubject === "object" ? p.notesBySubject : base.notesBySubject,
-          weeklyMinutes: Array.isArray(p.weeklyMinutes) && p.weeklyMinutes.length === 7 ? p.weeklyMinutes : base.weeklyMinutes,
-          todos: Array.isArray(p.todos) ? p.todos : base.todos,
-          decks: Array.isArray(p.decks) && p.decks.length ? p.decks : base.decks,
-          chat: Array.isArray(p.chat) && p.chat.length ? p.chat : base.chat
+          ...defaults,
+          ...parsed,
+          activeSubject: parsed.activeSubject || "toan",
+          activeGrade: parsed.activeGrade || "12",
+          notesBySubject: parsed.notesBySubject && typeof parsed.notesBySubject === "object" ? parsed.notesBySubject : defaults.notesBySubject,
+          completedSteps: Array.isArray(parsed.completedSteps) ? parsed.completedSteps : [],
+          practiceAnswers: parsed.practiceAnswers && typeof parsed.practiceAnswers === "object" ? parsed.practiceAnswers : {},
+          testScores: parsed.testScores && typeof parsed.testScores === "object" ? parsed.testScores : {},
+          weeklyMinutes: Array.isArray(parsed.weeklyMinutes) && parsed.weeklyMinutes.length === 7 ? parsed.weeklyMinutes : defaults.weeklyMinutes,
+          todos: Array.isArray(parsed.todos) ? parsed.todos : defaults.todos,
+          decks: Array.isArray(parsed.decks) && parsed.decks.length ? parsed.decks : defaults.decks,
+          chatHistory: Array.isArray(parsed.chatHistory) && parsed.chatHistory.length ? parsed.chatHistory : defaults.chatHistory
         };
       } catch {
-        return base;
+        return defaults;
       }
     }
 
     function saveState() {
       try {
-        localStorage.setItem(`sf_v3_${currentUser?.uid || "guest"}`, JSON.stringify(state));
+        localStorage.setItem(`studyflow_app_v4_${currentUserProfile?.uid || "guest"}`, JSON.stringify(state));
       } catch {}
     }
 
-    function escapeHTML(s) {
-      return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-    }
+    /* ==========================================================================
+       4. GAMIFICATION, SUBJECTS, ROADMAP, PRACTICE & PERIODIC TEST
+       ========================================================================== */
+    const RANK_TITLES = [
+      "Tân binh Tri thức",
+      "Học giả Tập sự",
+      "Chiến binh Tập trung",
+      "Nhà Chinh phục Đỉnh cao",
+      "Bậc thầy Trí nhớ",
+      "Huyền thoại StudyFlow"
+    ];
 
-    function toast(msg) {
-      const box = document.getElementById("toastContainer");
-      const el = document.createElement("div");
-      el.className = "toast";
-      el.textContent = msg;
-      box.appendChild(el);
-      setTimeout(() => el.remove(), 2600);
-    }
-
-    function addXP(pts) {
-      state.xp += pts;
+    function addXP(amount, reason = "") {
+      if (!amount || amount <= 0) return;
+      const oldLevel = Math.floor(state.xp / 100) + 1;
+      state.xp += amount;
+      const newLevel = Math.floor(state.xp / 100) + 1;
       saveState();
-      updateStatsUI();
-      toast(`+${pts} XP`);
+      updateGamificationUI();
+      playRewardChime(newLevel > oldLevel);
+      showToast(`+${amount} XP ${reason ? "• " + reason : ""}`, "xp");
+      if (newLevel > oldLevel) {
+        setTimeout(() => showToast(`🎉 Chúc mừng! Bạn đã thăng lên Cấp ${newLevel}!`, "success"), 450);
+      }
     }
 
-    function addMinutes(m) {
-      const idx = getDayIdx();
-      state.weeklyMinutes[idx] = (state.weeklyMinutes[idx] || 0) + m;
+    function addStudyMinutes(mins) {
+      if (!mins || mins <= 0) return;
+      const idx = getDayIndexMonToSun();
+      state.weeklyMinutes[idx] = (state.weeklyMinutes[idx] || 0) + mins;
       saveState();
-      updateStatsUI();
-      renderChart();
+      updateGamificationUI();
+      renderWeeklyChart();
     }
 
-    /* 3. THEME & NAVIGATION */
-    function applyTheme(t) {
-      document.documentElement.setAttribute("data-theme", t);
-      localStorage.setItem("studyflow_theme", t);
+    function updateGamificationUI() {
+      const level = Math.floor(state.xp / 100) + 1;
+      const currentLevelXP = state.xp % 100;
+      const todayMins = state.weeklyMinutes[getDayIndexMonToSun()] || 0;
+
+      document.getElementById("topLevelBadge").textContent = `Cấp ${level}`;
+      document.getElementById("topXpText").textContent = `${currentLevelXP} / 100 XP`;
+      document.getElementById("topTotalXp").textContent = `Tổng: ${state.xp} XP`;
+      document.getElementById("topXpBar").style.width = `${currentLevelXP}%`;
+      document.getElementById("topStreak").textContent = `${state.streak} ngày`;
+      document.getElementById("topMinutes").textContent = `${todayMins} phút hôm nay`;
+
+      const rankIndex = Math.min(level - 1, RANK_TITLES.length - 1);
+      document.getElementById("sidebarRankTitle").textContent = `🏅 ${RANK_TITLES[rankIndex]}`;
+
+      document.getElementById("kpiMinutes").textContent = `${todayMins} phút`;
+      document.getElementById("kpiXp").textContent = `${state.xp} XP`;
+      document.getElementById("kpiStreak").textContent = `${state.streak} ngày`;
+
+      let totalSteps = 0;
+      Object.values(SGK_CURRICULUM).forEach(subjData => {
+        ["10", "11", "12"].forEach(g => {
+          totalSteps += (subjData[g] || []).length;
+        });
+      });
+      document.getElementById("kpiRoadmapDone").textContent = `${state.completedSteps.length} / ${totalSteps}`;
     }
+
+    function renderSubjectChips() {
+      const container = document.getElementById("subjectChipsContainer");
+      container.innerHTML = THPT_SUBJECTS.map(sub => {
+        const active = state.activeSubject === sub.id ? "active" : "";
+        return `<button type="button" class="subject-chip ${active}" data-sub-id="${sub.id}">${sub.icon} ${sub.name}</button>`;
+      }).join("");
+
+      container.querySelectorAll(".subject-chip").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const prevSub = state.activeSubject;
+          const notesEl = document.getElementById("quickNotesArea");
+          if (notesEl && prevSub) state.notesBySubject[prevSub] = notesEl.value;
+          state.activeSubject = btn.dataset.subId;
+          saveState();
+          applySubjectContextUI();
+        });
+      });
+    }
+
+    function applySubjectContextUI() {
+      renderSubjectChips();
+      const sub = getSubjectObj(state.activeSubject);
+
+      document.getElementById("dashGreeting").textContent = `Chào ${currentUserProfile?.displayName || "bạn"}, đang học ${sub.icon} ${sub.name} (Lớp ${state.activeGrade})! ✨`;
+      document.getElementById("dashSubGreeting").textContent =
+        `Lộ trình bám sát SGK ${sub.name} lớp ${state.activeGrade} (GDPT 2018), kèm bài luyện tập Practice từng chặng và Test định kì.`;
+
+      document.getElementById("pomoSubjectTitle").textContent = `⏱️ Pomodoro • ${sub.icon} ${sub.name}`;
+      document.getElementById("notesSubjectTitle").textContent = `📝 Ghi chú môn ${sub.icon} ${sub.name}`;
+
+      const notesEl = document.getElementById("quickNotesArea");
+      const charEl = document.getElementById("notesCharCount");
+      notesEl.value = state.notesBySubject[state.activeSubject] || "";
+      notesEl.placeholder = `Ghi chú riêng cho môn ${sub.name} (công thức, dàn ý, lưu ý SGK)...`;
+      charEl.textContent = `${notesEl.value.length} ký tự • ${sub.name}`;
+
+      const matchingDecks = state.decks.filter(d => d.subject === state.activeSubject);
+      if (matchingDecks.length > 0 && !matchingDecks.some(d => d.id === state.activeDeckId)) {
+        state.activeDeckId = matchingDecks[0].id;
+        currentCardIndex = 0;
+        isCardFlipped = false;
+      }
+      renderFlashcardView();
+      renderRoadmapAndTests();
+    }
+
+    function renderRoadmapAndTests() {
+      const sub = getSubjectObj(state.activeSubject);
+      const grade = state.activeGrade || "12";
+      const currSub = SGK_CURRICULUM[state.activeSubject] || SGK_CURRICULUM.toan;
+      const steps = currSub[grade] || [];
+
+      document.querySelectorAll("#gradeTabsContainer .grade-tab").forEach(tab => {
+        tab.classList.toggle("active", tab.dataset.grade === grade);
+      });
+
+      document.getElementById("roadmapHeaderTitle").textContent =
+        `🗺️ Lộ Trình SGK ${sub.icon} ${sub.name} – Lớp ${grade} (GDPT 2018)`;
+      document.getElementById("roadmapHeaderSub").textContent =
+        `Mỗi chặng gồm mục tiêu SGK, bài Practice thực hành ngay và nút đánh dấu hoàn thành (+25 XP)`;
+
+      const stepsContainer = document.getElementById("roadmapStepsList");
+      stepsContainer.innerHTML = steps.map((step, idx) => {
+        const isDone = state.completedSteps.includes(step.id);
+        const savedAns = state.practiceAnswers[step.id];
+        const hasAnswered = typeof savedAns === "number";
+        const isRight = hasAnswered && savedAns === step.practice.answerIndex;
+
+        const choicesHtml = step.practice.choices.map((ch, cIdx) => {
+          let cls = "practice-choice-btn";
+          if (hasAnswered) {
+            if (cIdx === step.practice.answerIndex) cls += " right";
+            else if (cIdx === savedAns) cls += " wrong";
+          }
+          return `<button type="button" class="${cls}" onclick="answerPractice('${step.id}', ${cIdx})">${String.fromCharCode(65 + cIdx)}. ${escapeHTML(ch)}</button>`;
+        }).join("");
+
+        return `
+          <div class="roadmap-step-card ${isDone ? "completed-step" : ""}">
+            <div class="roadmap-step-top">
+              <div>
+                <span class="badge badge-indigo" style="margin-bottom:6px;">${escapeHTML(step.weekLabel)} • ${escapeHTML(step.sgkTopic)}</span>
+                <div class="roadmap-step-title">Chặng ${idx + 1}: ${escapeHTML(step.title)}</div>
+              </div>
+              <button type="button" class="btn ${isDone ? "btn-emerald" : "btn-outline"} btn-sm" onclick="toggleRoadmapStep('${step.id}')">
+                ${isDone ? "✓ Đã hoàn thành" : "Đánh dấu hoàn thành (+25 XP)"}
+              </button>
+            </div>
+
+            <div class="practice-box">
+              <div class="practice-q">🧪 Practice chặng ${idx + 1}: ${escapeHTML(step.practice.q)}</div>
+              <div class="practice-choices">${choicesHtml}</div>
+              ${hasAnswered ? `
+                <div style="font-size:0.82rem; font-weight:700; color:${isRight ? "var(--emerald)" : "var(--rose)"};">
+                  ${isRight ? "✓ Chính xác! (+15 XP)" : "✗ Chưa đúng."} ${escapeHTML(step.practice.explain)}
+                </div>
+              ` : ""}
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      const tests = currSub.periodicTests || [];
+      const testContainer = document.getElementById("periodicTestList");
+      const doneTestCount = Object.keys(state.testScores).length;
+      document.getElementById("testHistoryBadge").textContent =
+        doneTestCount > 0 ? `Đã làm ${doneTestCount} bài test` : "Chưa có bài test nào";
+
+      testContainer.innerHTML = tests.map(t => {
+        const key = `${state.activeSubject}_${t.id}`;
+        const prevScore = state.testScores[key];
+        return `
+          <div class="periodic-test-card">
+            <div class="roadmap-step-top" style="margin-bottom:0; align-items:center;">
+              <div>
+                <div class="roadmap-step-title">${escapeHTML(t.title)}</div>
+                <div class="card-subtitle">Thời lượng gợi ý: ${escapeHTML(t.duration)} • ${t.questions.length} câu hỏi • Thưởng +40 XP</div>
+                ${prevScore ? `<div style="font-size:0.8rem; font-weight:700; color:var(--emerald); margin-top:4px;">Điểm gần nhất: ${prevScore.score}/${prevScore.total} (${prevScore.pct}%)</div>` : ""}
+              </div>
+              <button type="button" class="btn btn-primary btn-sm" onclick="openPeriodicTest('${t.id}')">📝 Làm bài kiểm tra</button>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    document.querySelectorAll("#gradeTabsContainer .grade-tab").forEach(btn => {
+      btn.addEventListener("click", () => {
+        state.activeGrade = btn.dataset.grade;
+        saveState();
+        applySubjectContextUI();
+      });
+    });
+
+    function answerPractice(stepId, choiceIdx) {
+      const currSub = SGK_CURRICULUM[state.activeSubject] || SGK_CURRICULUM.toan;
+      const allSteps = ["10", "11", "12"].flatMap(g => currSub[g] || []);
+      const step = allSteps.find(s => s.id === stepId);
+      if (!step) return;
+
+      const firstTimeRight = typeof state.practiceAnswers[stepId] !== "number" && choiceIdx === step.practice.answerIndex;
+      state.practiceAnswers[stepId] = choiceIdx;
+      saveState();
+      renderRoadmapAndTests();
+      if (firstTimeRight) addXP(15, "Giải đúng Practice chặng");
+    }
+
+    function toggleRoadmapStep(stepId) {
+      const idx = state.completedSteps.indexOf(stepId);
+      if (idx === -1) {
+        state.completedSteps.push(stepId);
+        saveState();
+        updateGamificationUI();
+        renderRoadmapAndTests();
+        addXP(25, "Hoàn thành chặng lộ trình SGK");
+      } else {
+        state.completedSteps.splice(idx, 1);
+        saveState();
+        updateGamificationUI();
+        renderRoadmapAndTests();
+      }
+    }
+
+    let currentActiveTest = null;
+    function openPeriodicTest(testId) {
+      const currSub = SGK_CURRICULUM[state.activeSubject] || SGK_CURRICULUM.toan;
+      const testObj = (currSub.periodicTests || []).find(t => t.id === testId);
+      if (!testObj) return;
+      currentActiveTest = testObj;
+
+      document.getElementById("periodicTestModalTitle").textContent = testObj.title;
+      document.getElementById("periodicTestModalSub").textContent =
+        `${getSubjectObj(state.activeSubject).name} • Lớp ${state.activeGrade} • ${testObj.questions.length} câu`;
+      document.getElementById("periodicTestScoreBanner").style.display = "none";
+      document.getElementById("submitPeriodicTestBtn").disabled = false;
+
+      const qBox = document.getElementById("periodicTestQuestionsContainer");
+      qBox.innerHTML = testObj.questions.map((item, qIdx) => `
+        <div class="test-q-block">
+          <div style="font-weight:700; margin-bottom:8px;">Câu ${qIdx + 1}: ${escapeHTML(item.q)}</div>
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            ${item.opts.map((opt, oIdx) => `
+              <label style="display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:9px; background:var(--bg-surface-2); border:1px solid var(--border-color); cursor:pointer; font-size:0.86rem;">
+                <input type="radio" name="pq_${qIdx}" value="${oIdx}" />
+                <span>${String.fromCharCode(65 + oIdx)}. ${escapeHTML(opt)}</span>
+              </label>
+            `).join("")}
+          </div>
+        </div>
+      `).join("");
+
+      openModal("modalPeriodicTest");
+    }
+
+    document.getElementById("submitPeriodicTestBtn").addEventListener("click", () => {
+      if (!currentActiveTest) return;
+      let score = 0;
+      const total = currentActiveTest.questions.length;
+      currentActiveTest.questions.forEach((item, qIdx) => {
+        const checked = document.querySelector(`input[name="pq_${qIdx}"]:checked`);
+        if (checked && parseInt(checked.value, 10) === item.ans) score++;
+      });
+      const pct = Math.round((score / total) * 100);
+      const key = `${state.activeSubject}_${currentActiveTest.id}`;
+      state.testScores[key] = { score, total, pct };
+      saveState();
+      renderRoadmapAndTests();
+
+      const banner = document.getElementById("periodicTestScoreBanner");
+      banner.style.display = "block";
+      banner.textContent = `Kết quả: ${score}/${total} câu đúng (${pct}%). Đã cộng +40 XP!`;
+      document.getElementById("submitPeriodicTestBtn").disabled = true;
+      addXP(40, "Hoàn thành Test định kì");
+    });
+
+    function showToast(message, type = "info") {
+      const container = document.getElementById("toastContainer");
+      const toast = document.createElement("div");
+      toast.className = `toast ${type}`;
+      const icon = type === "xp" ? "⭐" : type === "success" ? "🎉" : "💡";
+      toast.innerHTML = `<span>${icon}</span><span>${escapeHTML(message)}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => toast.remove(), 3000);
+    }
+
+    function escapeHTML(str) {
+      return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.setItem("studyflow_theme", theme);
+      const metaTheme = document.querySelector('meta[name="theme-color"]');
+      if (metaTheme) metaTheme.setAttribute("content", theme === "dark" ? "#131c31" : "#6366f1");
+    }
+
     function toggleTheme() {
       const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
       state.theme = next;
       saveState();
       applyTheme(next);
     }
+
     document.getElementById("themeToggleBtn").addEventListener("click", toggleTheme);
     document.getElementById("authThemeBtn").addEventListener("click", toggleTheme);
 
-    function switchView(view) {
-      document.querySelectorAll(".view-section").forEach(v => v.classList.toggle("active", v.id === `view-${view}`));
-      document.querySelectorAll("[data-view]").forEach(b => b.classList.toggle("active", b.dataset.view === view));
-      if (view === "quiz") fillQuizSelect();
-      if (view === "flashcards") renderFlashcards();
-    }
-    document.querySelectorAll("[data-view]").forEach(btn => btn.addEventListener("click", () => switchView(btn.dataset.view)));
-
-    /* 4. SUBJECTS (MÔN CẤP 3) */
-    function renderSubjectsBar() {
-      const wrap = document.getElementById("subjectChipsContainer");
-      wrap.innerHTML = THPT_SUBJECTS.map(s =>
-        `<button type="button" class="subject-chip ${state.activeSubject === s.id ? "active" : ""}" data-sid="${s.id}">${s.icon} ${s.name}</button>`
-      ).join("");
-
-      wrap.querySelectorAll(".subject-chip").forEach(btn => {
-        btn.addEventListener("click", () => {
-          const prev = state.activeSubject;
-          const notesEl = document.getElementById("quickNotesArea");
-          if (notesEl && prev && prev !== "all") state.notesBySubject[prev] = notesEl.value;
-          state.activeSubject = btn.dataset.sid;
-          saveState();
-          applySubjectChanges();
-        });
-      });
+    function switchView(viewName) {
+      document.querySelectorAll(".view-section").forEach(sec => sec.classList.toggle("active", sec.id === `view-${viewName}`));
+      document.querySelectorAll("[data-view]").forEach(btn => btn.classList.toggle("active", btn.getAttribute("data-view") === viewName));
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      if (viewName === "dashboard") { renderWeeklyChart(); updateGamificationUI(); }
+      else if (viewName === "roadmap") { renderRoadmapAndTests(); }
+      else if (viewName === "flashcards") { renderFlashcardView(); }
+      else if (viewName === "quiz") { populateQuizDeckSelect(); }
     }
 
-    function applySubjectChanges() {
-      renderSubjectsBar();
-      const sub = getSubject(state.activeSubject);
-      const name = currentUser?.displayName || "Học viên";
-      document.getElementById("dashGreeting").textContent = `Xin chào, ${name}! ✨`;
-      document.getElementById("dashSubGreeting").textContent =
-        state.activeSubject === "all"
-          ? "Đang xem tất cả các môn cấp 3."
-          : `Môn đang chọn: ${sub.icon} ${sub.name}`;
-
-      document.getElementById("pomoSubjectTitle").textContent =
-        state.activeSubject === "all" ? "⏱️ Pomodoro" : `⏱️ Pomodoro • ${sub.icon} ${sub.name}`;
-      document.getElementById("notesSubjectTitle").textContent =
-        state.activeSubject === "all" ? "📝 Ghi chú (Toán)" : `📝 Ghi chú • ${sub.icon} ${sub.name}`;
-
-      const notesEl = document.getElementById("quickNotesArea");
-      const noteKey = state.activeSubject === "all" ? "toan" : state.activeSubject;
-      notesEl.value = state.notesBySubject[noteKey] || "";
-      notesEl.placeholder = `Ghi chú cho môn ${getSubject(noteKey).name}...`;
-
-      if (state.activeSubject !== "all") {
-        const match = state.decks.filter(d => d.subject === state.activeSubject);
-        if (match.length && !match.some(d => d.id === state.activeDeckId)) {
-          state.activeDeckId = match[0].id;
-          cardIdx = 0;
-          flipped = false;
-        }
-      }
-      renderFlashcards();
-    }
-
-    document.getElementById("quickNotesArea").addEventListener("input", (e) => {
-      const noteKey = state.activeSubject === "all" ? "toan" : state.activeSubject;
-      state.notesBySubject[noteKey] = e.target.value;
-      saveState();
+    document.querySelectorAll("[data-view]").forEach(btn => {
+      btn.addEventListener("click", () => switchView(btn.getAttribute("data-view")));
     });
 
-    /* 5. STATS, CHART, TODOS */
-    function updateStatsUI() {
-      const lv = Math.floor(state.xp / 100) + 1;
-      const rem = state.xp % 100;
-      const todayMins = state.weeklyMinutes[getDayIdx()] || 0;
-      let total = 0, mastered = 0;
-      state.decks.forEach(d => { total += d.cards.length; mastered += d.cards.filter(c => c.mastered).length; });
-
-      document.getElementById("topLevelBadge").textContent = `Cấp ${lv}`;
-      document.getElementById("topXpText").textContent = `${rem} / 100 XP`;
-      document.getElementById("topTotalXp").textContent = `${state.xp} XP`;
-      document.getElementById("topXpBar").style.width = `${rem}%`;
-      document.getElementById("topStreak").textContent = `${state.streak} ngày`;
-      document.getElementById("topMinutes").textContent = `${todayMins} phút`;
-
-      document.getElementById("kpiMinutes").textContent = `${todayMins} phút`;
-      document.getElementById("kpiMastered").textContent = `${mastered} / ${total}`;
-      document.getElementById("kpiXp").textContent = `${state.xp} XP`;
-      document.getElementById("kpiStreak").textContent = `${state.streak} ngày`;
-    }
-
-    function renderChart() {
+    /* ==========================================================================
+       5. DASHBOARD, POMODORO, 3D FLASHCARDS, QUIZ & AI
+       ========================================================================== */
+    function renderWeeklyChart() {
+      const container = document.getElementById("weeklyChartContainer");
       const days = ["T2", "T3", "T4", "T5", "T6", "T7", "CN"];
-      const today = getDayIdx();
-      const max = Math.max(40, ...state.weeklyMinutes);
-      const sum = state.weeklyMinutes.reduce((a, b) => a + b, 0);
-      document.getElementById("weeklyTotalBadge").textContent = `Tuần này: ${sum} phút`;
-      document.getElementById("weeklyChartContainer").innerHTML = days.map((d, i) => {
-        const m = state.weeklyMinutes[i] || 0;
-        const pct = Math.min(100, Math.round((m / max) * 100));
-        return `<div class="chart-col ${i === today ? "today" : ""}">
-          <span class="chart-mins">${m}p</span>
-          <div class="chart-bar-bg"><div class="chart-bar-fill" style="height:${pct}%"></div></div>
-          <span class="chart-day">${d}</span>
-        </div>`;
+      const todayIdx = getDayIndexMonToSun();
+      const maxMins = Math.max(60, ...state.weeklyMinutes);
+      const totalWeek = state.weeklyMinutes.reduce((a, b) => a + b, 0);
+      document.getElementById("weeklyTotalBadge").textContent = `Tuần này: ${totalWeek} phút`;
+
+      container.innerHTML = days.map((day, idx) => {
+        const mins = state.weeklyMinutes[idx] || 0;
+        const pct = Math.min(100, Math.round((mins / maxMins) * 100));
+        const isToday = idx === todayIdx;
+        return `
+          <div class="chart-col ${isToday ? "today" : ""}">
+            <span class="chart-mins">${mins}p</span>
+            <div class="chart-bar-bg"><div class="chart-bar-fill" style="height:${pct}%"></div></div>
+            <span class="chart-day">${isToday ? day + " •" : day}</span>
+          </div>
+        `;
       }).join("");
     }
 
-    function renderTodos() {
-      const list = document.getElementById("todoList");
-      const done = state.todos.filter(t => t.completed).length;
-      document.getElementById("todoCountBadge").textContent = `${done}/${state.todos.length}`;
-      list.innerHTML = state.todos.map(t => {
-        const sub = getSubject(t.subject);
-        return `<div class="todo-item ${t.completed ? "completed" : ""}">
-          <div class="todo-left">
-            <button type="button" class="todo-checkbox" onclick="toggleTodo('${t.id}')">${t.completed ? "✓" : ""}</button>
-            <span class="todo-text"><span class="subject-tag-pill">${sub.icon} ${sub.name}</span>${escapeHTML(t.text)}</span>
+    function renderTodoList() {
+      const listEl = document.getElementById("todoList");
+      const doneCount = state.todos.filter(t => t.completed).length;
+      document.getElementById("todoCountBadge").textContent = `${doneCount}/${state.todos.length}`;
+      if (!state.todos.length) {
+        listEl.innerHTML = `<div style="text-align:center; padding:20px; color:var(--text-muted); font-size:0.86rem;">Chưa có mục tiêu nào.</div>`;
+        return;
+      }
+      listEl.innerHTML = state.todos.map(todo => {
+        const sub = getSubjectObj(todo.subject || "toan");
+        return `
+          <div class="todo-item ${todo.completed ? "completed" : ""}">
+            <div class="todo-left">
+              <button type="button" class="todo-checkbox" onclick="toggleTodo('${todo.id}')">${todo.completed ? "✓" : ""}</button>
+              <span class="todo-text"><span class="subject-tag-pill">${sub.icon} ${sub.name}</span>${escapeHTML(todo.text)}</span>
+            </div>
+            <button type="button" class="btn btn-danger-soft btn-sm" onclick="deleteTodo('${todo.id}')">✕</button>
           </div>
-          <button type="button" class="btn btn-danger-soft btn-sm" onclick="delTodo('${t.id}')">✕</button>
-        </div>`;
+        `;
       }).join("");
     }
 
     document.getElementById("todoForm").addEventListener("submit", (e) => {
       e.preventDefault();
-      const inp = document.getElementById("todoInput");
-      const txt = inp.value.trim();
-      if (!txt) return;
-      state.todos.unshift({
-        id: "td-" + Date.now(),
-        text: txt,
-        subject: state.activeSubject === "all" ? "toan" : state.activeSubject,
-        completed: false,
-        xpGiven: false
-      });
-      inp.value = "";
+      const input = document.getElementById("todoInput");
+      const text = input.value.trim();
+      if (!text) return;
+      state.todos.unshift({ id: "todo-" + Date.now(), text, subject: state.activeSubject, completed: false, rewarded: false });
+      input.value = "";
       saveState();
-      renderTodos();
+      renderTodoList();
     });
 
     function toggleTodo(id) {
-      const t = state.todos.find(x => x.id === id);
-      if (!t) return;
-      t.completed = !t.completed;
-      if (t.completed && !t.xpGiven) { t.xpGiven = true; addXP(20); }
+      const item = state.todos.find(t => t.id === id);
+      if (!item) return;
+      item.completed = !item.completed;
+      if (item.completed && !item.rewarded) { item.rewarded = true; addXP(20, "Hoàn thành mục tiêu"); }
       saveState();
-      renderTodos();
+      renderTodoList();
     }
 
-    function delTodo(id) {
-      state.todos = state.todos.filter(x => x.id !== id);
+    function deleteTodo(id) {
+      state.todos = state.todos.filter(t => t.id !== id);
       saveState();
-      renderTodos();
+      renderTodoList();
     }
 
-    /* 6. POMODORO & SOUND */
-    let pomoMins = 25, pomoSec = 25 * 60, pomoTimer = null, pomoOn = false;
-    function showPomo() {
-      document.getElementById("timerDisplay").textContent =
-        `${String(Math.floor(pomoSec / 60)).padStart(2, "0")}:${String(pomoSec % 60).padStart(2, "0")}`;
+    /* Pomodoro & Web Audio */
+    let pomoMode = "focus";
+    let pomoTotalSeconds = 25 * 60;
+    let pomoRemainingSeconds = 25 * 60;
+    let pomoInterval = null;
+    let pomoRunning = false;
+    const RING_CIRCUMFERENCE = 2 * Math.PI * 95;
+
+    function updateTimerDisplay() {
+      const mins = Math.floor(pomoRemainingSeconds / 60);
+      const secs = pomoRemainingSeconds % 60;
+      document.getElementById("timerDisplay").textContent = `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+      const ratio = pomoTotalSeconds > 0 ? pomoRemainingSeconds / pomoTotalSeconds : 0;
+      const circle = document.getElementById("timerProgressCircle");
+      circle.style.strokeDashoffset = RING_CIRCUMFERENCE * (1 - ratio);
+      circle.style.stroke = pomoMode === "focus" ? "var(--indigo)" : "var(--emerald)";
     }
-    function stopTimer() {
-      pomoOn = false;
-      clearInterval(pomoTimer);
-      document.getElementById("pomoStartBtn").textContent = "▶ Bắt đầu";
+
+    function setPomoMode(mode, mins) {
+      pausePomodoro();
+      pomoMode = mode;
+      pomoTotalSeconds = mins * 60;
+      pomoRemainingSeconds = pomoTotalSeconds;
+      document.querySelectorAll("#pomoModes .mode-btn").forEach(btn => btn.classList.toggle("active", btn.dataset.mode === mode));
+      document.getElementById("customMinsRow").classList.toggle("visible", mode === "custom");
+      document.getElementById("timerStatusText").textContent = mode === "focus" ? "Sẵn sàng tập trung" : "Sẵn sàng nghỉ ngơi";
+      updateTimerDisplay();
     }
+
     document.querySelectorAll("#pomoModes .mode-btn").forEach(btn => {
       btn.addEventListener("click", () => {
-        stopTimer();
-        document.querySelectorAll("#pomoModes .mode-btn").forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-        pomoMins = parseInt(btn.dataset.mins, 10);
-        pomoSec = pomoMins * 60;
-        showPomo();
+        const mode = btn.dataset.mode;
+        const mins = mode === "custom"
+          ? Math.max(1, parseInt(document.getElementById("customMinsInput").value, 10) || 45)
+          : parseInt(btn.dataset.mins, 10);
+        setPomoMode(mode, mins);
       });
     });
-    document.getElementById("pomoStartBtn").addEventListener("click", () => {
-      if (pomoOn) { stopTimer(); return; }
-      pomoOn = true;
-      document.getElementById("pomoStartBtn").textContent = "⏸ Tạm dừng";
-      pomoTimer = setInterval(() => {
-        if (pomoSec > 0) { pomoSec--; showPomo(); }
-        else { donePomo(); }
+
+    document.getElementById("applyCustomMinsBtn").addEventListener("click", () => {
+      const mins = Math.min(180, Math.max(1, parseInt(document.getElementById("customMinsInput").value, 10) || 45));
+      document.getElementById("customMinsInput").value = mins;
+      setPomoMode("custom", mins);
+      showToast(`Đã đặt đồng hồ tùy chỉnh ${mins} phút`, "info");
+    });
+
+    function startPomodoro() {
+      if (pomoRunning) return;
+      ensureAudioContext();
+      pomoRunning = true;
+      document.getElementById("pomoStartBtn").innerHTML = "⏸ Tạm dừng";
+      document.getElementById("timerStatusText").textContent = "Đang tập trung cao độ...";
+      pomoInterval = setInterval(() => {
+        if (pomoRemainingSeconds > 0) { pomoRemainingSeconds--; updateTimerDisplay(); }
+        else finishPomodoroSession();
       }, 1000);
-    });
-    function donePomo() {
-      stopTimer();
-      addMinutes(pomoMins);
-      addXP(50);
-      pomoSec = pomoMins * 60;
-      showPomo();
     }
-    document.getElementById("pomoResetBtn").addEventListener("click", () => { stopTimer(); pomoSec = pomoMins * 60; showPomo(); });
-    document.getElementById("pomoCompleteBtn").addEventListener("click", donePomo);
 
-    let actx = null, rainGain = null, lofiOsc = null, lofiGain = null;
-    function setupAudio() {
-      if (!actx) {
+    function pausePomodoro() {
+      pomoRunning = false;
+      clearInterval(pomoInterval);
+      document.getElementById("pomoStartBtn").innerHTML = "▶ Bắt đầu";
+    }
+
+    function finishPomodoroSession() {
+      pausePomodoro();
+      const studiedMins = Math.max(1, Math.round(pomoTotalSeconds / 60));
+      addStudyMinutes(studiedMins);
+      addXP(50, `Phiên học ${studiedMins} phút • ${getSubjectObj(state.activeSubject).name}`);
+      pomoRemainingSeconds = pomoTotalSeconds;
+      document.getElementById("timerStatusText").textContent = "Phiên hoàn tất!";
+      updateTimerDisplay();
+    }
+
+    document.getElementById("pomoStartBtn").addEventListener("click", () => pomoRunning ? pausePomodoro() : startPomodoro());
+    document.getElementById("pomoResetBtn").addEventListener("click", () => {
+      pausePomodoro();
+      pomoRemainingSeconds = pomoTotalSeconds;
+      document.getElementById("timerStatusText").textContent = "Đã đặt lại đồng hồ";
+      updateTimerDisplay();
+    });
+    document.getElementById("pomoCompleteBtn").addEventListener("click", finishPomodoroSession);
+
+    let audioCtx = null;
+    const soundChannels = {
+      rain: { gain: null, initialized: false },
+      waves: { gain: null, initialized: false },
+      lofi: { gain: null, initialized: false }
+    };
+
+    function ensureAudioContext() {
+      if (!audioCtx) {
         const AC = window.AudioContext || window.webkitAudioContext;
-        if (!AC) return;
-        actx = new AC();
-        const buf = actx.createBuffer(1, actx.sampleRate * 2, actx.sampleRate);
-        const ch = buf.getChannelData(0);
-        for (let i = 0; i < ch.length; i++) ch[i] = Math.random() * 2 - 1;
-        const src = actx.createBufferSource();
-        src.buffer = buf; src.loop = true;
-        const flt = actx.createBiquadFilter(); flt.type = "lowpass"; flt.frequency.value = 900;
-        rainGain = actx.createGain(); rainGain.gain.value = 0;
-        src.connect(flt); flt.connect(rainGain); rainGain.connect(actx.destination); src.start();
-
-        lofiOsc = actx.createOscillator(); lofiOsc.type = "sine"; lofiOsc.frequency.value = 220;
-        lofiGain = actx.createGain(); lofiGain.gain.value = 0;
-        lofiOsc.connect(lofiGain); lofiGain.connect(actx.destination); lofiOsc.start();
+        if (AC) audioCtx = new AC();
       }
-      if (actx && actx.state === "suspended") actx.resume().catch(() => {});
+      if (audioCtx && audioCtx.state === "suspended") audioCtx.resume().catch(() => {});
     }
-    document.getElementById("volRain").addEventListener("input", (e) => {
-      const v = +e.target.value;
-      document.getElementById("volLabelRain").textContent = `${v}%`;
-      if (v > 0) setupAudio();
-      if (rainGain && actx) rainGain.gain.setTargetAtTime((v / 100) * 0.35, actx.currentTime, 0.05);
-    });
-    document.getElementById("volLofi").addEventListener("input", (e) => {
-      const v = +e.target.value;
-      document.getElementById("volLabelLofi").textContent = `${v}%`;
-      if (v > 0) setupAudio();
-      if (lofiGain && actx) lofiGain.gain.setTargetAtTime((v / 100) * 0.12, actx.currentTime, 0.05);
-    });
-    document.getElementById("muteAllSoundsBtn").addEventListener("click", () => {
-      ["volRain", "volLofi"].forEach(id => { const el = document.getElementById(id); el.value = 0; el.dispatchEvent(new Event("input")); });
+
+    function playRewardChime(isLevelUp = false) {
+      try {
+        ensureAudioContext();
+        if (!audioCtx) return;
+        const now = audioCtx.currentTime;
+        const notes = isLevelUp ? [523.25, 659.25, 783.99, 1046.5] : [587.33, 880];
+        notes.forEach((freq, i) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(freq, now + i * 0.09);
+          gain.gain.setValueAtTime(0.001, now + i * 0.09);
+          gain.gain.exponentialRampToValueAtTime(0.11, now + i * 0.09 + 0.02);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + i * 0.09 + 0.42);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now + i * 0.09);
+          osc.stop(now + i * 0.09 + 0.45);
+        });
+      } catch {}
+    }
+
+    function initAmbientChannel(type) {
+      ensureAudioContext();
+      if (!audioCtx || soundChannels[type].initialized) return;
+      const bufferSize = audioCtx.sampleRate * 3;
+      const masterGain = audioCtx.createGain();
+      masterGain.gain.value = 0;
+      masterGain.connect(audioCtx.destination);
+
+      if (type === "rain") {
+        const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+        const noise = audioCtx.createBufferSource();
+        noise.buffer = buffer; noise.loop = true;
+        const filter = audioCtx.createBiquadFilter(); filter.type = "lowpass"; filter.frequency.value = 1100;
+        noise.connect(filter); filter.connect(masterGain); noise.start();
+      } else if (type === "waves") {
+        const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) data[i] = (Math.random() * 2 - 1) * 0.6;
+        const noise = audioCtx.createBufferSource();
+        noise.buffer = buffer; noise.loop = true;
+        const filter = audioCtx.createBiquadFilter(); filter.type = "lowpass"; filter.frequency.value = 420;
+        noise.connect(filter); filter.connect(masterGain); noise.start();
+      } else if (type === "lofi") {
+        const freqs = [174.61, 220.0, 261.63, 329.63];
+        const filter = audioCtx.createBiquadFilter(); filter.type = "lowpass"; filter.frequency.value = 650;
+        filter.connect(masterGain);
+        freqs.forEach((f, idx) => {
+          const osc = audioCtx.createOscillator();
+          osc.type = idx % 2 === 0 ? "triangle" : "sine";
+          osc.frequency.value = f;
+          const subGain = audioCtx.createGain(); subGain.gain.value = 0.15;
+          osc.connect(subGain); subGain.connect(filter); osc.start();
+        });
+      }
+      soundChannels[type].gain = masterGain;
+      soundChannels[type].initialized = true;
+    }
+
+    ["rain", "waves", "lofi"].forEach(type => {
+      const slider = document.getElementById(`vol${type.charAt(0).toUpperCase() + type.slice(1)}`);
+      const label = document.getElementById(`volLabel${type.charAt(0).toUpperCase() + type.slice(1)}`);
+      const card = document.getElementById(`channel-${type}`);
+      slider.addEventListener("input", () => {
+        const val = parseInt(slider.value, 10);
+        label.textContent = `${val}%`;
+        card.classList.toggle("playing", val > 0);
+        if (val > 0) {
+          initAmbientChannel(type);
+          if (audioCtx && soundChannels[type].gain) {
+            soundChannels[type].gain.gain.setTargetAtTime((val / 100) * 0.35, audioCtx.currentTime, 0.08);
+          }
+        } else if (soundChannels[type].initialized && audioCtx && soundChannels[type].gain) {
+          soundChannels[type].gain.gain.setTargetAtTime(0, audioCtx.currentTime, 0.08);
+        }
+      });
     });
 
-    /* 7. FLASHCARDS */
-    let cardIdx = 0, flipped = false;
-    function visibleDecks() {
-      if (state.activeSubject === "all") return state.decks;
+    document.getElementById("muteAllSoundsBtn").addEventListener("click", () => {
+      ["rain", "waves", "lofi"].forEach(type => {
+        const slider = document.getElementById(`vol${type.charAt(0).toUpperCase() + type.slice(1)}`);
+        slider.value = 0;
+        slider.dispatchEvent(new Event("input"));
+      });
+    });
+
+    const notesArea = document.getElementById("quickNotesArea");
+    const notesCharCount = document.getElementById("notesCharCount");
+    const notesSaveStatus = document.getElementById("notesSaveStatus");
+    notesArea.addEventListener("input", () => {
+      const subName = getSubjectObj(state.activeSubject).name;
+      state.notesBySubject[state.activeSubject] = notesArea.value;
+      notesCharCount.textContent = `${notesArea.value.length} ký tự • ${subName}`;
+      notesSaveStatus.textContent = "Đã tự động lưu";
+      saveState();
+    });
+
+    function sendNotesToAI() {
+      const txt = notesArea.value.trim();
+      if (!txt) { showToast("Sổ ghi chú đang trống!", "info"); return; }
+      document.getElementById("aiSourceText").value = txt;
+      switchView("ai");
+    }
+
+    /* Flashcards 3D */
+    let currentCardIndex = 0;
+    let isCardFlipped = false;
+
+    function getVisibleDecks() {
       const m = state.decks.filter(d => d.subject === state.activeSubject);
       return m.length ? m : state.decks;
     }
-    function curDeck() {
-      const list = visibleDecks();
-      return list.find(d => d.id === state.activeDeckId) || state.decks.find(d => d.id === state.activeDeckId) || list[0];
+
+    function getActiveDeck() {
+      const vis = getVisibleDecks();
+      return vis.find(d => d.id === state.activeDeckId) || state.decks.find(d => d.id === state.activeDeckId) || vis[0];
     }
 
-    function renderFlashcards() {
-      const deck = curDeck();
-      const pills = visibleDecks();
-      document.getElementById("deckPillsContainer").innerHTML = pills.map(d =>
-        `<button type="button" class="deck-pill ${d.id === deck.id ? "active" : ""}" onclick="pickDeck('${d.id}')">${escapeHTML(d.title)}</button>`
-      ).join("");
+    function renderFlashcardView() {
+      const deck = getActiveDeck();
+      const vis = getVisibleDecks();
+      document.getElementById("deckPillsContainer").innerHTML = vis.map(d => {
+        const mastered = d.cards.filter(c => c.mastered).length;
+        return `<button type="button" class="deck-pill ${d.id === deck.id ? "active" : ""}" onclick="selectDeck('${d.id}')"><span>${escapeHTML(d.title)}</span><span style="opacity:0.8; font-size:0.75rem;">(${mastered}/${d.cards.length})</span></button>`;
+      }).join("");
 
       document.getElementById("activeDeckTitle").textContent = deck.title;
-      const done = deck.cards.filter(c => c.mastered).length;
-      document.getElementById("activeDeckProgress").textContent = `Đã thuộc ${done}/${deck.cards.length} thẻ`;
-      if (!deck.cards.length) return;
-      if (cardIdx >= deck.cards.length) cardIdx = 0;
-      const c = deck.cards[cardIdx];
-      document.getElementById("fcCounterBadge").textContent = `${cardIdx + 1} / ${deck.cards.length}`;
-      document.getElementById("fcFrontText").textContent = c.front;
-      document.getElementById("fcBackText").textContent = c.back;
-      document.getElementById("fcStatusFront").textContent = c.mastered ? "✓ Đã thuộc" : "Đang học";
-      document.getElementById("flashcardInner").classList.toggle("flipped", flipped);
+      const masteredCount = deck.cards.filter(c => c.mastered).length;
+      document.getElementById("activeDeckProgress").textContent = `Đã thuộc: ${masteredCount} / ${deck.cards.length} thẻ • Chạm vào thẻ hoặc nhấn Space để lật`;
+      document.getElementById("deleteDeckBtn").style.display = deck.isDefault ? "none" : "inline-flex";
+
+      if (!deck.cards.length) {
+        document.getElementById("fcCounterBadge").textContent = "0 / 0";
+        document.getElementById("fcFrontText").textContent = "Bộ thẻ trống.";
+        document.getElementById("fcBackText").textContent = "Bấm '+ Thêm thẻ vào bộ' để thêm thẻ mới.";
+        return;
+      }
+      if (currentCardIndex >= deck.cards.length) currentCardIndex = 0;
+      const card = deck.cards[currentCardIndex];
+      document.getElementById("fcCounterBadge").textContent = `Thẻ ${currentCardIndex + 1} / ${deck.cards.length}`;
+      document.getElementById("fcFrontText").textContent = card.front;
+      document.getElementById("fcBackText").textContent = card.back;
+      const tagF = document.getElementById("fcStatusTag");
+      const tagB = document.getElementById("fcStatusTagBack");
+      if (card.mastered) { tagF.className = tagB.className = "badge badge-emerald"; tagF.textContent = tagB.textContent = "✓ Đã thuộc"; }
+      else { tagF.className = tagB.className = "badge badge-amber"; tagF.textContent = tagB.textContent = "Đang học"; }
+      document.getElementById("flashcardInner").classList.toggle("flipped", isCardFlipped);
     }
 
-    function pickDeck(id) { state.activeDeckId = id; cardIdx = 0; flipped = false; saveState(); renderFlashcards(); }
-    document.getElementById("flashcardStage").addEventListener("click", () => { flipped = !flipped; document.getElementById("flashcardInner").classList.toggle("flipped", flipped); });
-    document.getElementById("fcFlipBtn").addEventListener("click", () => { flipped = !flipped; document.getElementById("flashcardInner").classList.toggle("flipped", flipped); });
-    document.getElementById("fcNextBtn").addEventListener("click", () => { const d = curDeck(); if (!d.cards.length) return; flipped = false; cardIdx = (cardIdx + 1) % d.cards.length; renderFlashcards(); });
-    document.getElementById("fcPrevBtn").addEventListener("click", () => { const d = curDeck(); if (!d.cards.length) return; flipped = false; cardIdx = (cardIdx - 1 + d.cards.length) % d.cards.length; renderFlashcards(); });
-    document.getElementById("fcReviewBtn").addEventListener("click", () => { const d = curDeck(); if (!d.cards.length) return; d.cards[cardIdx].mastered = false; saveState(); updateStatsUI(); flipped = false; cardIdx = (cardIdx + 1) % d.cards.length; renderFlashcards(); });
+    function selectDeck(id) { state.activeDeckId = id; currentCardIndex = 0; isCardFlipped = false; saveState(); renderFlashcardView(); }
+    function flipFlashcard() { isCardFlipped = !isCardFlipped; document.getElementById("flashcardInner").classList.toggle("flipped", isCardFlipped); }
+    function nextFlashcard() { const d = getActiveDeck(); if (!d.cards.length) return; isCardFlipped = false; currentCardIndex = (currentCardIndex + 1) % d.cards.length; renderFlashcardView(); }
+    function prevFlashcard() { const d = getActiveDeck(); if (!d.cards.length) return; isCardFlipped = false; currentCardIndex = (currentCardIndex - 1 + d.cards.length) % d.cards.length; renderFlashcardView(); }
+
+    document.getElementById("flashcardStage").addEventListener("click", flipFlashcard);
+    document.getElementById("fcFlipBtn").addEventListener("click", flipFlashcard);
+    document.getElementById("fcNextBtn").addEventListener("click", nextFlashcard);
+    document.getElementById("fcPrevBtn").addEventListener("click", prevFlashcard);
+    document.getElementById("fcShuffleBtn").addEventListener("click", () => {
+      const d = getActiveDeck();
+      for (let i = d.cards.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [d.cards[i], d.cards[j]] = [d.cards[j], d.cards[i]]; }
+      currentCardIndex = 0; isCardFlipped = false; saveState(); renderFlashcardView(); showToast("🔀 Đã xáo trộn thẻ!", "info");
+    });
+    document.getElementById("fcNeedReviewBtn").addEventListener("click", () => { const d = getActiveDeck(); if (!d.cards.length) return; d.cards[currentCardIndex].mastered = false; saveState(); nextFlashcard(); });
     document.getElementById("fcMasteredBtn").addEventListener("click", () => {
-      const d = curDeck(); if (!d.cards.length) return;
-      if (!d.cards[cardIdx].mastered) { d.cards[cardIdx].mastered = true; addXP(10); }
-      saveState(); updateStatsUI(); flipped = false; cardIdx = (cardIdx + 1) % d.cards.length; renderFlashcards();
+      const d = getActiveDeck(); if (!d.cards.length) return;
+      if (!d.cards[currentCardIndex].mastered) { d.cards[currentCardIndex].mastered = true; addXP(10, "Thuộc thẻ ghi nhớ"); }
+      saveState(); nextFlashcard();
+    });
+    document.getElementById("deleteDeckBtn").addEventListener("click", () => {
+      const d = getActiveDeck(); if (d.isDefault) return;
+      state.decks = state.decks.filter(x => x.id !== d.id);
+      state.activeDeckId = state.decks[0].id; currentCardIndex = 0; saveState(); renderFlashcardView();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      const el = document.activeElement;
+      if (el && (el.tagName === "INPUT" || el.tagName === "TEXTAREA" || el.tagName === "SELECT")) return;
+      if (e.code === "Escape") { document.querySelectorAll(".modal-backdrop.open").forEach(m => closeModal(m.id)); return; }
+      if (!document.getElementById("view-flashcards").classList.contains("active")) return;
+      if (e.code === "Space") { e.preventDefault(); flipFlashcard(); }
+      else if (e.code === "ArrowRight") nextFlashcard();
+      else if (e.code === "ArrowLeft") prevFlashcard();
     });
 
     function openModal(id) { document.getElementById(id).classList.add("open"); document.body.classList.add("modal-open"); }
     function closeModal(id) { document.getElementById(id).classList.remove("open"); document.body.classList.remove("modal-open"); }
+    document.querySelectorAll(".modal-backdrop").forEach(b => b.addEventListener("click", (e) => { if (e.target === b) closeModal(b.id); }));
 
-    document.getElementById("openCreateDeckBtn").addEventListener("click", () => openModal("modalCreateDeck"));
+    function addCardPairInputRow(fVal = "", bVal = "") {
+      const row = document.createElement("div");
+      row.className = "card-pair-row";
+      row.innerHTML = `<input type="text" class="input pair-front" placeholder="Mặt trước" value="${escapeHTML(fVal)}" required /><input type="text" class="input pair-back" placeholder="Mặt sau" value="${escapeHTML(bVal)}" required /><button type="button" class="btn btn-danger-soft btn-sm" onclick="this.parentElement.remove()">✕</button>`;
+      document.getElementById("newDeckPairsContainer").appendChild(row);
+    }
+
+    document.getElementById("openCreateDeckModalBtn").addEventListener("click", () => {
+      document.getElementById("newDeckName").value = "";
+      document.getElementById("newDeckPairsContainer").innerHTML = "";
+      addCardPairInputRow(); addCardPairInputRow();
+      openModal("modalCreateDeck");
+    });
+    document.getElementById("addPairRowBtn").addEventListener("click", () => addCardPairInputRow());
+
     document.getElementById("createDeckForm").addEventListener("submit", (e) => {
       e.preventDefault();
       const title = document.getElementById("newDeckName").value.trim();
-      const cards = [{ id: "c1-" + Date.now(), front: document.getElementById("card1Front").value.trim(), back: document.getElementById("card1Back").value.trim(), mastered: false }];
-      const f2 = document.getElementById("card2Front").value.trim();
-      const b2 = document.getElementById("card2Back").value.trim();
-      if (f2 && b2) cards.push({ id: "c2-" + Date.now(), front: f2, back: b2, mastered: false });
-      const nd = { id: "deck-" + Date.now(), subject: state.activeSubject === "all" ? "toan" : state.activeSubject, title, isDefault: false, cards };
-      state.decks.push(nd); state.activeDeckId = nd.id; cardIdx = 0; flipped = false;
-      saveState(); closeModal("modalCreateDeck"); renderFlashcards(); updateStatsUI(); addXP(15);
-    });
-
-    document.getElementById("openAddCardBtn").addEventListener("click", () => openModal("modalAddCard"));
-    document.getElementById("addCardForm").addEventListener("submit", (e) => {
-      e.preventDefault();
-      const d = curDeck();
-      d.cards.push({ id: "ac-" + Date.now(), front: document.getElementById("addCardFront").value.trim(), back: document.getElementById("addCardBack").value.trim(), mastered: false });
-      document.getElementById("addCardFront").value = ""; document.getElementById("addCardBack").value = "";
-      cardIdx = d.cards.length - 1; flipped = false;
-      saveState(); closeModal("modalAddCard"); renderFlashcards(); updateStatsUI(); toast("Đã thêm thẻ!");
-    });
-
-    /* 8. QUIZ */
-    let qList = [], qPos = 0, qScore = 0, qRight = 0, qInt = null, qSec = 15;
-    function fillQuizSelect() {
-      const sel = document.getElementById("quizDeckSelect");
-      sel.innerHTML = `<option value="all">🌟 Tất cả môn</option>` + state.decks.map(d => `<option value="${d.id}">${escapeHTML(d.title)}</option>`).join("");
-      if (state.activeSubject !== "all") {
-        const m = state.decks.find(d => d.subject === state.activeSubject);
-        if (m) sel.value = m.id;
-      }
-    }
-    document.getElementById("startQuizBtn").addEventListener("click", () => {
-      const v = document.getElementById("quizDeckSelect").value;
-      const pool = v === "all" ? state.decks.flatMap(d => d.cards) : (state.decks.find(d => d.id === v)?.cards || []);
-      const allBacks = state.decks.flatMap(d => d.cards.map(c => c.back));
-      qList = pool.slice(0, 5).map(c => {
-        const wrong = allBacks.filter(b => b !== c.back).slice(0, 3);
-        while (wrong.length < 3) wrong.push("Đáp án khác");
-        const opts = [c.back, ...wrong].sort(() => Math.random() - 0.5);
-        return { q: c.front, ans: c.back, opts };
+      const fronts = document.querySelectorAll("#newDeckPairsContainer .pair-front");
+      const backs = document.querySelectorAll("#newDeckPairsContainer .pair-back");
+      const cards = [];
+      fronts.forEach((f, idx) => {
+        if (f.value.trim() && backs[idx].value.trim()) cards.push({ id: `c-${Date.now()}-${idx}`, front: f.value.trim(), back: backs[idx].value.trim(), mastered: false });
       });
-      if (!qList.length) return;
-      qPos = 0; qScore = 0; qRight = 0;
+      if (!title || !cards.length) return;
+      const nd = { id: `deck-${Date.now()}`, subject: state.activeSubject, title, isDefault: false, cards };
+      state.decks.push(nd); state.activeDeckId = nd.id; currentCardIndex = 0; isCardFlipped = false;
+      saveState(); closeModal("modalCreateDeck"); renderFlashcardView(); addXP(15, "Tạo bộ thẻ mới");
+    });
+
+    document.getElementById("openAddCardModalBtn").addEventListener("click", () => {
+      document.getElementById("singleCardFront").value = ""; document.getElementById("singleCardBack").value = "";
+      openModal("modalAddCard");
+    });
+    document.getElementById("addSingleCardForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const d = getActiveDeck();
+      d.cards.push({ id: `card-${Date.now()}`, front: document.getElementById("singleCardFront").value.trim(), back: document.getElementById("singleCardBack").value.trim(), mastered: false });
+      currentCardIndex = d.cards.length - 1; isCardFlipped = false; saveState(); closeModal("modalAddCard"); renderFlashcardView(); showToast("Đã thêm thẻ mới!", "success");
+    });
+
+    /* Speed Quiz */
+    let quizQuestions = [], quizIndex = 0, quizScore = 0, quizCorrectCount = 0, quizCombo = 0, quizMaxCombo = 1, quizEarnedXP = 0, quizMissedItems = [], quizTimerInterval = null, quizTimeLeft = 15.0;
+
+    function populateQuizDeckSelect() {
+      const sel = document.getElementById("quizDeckSelect");
+      const allCount = state.decks.reduce((acc, d) => acc + d.cards.length, 0);
+      sel.innerHTML = `<option value="all">🌟 Tổng hợp tất cả các môn (${allCount} thẻ)</option>` +
+        state.decks.map(d => `<option value="${d.id}">${escapeHTML(d.title)} (${d.cards.length} thẻ)</option>`).join("");
+      const match = state.decks.find(d => d.subject === state.activeSubject);
+      if (match) sel.value = match.id;
+    }
+
+    function buildQuizQuestions(deckId, count) {
+      const allCards = state.decks.flatMap(d => d.cards);
+      const src = deckId === "all" ? [...allCards] : [...(state.decks.find(d => d.id === deckId)?.cards || allCards)];
+      for (let i = src.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [src[i], src[j]] = [src[j], src[i]]; }
+      const selected = src.slice(0, Math.min(count, src.length));
+      const fallback = ["Đáp án không đúng với định nghĩa SGK.", "Quy luật biến thiên ngược chiều.", "Công thức chỉ áp dụng cho trường hợp đặc biệt.", "Khái niệm thuộc chương trình khác."];
+      return selected.map(card => {
+        const correct = card.back.split("\n")[0];
+        const pool = allCards.filter(c => c.id !== card.id).map(c => c.back.split("\n")[0]).filter(t => t !== correct);
+        const distractors = [];
+        for (const item of pool) if (!distractors.includes(item) && distractors.length < 3) distractors.push(item);
+        for (const fb of fallback) if (!distractors.includes(fb) && distractors.length < 3) distractors.push(fb);
+        const opts = [correct, ...distractors].sort(() => Math.random() - 0.5);
+        return { question: card.front, correctAnswer: correct, options: opts };
+      });
+    }
+
+    function startQuiz() {
+      quizQuestions = buildQuizQuestions(document.getElementById("quizDeckSelect").value, parseInt(document.getElementById("quizCountSelect").value, 10) || 8);
+      if (!quizQuestions.length) return;
+      quizIndex = 0; quizScore = 0; quizCorrectCount = 0; quizCombo = 0; quizMaxCombo = 1; quizEarnedXP = 0; quizMissedItems = [];
       document.getElementById("quizSetupPanel").style.display = "none";
       document.getElementById("quizResultPanel").style.display = "none";
       document.getElementById("quizPlayPanel").style.display = "block";
-      showQ();
-    });
-    function showQ() {
-      clearInterval(qInt);
-      const item = qList[qPos];
-      document.getElementById("quizProgressLabel").textContent = `Câu ${qPos + 1} / ${qList.length}`;
-      document.getElementById("quizScoreLabel").textContent = `Điểm: ${qScore}`;
-      document.getElementById("quizQuestionText").textContent = item.q;
-      const g = document.getElementById("quizOptionsGrid");
-      g.innerHTML = item.opts.map(o => `<button type="button" class="quiz-option">${escapeHTML(o)}</button>`).join("");
-      g.querySelectorAll(".quiz-option").forEach(btn => {
-        btn.addEventListener("click", () => ansQ(btn, btn.textContent === item.ans, item.ans));
-      });
-      qSec = 15;
-      document.getElementById("quizTimeLabel").textContent = "15s";
-      qInt = setInterval(() => {
-        qSec--;
-        document.getElementById("quizTimeLabel").textContent = `${Math.max(0, qSec)}s`;
-        if (qSec <= 0) ansQ(null, false, item.ans);
-      }, 1000);
+      renderQuizQuestion();
     }
-    function ansQ(btn, ok, ans) {
-      clearInterval(qInt);
-      document.querySelectorAll("#quizOptionsGrid .quiz-option").forEach(b => {
-        b.disabled = true;
-        if (b.textContent === ans) b.classList.add("correct");
-      });
-      if (btn && !ok) btn.classList.add("wrong");
-      if (ok) { qRight++; qScore += 100; }
-      setTimeout(() => {
-        qPos++;
-        if (qPos < qList.length) showQ();
-        else {
-          document.getElementById("quizPlayPanel").style.display = "none";
-          document.getElementById("quizResultPanel").style.display = "block";
-          const xpGain = qRight * 15;
-          document.getElementById("quizResultSummary").textContent = `Đúng ${qRight}/${qList.length} câu • Điểm ${qScore} • +${xpGain} XP`;
-          if (xpGain) addXP(xpGain);
-        }
-      }, 900);
+
+    function renderQuizQuestion() {
+      clearInterval(quizTimerInterval);
+      const q = quizQuestions[quizIndex];
+      const mult = quizCombo >= 4 ? 3 : quizCombo >= 2 ? 2 : 1;
+      document.getElementById("quizProgressLabel").textContent = `Câu ${quizIndex + 1} / ${quizQuestions.length}`;
+      document.getElementById("quizScoreLabel").textContent = `Điểm: ${quizScore}`;
+      const badge = document.getElementById("quizComboBadge");
+      badge.textContent = `🔥 Combo x${mult}`;
+      badge.classList.toggle("hot", mult > 1);
+      document.getElementById("quizQuestionText").textContent = q.question;
+
+      const letters = ["A", "B", "C", "D"];
+      const grid = document.getElementById("quizOptionsGrid");
+      grid.innerHTML = q.options.map((o, idx) => `<button type="button" class="quiz-option" data-idx="${idx}"><span class="opt-letter">${letters[idx]}</span><span>${escapeHTML(o)}</span></button>`).join("");
+      grid.querySelectorAll(".quiz-option").forEach(btn => btn.addEventListener("click", () => handleQuizAnswer(+btn.dataset.idx)));
+
+      quizTimeLeft = 15.0;
+      updateQuizTimerBar();
+      quizTimerInterval = setInterval(() => {
+        quizTimeLeft -= 0.1;
+        if (quizTimeLeft <= 0) { quizTimeLeft = 0; updateQuizTimerBar(); handleQuizAnswer(-1); }
+        else updateQuizTimerBar();
+      }, 100);
     }
+
+    function updateQuizTimerBar() {
+      document.getElementById("quizTimeLabel").textContent = `⏳ ${quizTimeLeft.toFixed(1)}s`;
+      document.getElementById("quizTimerFill").style.width = `${Math.max(0, (quizTimeLeft / 15.0) * 100)}%`;
+    }
+
+    function handleQuizAnswer(selIdx) {
+      clearInterval(quizTimerInterval);
+      const q = quizQuestions[quizIndex];
+      const btns = document.querySelectorAll("#quizOptionsGrid .quiz-option");
+      btns.forEach(b => (b.disabled = true));
+      const ok = selIdx >= 0 && q.options[selIdx] === q.correctAnswer;
+      btns.forEach((b, i) => {
+        if (q.options[i] === q.correctAnswer) b.classList.add("correct");
+        else if (i === selIdx && !ok) b.classList.add("wrong");
+      });
+      if (ok) {
+        quizCorrectCount++; quizCombo++;
+        const mult = quizCombo >= 4 ? 3 : quizCombo >= 2 ? 2 : 1;
+        if (mult > quizMaxCombo) quizMaxCombo = mult;
+        quizScore += (100 + Math.round(quizTimeLeft * 5)) * mult;
+        quizEarnedXP += 10 * mult;
+        playRewardChime(false);
+      } else {
+        quizCombo = 0;
+        quizMissedItems.push({ question: q.question, correctAnswer: q.correctAnswer });
+      }
+      setTimeout(() => { quizIndex++; if (quizIndex < quizQuestions.length) renderQuizQuestion(); else showQuizSummary(); }, 1050);
+    }
+
+    function showQuizSummary() {
+      document.getElementById("quizPlayPanel").style.display = "none";
+      document.getElementById("quizResultPanel").style.display = "block";
+      const acc = Math.round((quizCorrectCount / quizQuestions.length) * 100);
+      document.getElementById("resScore").textContent = quizScore;
+      document.getElementById("resXp").textContent = `+${quizEarnedXP} XP`;
+      document.getElementById("resAccuracy").textContent = `${acc}%`;
+      document.getElementById("resMaxCombo").textContent = `x${quizMaxCombo}`;
+      if (quizEarnedXP > 0) addXP(quizEarnedXP, `Speed Quiz (${acc}%)`);
+      document.getElementById("quizReviewList").innerHTML = quizMissedItems.length === 0
+        ? `<div style="padding:12px; background:var(--emerald-soft); color:var(--emerald); border-radius:10px; font-weight:700; text-align:center;">🎉 Xuất sắc! Đúng 100%!</div>`
+        : quizMissedItems.map(m => `<div style="padding:10px; background:var(--bg-surface-2); border-radius:10px; font-size:0.84rem;"><strong>${escapeHTML(m.question)}</strong><div style="color:var(--emerald); font-weight:700;">✓ ${escapeHTML(m.correctAnswer)}</div></div>`).join("");
+    }
+
+    document.getElementById("startQuizBtn").addEventListener("click", startQuiz);
+    document.getElementById("quizRetryBtn").addEventListener("click", startQuiz);
     document.getElementById("quizBackSetupBtn").addEventListener("click", () => {
       document.getElementById("quizResultPanel").style.display = "none";
       document.getElementById("quizSetupPanel").style.display = "block";
     });
 
-    /* 9. AI CHAT */
-    function showChat() {
+    /* AI Study Buddy */
+    async function callGeminiWithBackoff(payload, retries = 3) {
+      const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+      let delay = 900;
+      for (let attempt = 0; attempt <= retries; attempt++) {
+        try {
+          const r = await fetch(apiUrl, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+          if (!r.ok) throw new Error("HTTP " + r.status);
+          return await r.json();
+        } catch (err) {
+          if (attempt === retries) throw err;
+          await new Promise(res => setTimeout(res, delay));
+          delay *= 2;
+        }
+      }
+    }
+
+    let lastGeneratedDeckId = null;
+    document.getElementById("aiFillSampleBtn").addEventListener("click", () => {
+      document.getElementById("aiDeckTitleInput").value = "Hóa 12 - Polime & Vật liệu";
+      document.getElementById("aiSourceText").value =
+        "Polime là những hợp chất có phân tử khối lớn do nhiều đơn vị nhỏ (mắt xích) liên kết với nhau.\n" +
+        "Trùng hợp là quá trình cộng hợp liên tiếp nhiều phân tử nhỏ (monome) có liên kết bội hoặc vòng kém bền tạo thành phân tử lớn.\n" +
+        "Trùng ngưng là quá trình nhiều monome kết hợp với nhau tạo thành polime và giải phóng những phân tử nhỏ (như H2O).";
+    });
+
+    document.getElementById("aiGenerateCardsBtn").addEventListener("click", async () => {
+      const sourceText = document.getElementById("aiSourceText").value.trim();
+      const customTitle = document.getElementById("aiDeckTitleInput").value.trim();
+      if (sourceText.length < 15) { showToast("Hãy nhập đoạn nội dung dài hơn.", "info"); return; }
+      const btn = document.getElementById("aiGenerateCardsBtn");
+      const orig = btn.innerHTML;
+      btn.disabled = true; btn.innerHTML = `<span class="spinner"></span> Đang tạo thẻ...`;
+      try {
+        const res = await callGeminiWithBackoff({
+          contents: [{ parts: [{ text: `Trích xuất kiến thức trọng tâm thành 4-5 flashcard front/back tiếng Việt từ nội dung:\n${sourceText}` }] }],
+          generationConfig: {
+            responseMimeType: "application/json",
+            responseSchema: {
+              type: "OBJECT",
+              properties: {
+                deckTitle: { type: "STRING" },
+                cards: { type: "ARRAY", items: { type: "OBJECT", properties: { front: { type: "STRING" }, back: { type: "STRING" } }, required: ["front", "back"] } }
+              },
+              required: ["deckTitle", "cards"]
+            }
+          }
+        });
+        const parsed = JSON.parse(res?.candidates?.[0]?.content?.parts?.[0]?.text || "{}");
+        const formatted = (parsed.cards || []).map((c, i) => ({ id: `ai-${Date.now()}-${i}`, front: c.front, back: c.back, mastered: false }));
+        if (!formatted.length) throw new Error("Empty");
+        const nd = { id: `deck-ai-${Date.now()}`, subject: state.activeSubject, title: `✨ ${customTitle || parsed.deckTitle || "Bộ thẻ AI"}`, isDefault: false, cards: formatted };
+        state.decks.push(nd); lastGeneratedDeckId = nd.id; saveState();
+        document.getElementById("aiGenSummary").textContent = `🎉 Đã tạo "${nd.title}" (${formatted.length} thẻ)!`;
+        document.getElementById("aiGenResultBox").style.display = "block";
+        addXP(30, "Tạo Flashcard bằng AI");
+      } catch {
+        showToast("Chưa kết nối được AI lúc này. Bạn có thể tạo bộ thẻ thủ công bằng nút '+ Tạo bộ thẻ mới'.", "info");
+      } finally {
+        btn.disabled = false; btn.innerHTML = orig;
+      }
+    });
+
+    document.getElementById("aiJumpToDeckBtn").addEventListener("click", () => {
+      if (lastGeneratedDeckId) { selectDeck(lastGeneratedDeckId); switchView("flashcards"); }
+    });
+
+    function renderChatHistory() {
       const w = document.getElementById("aiChatWindow");
-      w.innerHTML = state.chat.map(m => `<div class="chat-msg ${m.role === "user" ? "user" : "ai"}">${escapeHTML(m.text)}</div>`).join("");
+      w.innerHTML = state.chatHistory.map(m => `<div class="chat-msg ${m.role === "user" ? "user" : "ai"}">${escapeHTML(m.text)}</div>`).join("");
       w.scrollTop = w.scrollHeight;
     }
-    async function askBot(txt) {
-      if (!txt.trim()) return;
-      state.chat.push({ role: "user", text: txt.trim() });
-      saveState(); showChat();
+
+    async function sendChatMessage(txt) {
+      const text = txt.trim();
+      if (!text) return;
+      state.chatHistory.push({ role: "user", text });
+      saveState(); renderChatHistory();
+
       if (!apiKey) {
-        state.chat.push({ role: "ai", text: `Môn ${getSubject(state.activeSubject).name}: Bạn hãy ôn nắm vững định nghĩa, công thức/ý chính rồi làm Flashcard và Quiz để nhớ lâu nhé.` });
-        saveState(); showChat(); return;
-      }
-      try {
-        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ contents: [{ parts: [{ text: `Học sinh cấp 3 hỏi môn ${getSubject(state.activeSubject).name}: ${txt}` }] }] })
+        const subName = getSubjectObj(state.activeSubject).name;
+        state.chatHistory.push({
+          role: "ai",
+          text: `Với môn ${subName} (Lớp ${state.activeGrade}) theo SGK:\n1. Nắm vững khái niệm/công thức nền tảng ở từng chặng lộ trình.\n2. Làm Practice ngay sau mỗi chặng để kiểm tra cách vận dụng.\n3. Làm bài Kiểm tra định kì và ôn lại bằng Flashcard 3D.`
         });
-        const j = await res.json();
-        const reply = j?.candidates?.[0]?.content?.parts?.[0]?.text || "Chưa có phản hồi.";
-        state.chat.push({ role: "ai", text: reply });
-      } catch {
-        state.chat.push({ role: "ai", text: "Không kết nối được AI lúc này." });
+        saveState(); renderChatHistory();
+        return;
       }
-      saveState(); showChat();
+
+      try {
+        const subName = getSubjectObj(state.activeSubject).name;
+        const res = await callGeminiWithBackoff({
+          contents: state.chatHistory.slice(-6).map(m => ({ role: m.role === "user" ? "user" : "model", parts: [{ text: m.text }] })),
+          systemInstruction: { parts: [{ text: `Bạn là StudyBot, gia sư cấp 3 chuẩn SGK GDPT 2018. Môn đang chọn: ${subName}, Lớp ${state.activeGrade}.` }] }
+        });
+        state.chatHistory.push({ role: "ai", text: res?.candidates?.[0]?.content?.parts?.[0]?.text || "Chưa có phản hồi." });
+      } catch {
+        state.chatHistory.push({ role: "ai", text: "Kết nối AI tạm gián đoạn, bạn thử lại nhé." });
+      }
+      saveState(); renderChatHistory();
     }
+
     document.getElementById("aiChatForm").addEventListener("submit", (e) => {
       e.preventDefault();
       const inp = document.getElementById("aiChatInput");
-      askBot(inp.value); inp.value = "";
+      sendChatMessage(inp.value); inp.value = "";
     });
-    document.querySelectorAll(".prompt-chip[data-prompt]").forEach(c => c.addEventListener("click", () => askBot(c.dataset.prompt)));
+    document.querySelectorAll(".prompt-chips .prompt-chip[data-prompt]").forEach(c => c.addEventListener("click", () => sendChatMessage(c.dataset.prompt)));
     document.getElementById("aiClearChatBtn").addEventListener("click", () => {
-      state.chat = [{ role: "ai", text: "Đã xóa lịch sử chat." }]; saveState(); showChat();
+      state.chatHistory = [{ role: "ai", text: "Đã làm mới cuộc trò chuyện! 🚀" }]; saveState(); renderChatHistory();
     });
 
-    function renderAll() {
+    function refreshAllAppViews() {
       applyTheme(state.theme || "light");
-      updateStatsUI();
-      renderChart();
-      renderTodos();
-      showPomo();
-      showChat();
-      fillQuizSelect();
-      applySubjectChanges();
+      updateGamificationUI();
+      renderWeeklyChart();
+      renderTodoList();
+      updateTimerDisplay();
+      populateQuizDeckSelect();
+      renderChatHistory();
+      applySubjectContextUI();
     }
 
+    /* ==========================================================================
+       6. INITIALIZE ON LOAD
+       ========================================================================== */
     window.addEventListener("DOMContentLoaded", () => {
       applyTheme(localStorage.getItem("studyflow_theme") || "light");
       if (auth) {
-        auth.onAuthStateChanged((u) => {
-          if (u) {
-            localStorage.removeItem("studyflow_guest");
-            enterApp({ uid: u.uid, displayName: u.displayName || u.email?.split("@")[0] || "Học viên", email: u.email || "", photoURL: u.photoURL || null, isGuest: false });
-          } else if (localStorage.getItem("studyflow_guest") === "1") {
-            enterApp({ uid: "guest", displayName: "Khách", email: "", photoURL: null, isGuest: true });
+        auth.onAuthStateChanged((user) => {
+          if (user) {
+            localStorage.removeItem("studyflow_guest_mode");
+            enterAppWithUser({
+              uid: user.uid,
+              displayName: user.displayName || user.email?.split("@")[0] || "Học viên",
+              email: user.email || "",
+              photoURL: user.photoURL || null,
+              isGuest: false
+            });
+          } else if (localStorage.getItem("studyflow_guest_mode") === "1") {
+            enterAppWithUser({ uid: "guest", displayName: "Khách học tập", email: "Lưu cục bộ", photoURL: null, isGuest: true });
           }
         });
       } else {
-        const loc = localStorage.getItem("studyflow_local_user");
-        if (loc) { try { enterApp(JSON.parse(loc)); return; } catch {} }
-        if (localStorage.getItem("studyflow_guest") === "1") {
-          enterApp({ uid: "guest", displayName: "Khách", email: "", photoURL: null, isGuest: true });
+        const loc = localStorage.getItem("studyflow_local_account");
+        if (loc) { try { enterAppWithUser(JSON.parse(loc)); return; } catch {} }
+        if (localStorage.getItem("studyflow_guest_mode") === "1") {
+          enterAppWithUser({ uid: "guest", displayName: "Khách học tập", email: "Lưu cục bộ", photoURL: null, isGuest: true });
         }
       }
     });
